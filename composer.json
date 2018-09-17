@@ -1,0 +1,11 @@
+{
+    "name": "norion/goodbusiness",
+    "description": "site de pesquisa de produto para lojas e fornecedores",
+    "authors": [
+        {
+            "name": "Norion",
+            "email": "andre.luiz.tavares@bol.com.br"
+        }
+    ],
+    "require": {}
+}

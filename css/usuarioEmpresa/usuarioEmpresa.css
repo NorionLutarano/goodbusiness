@@ -1,0 +1,68 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 231px;
+  height: 100%;
+  background-color: #233f5e; }
+
+header h2 {
+  color: #fff;
+  text-align: center;
+  cursor: default;
+  font-family: Muli, arial;
+  font-weight: 100;
+  background-color: #236F9E;
+  padding: 1rem 0; }
+
+header ul {
+  padding-left: 1rem;
+  list-style: none;
+  line-height: 40px; }
+
+header ul li {
+  font-size: 1rem;
+  font-family: Muli, arial;
+  font-weight: 100;
+  cursor: default;
+  color: #fff; }
+
+main {
+  width: 1088px;
+  height: auto;
+  float: right; }
+
+main .header {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem; }
+
+main .header span {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  cursor: default;
+  font-size: 0.9rem; }
+
+main .header img {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 100px;
+  margin-right: 1rem; }
+
+main .painel .titulo {
+  width: 97%;
+  border-bottom: 1px solid #aaa; }
+
+main .painel .titulo h2 {
+  font-size: 2rem;
+  color: #444;
+  font-family: Poppins, Muli, arial; }
+
+main .painel .grafico {
+  width: 70%; }
+
+main .painel .informacao_generica {
+  width: 30%; }
+
+/*# sourceMappingURL=usuarioEmpresa.css.map */

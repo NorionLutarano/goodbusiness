@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,4BAA4B;EAC3B,KAAK,EAAE,GAAG",
+"sources": ["../../path/sass/home/mobile_index.sass"],
+"names": [],
+"file": "mobile_index.css"
+}
