@@ -5,7 +5,7 @@
  ?>
 <html>
 <head>
-  <title>Good Businnes</title>
+  <title>Goo d Businnes</title>
  
   <link href="https://fonts.googleapis.com/css?family=Poppins|Muli|Paytone+One|Roboto" rel="stylesheet">
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-reboot.css">
