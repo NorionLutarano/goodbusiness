@@ -1,0 +1,31 @@
+<?php
+
+
+class produto{
+
+	public static function getListaProduto($produto,$filtro=null,$quantidadeProduto=15){
+		//obter conexao
+		$con= new pdo("mysql:host=localhost;dbname=goodBusiness;","temp","elite#17");
+		//prepara o filtro
+		$filtro=$filtro?" and ". $filtro:null;
+		//prepara string do produto
+		$produto = "'%".$produto."%'";
+		//cria a query
+		$sql="  select cnpj,E.nome,P.nome,valor,P.imagem from  produto as P inner join empresa as E on E.id_empresa=P.id_empresa and P.nome Like {$produto}  {$filtro} order by valor asc limit {$quantidadeProduto}";		
+		//prepara a query para executar 
+		 $query=$con->prepare($sql);
+		 if(false==$query->execute()){return "error";}
+		 //obtém dados
+		 $query->execute();
+		 $resultado=$query->fetchAll();
+		 //verifica se retornou nada
+		 if(!$resultado){ return 0;}
+		 //encerra a conexao
+		 $con=null;
+		 //cria um json com os resultados
+		 return json_encode($resultado);
+	}
+
+}
+
+echo produto::getListaProduto("mito");

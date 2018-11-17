@@ -1,0 +1,463 @@
+
+header{
+    /* position: fixed; */
+    height: 58px;
+    width: 100%;
+    background-color: #09A5F0;
+    display:flex;
+    justify-content: space-between;
+}
+
+header .titulo{
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+    /* margin-bottom:2rem; */
+    font-size: 1.9rem;
+    font-weight:100;
+    color: white;
+    cursor:default;
+}
+
+header > .titulo> sub{
+    font-size: 0.8rem;
+}
+
+header > .responsavel{
+    margin-right:1rem;
+    display:flex;
+    height: 100%;
+}
+
+header > .responsavel > img{
+    margin-top:0.25rem;
+    height: 50px;
+    width: 50px;
+    background-color:white;
+    border-radius:100px; 
+}
+
+header > .responsavel > h2::before{
+    content: "Bem vindo,";
+    font-size:0.9rem;
+    font-weight:100;
+    display:block;
+    color:#AAA;
+}
+
+header > .responsavel > h2{
+    margin-top:0.5rem;
+    margin-left: 1.2rem;
+    font-size:0.9rem;
+    font-weight:100;
+    color:white;
+}
+
+header > span{
+    display:block;
+    margin-left: 1rem;
+    margin-bottom:1rem;
+    color: white;
+    font-weight:900;
+    font-size:0.8rem;
+    text-shadow: 0px 0px 10px  #000;
+}
+
+
+header ul{
+    padding-left:0;
+    list-style:none;
+}
+
+header > ul > li{
+    margin-bottom:1rem;
+    padding-left:1rem;
+    color:white;
+    cursor:pointer;
+    font-size:0.85rem;
+}
+
+
+main{
+    width: 1345px;
+}
+
+
+main > .menu{
+    float:left;
+    padding-left:1rem;
+    width: 218px;
+    list-style:none;
+    margin-top: 0;
+    height: 569px;
+    padding-top: 1rem;
+}
+
+main > .menu > h2{
+    font-size:2rem;
+    font-family: arial;
+    font-weight: 100;
+    cursor: default;
+    text-transform: uppercase;
+    color: #454847;
+}
+
+main > .menu > li{
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color:#787596;
+    cursor: pointer;
+}
+
+main > .menu > li >.subMenu{
+    list-style: none;
+    padding-left:10px;
+}
+
+main > .menu > li >.subMenu > li{
+    line-height: 35px;
+}
+
+main .conta{
+    padding-top:10px;
+    padding-right:15px;
+    display: flex;
+    justify-content:flex-end;
+}
+
+.conta >img{
+    margin-right:10px;
+    height:40px;
+    border-radius:100px;
+}
+
+.conta > span{
+    margin-top:0.5rem;
+    font-size:0.8rem;
+    cursor: pointer;
+    color:#444;
+}
+
+
+.infoGerais{
+    margin-top:1rem;
+    margin-bottom:2rem;
+    height: 88px;
+    width: 1117px;
+    color:#73879C;
+    display: flex;
+    float: right;
+}
+
+.infoEmpresa{
+    float: left;
+    padding-top: 10rem;
+    width: 1117px;
+    /*! height: 419px; */
+}
+
+.container{
+    height:100%;
+    width: 16%;
+    display:inline-block;
+    /* border-left: 1px solid #73879C; */
+}
+
+
+.container:first-child{
+    border:0;
+}
+
+.container > span:first-child{
+    /* text-align:center; */
+    display:block;
+    font-size:0.8rem;
+}
+
+.container > span:nth-child(2){
+    /* text-align:center; */
+    display:block;
+    font-size: 40px;
+    font-weight:900;
+}
+
+
+.container > span:last-child{
+    /* text-align:center; */
+    display:block;
+}
+
+.container > .subiu::after{
+      content:" subiu";
+      color:#07A075;
+}
+
+.container > .queda::after{
+      content:" queda";
+      color:#F70045;
+}
+
+
+.infoEmpresa > .tituloGrafico{
+    margin-left: 0.5rem;
+    font-size:2.5rem;
+    font-family:arial;
+    font-weight:100;
+    color:#507987;
+    cursor:default;
+}
+
+.green{
+  color:#1ABB9C;
+}
+
+.red{
+  color:#f50755;
+}
+
+.desativado{
+    display: none;
+}
+
+#infoGeral{
+    width: 1125px;
+    float: left;
+    height: auto;
+}
+
+
+
+
+form  span{
+    font-family: arial;
+    font-size: 0.9rem;
+    display: block;
+    color:#555;
+}
+
+form  h2{
+  font-family: arial;
+  font-size:2rem;
+  font-weight: 100;
+}
+
+form  select{
+    padding:0.5rem;
+    width: 25rem;
+    border:1px solid #AAA;
+    background-color: white;
+    color:#777;
+}
+
+form  textarea{
+  margin-bottom: 0.75rem;
+  padding: 0.25rem;
+  border:1px solid #AAA;
+  width: 25rem;
+}
+
+form  input{
+  padding:0.25rem;
+  width: 25rem;
+  border:1px solid #AAA;
+}
+
+
+form  button{
+  border:0;
+  padding: 0.5rem 1rem;
+  background-color: #0F78FF;
+  color:white;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: block;
+}
+
+#formCadastrarFilial {
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
+#formCadastrarFilial  input{
+    margin-bottom: 1rem;
+    border:1px solid #bbb;
+    display: block;
+    width: 34rem;
+}
+
+#formCadastrarFilial textarea{
+    width: 68rem;
+    height: 81px;
+}
+
+#formCadastrarFilial div{
+    display: inline-block;
+}
+
+
+
+.pesquisa {
+  padding-top: 1rem;
+}
+
+.pesquisa > input{
+  width: 61rem;
+  padding:0.45rem;
+  border-right: 0;
+  margin-right: -5px;
+}
+
+.pesquisa > button{
+  padding-top: 0.35rem;
+  padding-bottom:0.4rem;
+  display: inline-block;
+}
+
+.painel{
+  margin-top:1rem;
+  width: 68rem;
+} 
+
+
+#formListarFornecedor h2{
+  font-family: Fredoka One,arial;
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
+
+
+
+.lista {
+  padding-top: 1rem;
+  display: flex;
+}
+
+.lista >.itens{
+  width: 19%;
+  height: 250px;
+  margin-right: 1%;
+  cursor:pointer;
+}
+
+.lista >.itens:last-of-type{
+  margin-right: 0;
+}
+
+.itens > img{
+  height: 200px;
+  width: 100%;
+  background-color: #CCC;
+}
+
+
+.itens h3{
+  font-size:1rem;
+  font-weight: 100;
+  text-align: center;
+}
+
+
+.filial {
+  list-style: none;
+  padding: 10px;
+  border:1px solid #AAA;
+  display:flex;
+  justify-content:space-between;
+}
+
+.filial >li:first-of-type{
+  margin-top: 0.5rem;
+}
+
+.filial >li:last-of-type{
+  margin:0;
+}
+
+.filial >li{
+  margin:0 1rem;
+  display: inline-block;
+}
+
+.filial button{
+  margin-top: 5px;
+  padding:5px 10px;
+  font-size:1rem;
+  background-color: #70F0F0;
+  color:#fff;
+  border:0;
+  cursor:pointer;
+}
+#formCadastrarProduto{
+  margin-bottom: 1rem;
+}
+
+#formCadastrarProduto input{
+  margin-bottom: 1rem; 
+  width: 35rem;
+}
+
+#formCadastrarProduto textarea{
+  margin-bottom: 1rem; 
+  width: 35rem;
+}
+
+#formCadastrarProduto select{
+  margin-bottom: 1rem; 
+  width: 35rem;
+}
+
+#formConfiguracao{
+    margin-bottom:1rem;
+}
+
+#formConfiguracao div{
+  padding-right: 1rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  width: 47%;
+}
+
+#formConfiguracao textarea{
+    width: 100%;
+}
+
+#formConfiguracao input{
+    width: 100%;
+}
+
+#formConfiguracao select{
+    width: 46%;
+}
+#formConfiguracao button{
+    display: inline-block;
+}
+#formConfiguracao button:last-of-type{
+    margin-right: 2rem;
+}
+
+.error{
+    margin-left:1rem;
+    font-size: 0.9rem;
+    color:red;
+}
+
+.success{
+    margin-left:1rem;
+    font-size: 0.9rem;
+    color:green;
+}
+
+
+.subAviso {
+  display: inline-block;
+  bottom:0;
+}
+
+
+.spanEstilo1{
+    font-family: arial;
+    font-size: 0.9rem;
+    display: block;
+    color:#555;
+}

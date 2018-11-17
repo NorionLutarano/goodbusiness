@@ -1,0 +1,72 @@
+Página de Pesquisa
+
+//variáveis
+nomeProduto => formato exemplo 'casa verde' para '%casa%verde%'. Trabalhado no php
+or
+nomeProduto => formato exemplo 'casa verde' para '%casa verde%'. Trabalhado no php
+
+quantidade  => quantidade mínima de compra do produto
+
+localidade => localidade da empresa que está sendo buscado
+
+//Pesquisa por produto
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto order by valor asc;
+
+//Pesquisa por produto com frete
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and frete=1 order by valor asc;
+
+//Pesquisa por produto com parcelamento
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and parcelamento not is null order by valor asc;
+
+
+//Pesquisa por produto com quantidade mínima
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and quantidadeMinima>=quantidade order by valor asc;
+
+//Pesquisa produto por Localidade
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade order by valor asc;
+
+
+//Pesquisa produto por promocao
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and promocao not is null order by valor asc;
+
+
+
+///Derivadas do frete
+//Pesquisa por produto frete e parcelamento
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and parcelamento not is null and frete=1 order by valor asc;
+
+//Pesquisa por produto frete e quantidade Mínima
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and quantidadeMinima>=quantidade order by valor asc;
+
+//Pesquisa por produto frete e Localidade
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade order by valor asc;
+
+//Pesquisa por produto frete e promocao
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and promocao not is null order by valor asc;
+
+
+//Pesquisa por produto, frete, parcelamento e quantidade Mínima
+
+///Fim derividas do frete
+
+
+//Pesquisa produto por Localidade e promocao
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade and promocao not is null order by valor asc;
+
+
+//Pesquisa por Localidade e promocao e quantidade mínima
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade and promocao not is null and quantidadeMinima>=quantidade order by valor asc;
+
+
+//Pesquisa produto por Localidade e parcelamento e promocao e quantidade mínima
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade and promocao not is null and quantidadeMinima>=quantidade and parcelamento not is null order by valor asc;
+
+
+//Pesquisa produto por Localidade e parcelamento e promocao e quantidade mínima e frete
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade and promocao not is null and quantidadeMinima>=quantidade and parcelamento not is null and frete=1 order by valor asc;
+
+//Pesquisa produto por Localidade e parcelamento e promocao e quantidade mínima e frete
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa where P.nome Like nomeProduto and bairro=localidade and promocao not is null and quantidadeMinima>=quantidade and parcelamento not is null order by valor asc;
+
+
+

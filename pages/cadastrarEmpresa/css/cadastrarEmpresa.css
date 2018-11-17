@@ -1,0 +1,121 @@
+body{margin:0;}
+header{
+    margin-bottom:2rem;
+    width: auto;
+    height: 45px;
+    display:flex;
+    justify-content: space-between;
+    background-color:#09A5F0;
+}
+
+header h1{
+  margin: 0.25rem;
+  font-size: 2rem;
+  font-family:arial;
+  color:#FFF;
+}
+
+
+header .buttonLogin {
+  height: 17px;
+  width: 80px;
+  margin:auto;
+  margin-right: 10px;
+  font-size: 0.8rem;
+  font-family: Muli, arial;
+  color: white;
+  font-weight: 900;
+  border: 0;
+  cursor: pointer;
+  text-decoration:none;
+  }
+
+  header .buttonLogin:hover{
+    color:#fff;
+  }
+
+  main{
+    margin:0 auto;
+    height:470px;
+    width:700px;
+  }
+
+  main > form > h2{
+    margin-top:0;
+    font-family:arial;
+    font-weight:100;
+    font-size:2rem;
+  } 
+
+
+  main > form > input{
+    width:95%;
+    display:block;
+    margin-bottom:1rem;
+    padding:0.5rem;
+    border:1px solid #ccc;
+  }
+
+  main > form > select{
+    padding:0.4rem;
+    padding-left:0.1rem;
+    width: 98%;
+    background-color:white;
+    margin-bottom:1rem;
+    border:1px solid #ccc;
+    font-size:0.8rem;
+    color:#888;
+  }
+
+  main > form > input.senha{
+    margin-right:1rem;
+    width: 43.5%;
+    display: inline-block;
+  }
+
+  main > form > input.ConfirmarSenha{
+    margin-left:1rem;
+    width: 43.5%;
+    display: inline-block;
+  }
+
+  main > form button{
+    margin-top:0.5rem;
+    padding:0.5rem;
+    border:0;
+    font-size:1rem;
+    color: #555;
+    background-color:#CFCFCF;
+  }
+
+  .infoGeral{
+    display: inline-block;
+  }
+
+  .aviso{
+    float: right;
+    font-size: 0.9rem;
+    font-family: arial;
+    margin-right: 1rem;
+  }
+
+  .alert{
+    position: absolute;
+    top: 12%;
+    left:41%;
+    height:50px;
+    width:450px;
+
+  }
+
+  .alert h2{
+    margin-top:0.5rem;
+    font-family:arial;
+    font-weight:100;
+    text-align:right;
+    color:#F44;
+  }
+
+  .borderRed{
+    border: 1px solid red;
+  }

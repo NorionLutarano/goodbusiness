@@ -7,5 +7,14 @@
             "email": "andre.luiz.tavares@bol.com.br"
         }
     ],
+    {
+	  "autoload": {
+	    "psr-4": {
+	      "Service\\" : "php/service",
+	      "Config\\"  : "php/config",
+	      "Function\\": "php/function"
+	    }
+	  }
+	},
     "require": {}
 }

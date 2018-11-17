@@ -1,0 +1,23 @@
+ Produto
+	nome varchar(255) not null
+	imagem varchar(255) not null
+	valor DECIMAL(65,2) not null
+	descricao varchar(255) not null
+	frete boolean not null default 0
+	parcelamento tinyint default null
+	promocao varchar(255) default null
+
+// create table if not exists produto(
+	id_produto bigint unsigned auto_increment primary key,
+	id_empresa bigint unsigned,
+	nome varchar(255) not null,
+	imagem varchar(255) default null,
+	valor decimal(65,2) not null,
+	descricao text default null,
+	frete boolean not null default 0,
+	parcelamento tinyint default null,
+	promocao varchar(255) default null,
+	foreign key(id_empresa) references empresa(id_empresa)
+);
+
+select P.nome,valor,E.nome from produto as P inner join empresa as E on E.id_empresa=P.id_empresa on Like P.nome = '%Lojas Americanas%'; 

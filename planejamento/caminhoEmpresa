@@ -1,0 +1,58 @@
+versão 1 básico
+	empresa cadastra-se
+	empresa caso de perda da senha, renova a senha
+	empresa cadastra produto
+	empresa edita produto
+	empresa exclui produto
+	empresa lista seus produtos
+	empresa procura por seus produtos
+	empresa pesquisa fornecedor
+	empresa salva fornecedor
+	empresa excluir fornecedor da sua lista
+	empresa modifica seus dados
+	//
+	tipo de empresa: fornecedor e loja
+
+versão 2 * expansão de clientes
+	empresa pode oferecer serviço
+	empresa de outros tipos podem se cadastrar
+	//
+	tipo de empresa: serviço e outros
+
+versão 3 * estátisticas
+	empresa podem ver quantas vezes um item foi pesquisado
+	empresa podem ver quantas vezes era foi visualizada
+	empresa podem ver de onde os usuários são e o que pesquisam
+
+
+
+
+versão ?
+	os usuários que queram fazer cartão ou se cadastrar em uma empresa\
+	e fazem um requerimento a empresa que deseja fazer cartão ou se cadastrar\
+	a empresa valida esses dados e depois confirma.
+		isso irá fazer utilizar a empresa como um viés confirmatório para o veracidade dos dados informados do cliente
+
+	aprender o que é mais pesquisado em um local, para mostrar banner de produtos e serviços.
+	aprender com o que um usuário cadastrado pesquisa e compra.
+	fazer pagamento através do site para as lojas.
+	fazer um histórico de compra e pesquisa de cada usuário cadastrado.
+	fazer comprar periódicas
+	o usuário pode usar o goodBusiness para pagar todas as contas de uma só vez, ou escolher quais pagar.
+	as empresas podem ver com grande precisão seu público alvo e onde eles estão.
+	as empresas podem ver para exterior.
+	goodBusiness investem em pequenas empresas, utilizando dinheiro de outras empresas ou de usuários cadastrados.
+	goodBusiness emprestam dinheiro.
+	goodBusiness disponibiliza recursos administrativos para empresas como:
+			encontrar profissionais para contratar.
+			descrever o funcionário.
+			dar nota de qualidade para funcionário.
+			criar relatórios.
+			enviar relatórios.
+			editar relatórios.
+			ver total de gastos por categoria(funcionários, impostos).
+			ver relatórios de venda, pesquisa, gastos, impostos e etc.
+			ver rotatividade de funcionários.
+			ver notificações dos fornecedores.
+			enviar mensagem para fornecedores.
+

@@ -4,16 +4,57 @@ header {
   display: flex;
   justify-content: flex-end; }
 
-header button {
+header a{
+  padding-top:0.5rem;
+  margin-right:1rem;
+  color: #888;
+  cursor: pointer;
+}
+
+header a:hover{
+  color:#888;
+  text-decoration:none;
+}
+
+
+a.nomeEmpresa{
+  cursor: default;
+}
+
+.imagemEmpresa{
+  cursor: default;
+}
+
+a img{
+  position: relative;
+  height: 50px;
+  width: 50px;
+  border-radius:50px;
+}
+
+a span{
+  padding-top: 1rem;
+  cursor:default;
+  display: block;
+  font-size:0.9rem;
+}
+
+header .buttonLogin {
   height: 40px;
   margin-right: 15px;
   font-size: 0.8rem;
   font-family: Muli, arial;
-  padding: 0px 10px;
+  padding: 0.6rem 10px;
   background-color: #50a0f0;
   color: white;
   font-weight: 900;
-  border: 0; }
+  border: 0;
+  cursor: pointer;
+  }
+
+  header .buttonLogin:hover{
+    color:#fff;
+  }
 
 main h1 {
   margin-top: 5rem;
@@ -45,7 +86,9 @@ main span {
   width: 30%; }
 
 #home .formulario form {
-  width: 40%; }
+  width: 40%; 
+  margin:auto;
+}
 
 #home .formulario form input {
   display: block;
@@ -98,7 +141,10 @@ footer span {
     margin-right: 10%; } }
 @media (max-width: 600px) {
   #home {
-    margin-top: 3rem; }
+    margin-top: 0rem; }
+  #home h1{
+    margin-top:3rem;
+  }
 
   #home .formulario div {
     width: 5%; }
