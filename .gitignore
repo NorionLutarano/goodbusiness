@@ -1,0 +1,8 @@
+.sass-cache
+path/
+planejamento/
+node_modules/
+documento/
+package-lock.json
+package.json
+composer.json
