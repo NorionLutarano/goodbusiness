@@ -28,7 +28,7 @@
           //tenta mover o arquivo para o destino
           if(@move_uploaded_file($arquivo_tmp, $destino)){
             $path=$destino;
-            return true;
+            return 1;
           }else{
             return 2;//"Servidor está em Manutenção.";
           }

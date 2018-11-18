@@ -40,14 +40,6 @@
     <span>Planos</span>
     <span >Negócios</span>
   </footer>
-  <script type="text/javascript" src="node_modules/angular/angular.js"></script>
-  <script type="text/javascript">
-      angular.module("app",[])
-             .controller("header",["$scope",function($scope){
-                $scope.logado='<?php echo $logado; ?>';
-                $scope.empresa= '<?php echo $logado; ?>'?'<?php echo $logado; ?>':{};
-      }]);
-  </script>
   <script type="text/javascript">
                 var pesquisaRapida= function(e){
                   e.preventDefault();

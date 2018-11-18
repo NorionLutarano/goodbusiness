@@ -32,12 +32,12 @@
 	//adiciona id do empresário ao POST
 	$_POST['id_empresa']=$_SESSION['empresa']['id_empresa'];
 	//instancia o produto
-	$produto=new produto();
+	$produto=new produto($_POST);
 	//cadastrar o produto, se retorna true foi cadastrado e false houve error
-	if ($produto->cadastrar($_POST)) {
-		echo "cadastrado com sucesso.";	
+	if ($produto->cadastrar()) {
+		echo 100;	
 	}else{
-		echo "Servidor em manutenção.";
+		echo var_dump($_POST);
 	}
 	
 	exit();

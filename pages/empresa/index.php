@@ -60,26 +60,33 @@ conferirStatusLogin();
         <h2>Cadastrar Produto<sub class="desativado"></sub></h2>
         <span>Nome do produto: <sub class="subAviso">obrigatório</sub></span>
         <input type="text" name="nome" placeholder="Informe o nome do produto" required />
+        
         <span>Imagem para produto: <sub class="subAviso">arquivo menor que 2 megabyte</sub></span>
         <input type="file" name="imagem" placeholder="Informe a imagem do produto" required />
-        <span>Descrição: <sub class="subAviso">opcional</sub> </span>
+        
+        <span>Descrição: <sub class="subAviso">obrigatório, total de caracteres <caracteres><digit>0</digit>/5000</caracteres></sub> </span>
         <textarea name="descricao" placeholder="descrever o produto, se houver promoção descreva aqui" required></textarea>
+        
         <span>Valor: <sub class="subAviso">obrigatório</sub> </span>
         <input type="text" name="valor" placeholder="Informe o preço" required />
-        <span>Máximo de parcelas: <sub class="subAviso">obrigatório</sub> </span>
+        
+        <span>Máximo de parcelas: <sub class="subAviso">opcional</sub> </span>
         <input type="text" name="parcelamento" placeholder="se houver, informe o valor máximo do parcelamento"/>
+        
         <span>Promoção: <sub class="subAviso">opcional</sub></span>
         <select name="promocao" >
           <option value="0">Selecione:</option>
           <option value="0">Não tem promoção</option>
           <option value="1">Tem promoção</option>
         </select>
+       
         <span>Frete: <sub class="subAviso">opcional</sub></span>  
-        <select name="promocao" >
+        <select name="frete" >
           <option value="0">Selecione:</option>
           <option value="0">Não tem frete</option>
           <option value="1">Tem frete</option>
         </select>
+
         <button>Cadastrar</button>
       </form>
 

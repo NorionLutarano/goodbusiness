@@ -14,6 +14,7 @@ var mostrarFormId=function(id,form){
   control.forEach(function(elemento){
     elemento.classList.add("desativado");
   });
+
   document.getElementById(form).classList.remove("desativado");
   document.querySelectorAll('sub').forEach(function(tag){
     tag.classList.add('desativado');
@@ -22,7 +23,11 @@ var mostrarFormId=function(id,form){
  });  
 };
 
-
+var formReset=function(){
+  document.querySelectorAll("form").forEach(function(form){
+    form.reset();
+  });
+}
 
 
 
@@ -67,7 +72,14 @@ var mostrarFormId=function(id,form){
   document.querySelectorAll("form").forEach(function(el){ el.reset(); });
 
 
- //
+  //mostrar o máximo de caracteres na descrição do produto
+  cadastrarProduto.querySelector("textarea[name='descricao']").addEventListener("keyup",function(value){
+    if(this.value.length>5000){
+      this.value=this.value.substring(0,5000);
+      return;
+    }
+    document.querySelector("digit").innerText=this.value.length;
+  });
 
  //monitoramento dos inputs do formulário Cadastro produto
  cadastrarProduto.querySelector("input[name='parcelamento']").addEventListener("keyup",function(valor){
@@ -86,7 +98,10 @@ var mostrarFormId=function(id,form){
   this.value=this.value.replace(/[^\d]+/g,'');
   if(this.value.length>2){
     this.value="R$ "+this.value.substring(0,this.value.length-2)+"."+this.value.substring(this.value.length-2,this.value.length);
+  }else{
+    this.value="R$ "+this.value;
   }
+
   return;
  });
 
@@ -99,15 +114,14 @@ cadastrarProduto.addEventListener("submit",function(e){
   var parcelamento= cadastrarProduto.querySelector("input[name='parcelamento']");
   var frete=        cadastrarProduto.querySelector("select[name='frete']");
 
-  //verificar se os inputs estão vazios
-  cadastrarProduto.querySelectorAll("input").forEach(function(valor){
-    if(valor.value==""){
-     avisoCadastrarProduto.classList.add("error");
-     avisoCadastrarProduto.classList.remove("desativado");
-     avisoCadastrarProduto.innerText="Preencha os campos obrigatórios.";
-     return;
-    }
-  });
+
+  //verifica se valor foi setado
+  var regex = /[0-9]$/g;
+  if(!regex.test(valor.value)){
+    avisoCadastrarProduto.innerText="";
+    avisoCadastrarProduto.innerText="Informe o valor do produto";
+    return;
+  }
 
   //verifica se o parcelamento é negativo
   if(parcelamento<0){
@@ -133,8 +147,21 @@ cadastrarProduto.addEventListener("submit",function(e){
       contentType: false,
       processData: false,
       success: function(retorno){
-        console.log(retorno);
-      },
+        var aviso=document.getElementById("formCadastrarProduto").querySelector("h2").querySelector("sub");
+        if(100==retorno){
+          aviso.classList.remove("error");
+          aviso.classList.add("success");
+          aviso.innerText="cadastrado com sucesso.";
+          formReset();
+        }else{
+          aviso.classList.remove("success");
+          aviso.classList.add("error");
+          aviso.innerText=retorno;
+        }
+          aviso.classList.remove("desativado");
+          return;
+
+      }
     });
 
 });

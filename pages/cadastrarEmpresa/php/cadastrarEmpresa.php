@@ -4,17 +4,17 @@
 	//importa objeto empresa
 	require_once("../../../autoload.php");
 
-	echo var_dump($_POST);
+	
 	//se algum dado do formulário não for enviado retorna mensagem de error e redireciona para página de cadastro
 	if(	!isset($_POST['nome']) 		or
 		!isset($_POST['cnpj']) 		or
 		!isset($_POST['estado']) 	or
 		!isset($_POST['bairro']) 	or
 		!isset($_POST['endereco']) 	or
-		!isset($_POST['tipo']) 		or
+		!isset($_POST['categoria']) or
 		!isset($_POST['email']) 	or
 		!isset($_POST['senha'])) { 
-			$_SESSION['PreenchaDados']= "<h2> Preencha todos os dados! </h2>";
+			$_SESSION['statusCadastro']= "<h2> Preencha todos os dados 1! </h2>";
 			header("Location: /pages/cadastrarEmpresa/");
 			return; 
 		}
@@ -24,10 +24,10 @@
 		empty($_POST['estado']) 	or
 		empty($_POST['bairro']) 	or
 		empty($_POST['endereco']) 	or
-		empty($_POST['tipo']) 		or
+		empty($_POST['categoria']) 	or
 		empty($_POST['email']) 		or
 		empty($_POST['senha'])) { 
-			$_SESSION['PreenchaDados']= "<h2> Preencha todos os dados! </h2>";
+			$_SESSION['statusCadastro']= "<h2> Preencha todos os dados 2! </h2>";
 			header("Location: /pages/cadastrarEmpresa/");
 			return; 
 		}
@@ -38,7 +38,7 @@
 								 'estado'	=> $_POST['estado'],
 								 'bairro'	=> $_POST['bairro'],
 								 'endereco' => $_POST['endereco'],
-								 'tipo'		=> $_POST['tipo'],
+								 'categoria'=> $_POST['categoria'],
 								 'email'	=> $_POST['email'],
 								 'senha' 	=> $_POST['senha']]);
 	

@@ -12,6 +12,10 @@ function validarString($String=null){
 	return $String;
 }
 
+function removerMoeda($moeda){
+	return str_replace("R$","",$moeda);
+}
+
 
 function arrayValidarString($Array){
 	foreach ($Array as $key => $value) {
