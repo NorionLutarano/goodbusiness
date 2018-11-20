@@ -2,6 +2,7 @@
 session_start();
 session_regenerate_id();
 require_once("../../autoload.php");
+require_once("php/listarProduto.php");
 conferirStatusLogin();
 ?>
 
@@ -96,13 +97,21 @@ conferirStatusLogin();
           <input type="text" name="produto" placeholder="nome do produto" />
           <button>Pesquisar</button>
         </form>
-        <span class="spanEstilo1">Quantidade de produtos: 0</span>
-        <div class="painel desativado">
-          <div class="lista">
+        <span class="spanEstilo1">Quantidade de produtos:
+         <quantidadeProdutos>
+          <?php quantidadeProdutos($_SESSION['empresa']['id_empresa']); ?>
+         </quantidadeProdutos>
+        </span>
+        <div class="painel">
+          <!--<div class="lista">
             <div class="itens">
               <img src="">
                 <h3>Nome do Produto</h3>
             </div>
+          </div-->
+
+          <div class="setaBaixo">
+            <img  src="/imgs/down-arrow.png">
           </div>
       </div>
       </div>

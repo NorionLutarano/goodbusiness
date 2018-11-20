@@ -19,33 +19,36 @@ class produto{
 		
 	}
 
-	public  function getListaProduto($produto,$filtro=null,$quantidadeProduto=16){
-		//prepara o filtro
-		$filtro=$filtro?" and ". $filtro:null;
-		//prepara string do produto
-		$produto = "'%".$produto."%'";
+	public  function listarProduto($produto){
+		$min=$produto['quantidade']-20;
 		//cria a query
-		$sql="  select P.id_produto,cnpj,E.nome as nomeEmpresa,P.nome as nomeProduto,valor,P.imagem as imagemProduto from  produto as P inner join empresa as E on E.id_empresa=P.id_empresa and P.nome Like {$produto}  {$filtro} order by valor asc limit {$quantidadeProduto}";
-		
+		$sql="select nome,imagem from produto where id_empresa={$produto['id_empresa']} limit {$min},{$produto['quantidade']}";
 		//prepara a query para executar 
-		 $query=$con->prepare($sql);
+		 $query=$this->con->prepare($sql);
 		 //encerra a conexao
-		 $con=null;
+		 $this->con=null;
 		 //se retorna false avisa do error 
-		 if(false==$query->execute()){return "error";}
-		 //obtém dados
-		 $resultado=$query->fetchAll();
-		 //verifica se retornou nada
-		 if(!count($resultado)){ return 0;}
-		 //cria um json com os resultados
-		 return $resultado;
+		 if(false==$query->execute()){return "Servidor em manutenção #901";}
+		 //retorna a array associativo
+		 return $query->fetchAll();
 	}
 
 
-	public function totalProdutosEmpresa($idEmpresa){
+	public function quantidadeProdutos($idEmpresa){
 		//cria o comando do sql
-		$sql = "select count(id_produto) as total from produtos as P inner join
-		empresa as E on E.id_empresa=P.id_empresa";
+		$sql = "select count(id_produto) as total from produto where id_empresa={$idEmpresa}";
+		//prepara a query
+		$query=$this->con->prepare($sql);
+		//executa a query e obtem o resultado
+		$query->execute();
+		//se não houver erro retorna true senão false
+		$quantidade=$query->fetch(PDO::FETCH_ASSOC);
+		//verifica se a consulta ocorreu bem
+		if($quantidade){
+			return $quantidade['total'];
+		}else{
+			return "Servidor em manutenção #502.";
+		}
 	}
 
 

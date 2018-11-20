@@ -318,15 +318,11 @@ form  button{
   width: 68rem;
 } 
 
-
 #formListarFornecedor h2{
   font-family: Fredoka One,arial;
   font-weight: 100;
   font-size: 2.5rem;
 }
-
-
-
 
 .lista {
   padding-top: 1rem;
@@ -460,4 +456,21 @@ form  button{
     font-size: 0.9rem;
     display: block;
     color:#555;
+}
+
+
+.setaBaixo{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  background-color: #CCC;
+  cursor: pointer;
+  padding-top: 0.25rem;
+}
+
+.setaBaixo > img{
+  width:23px;
+  height: 22px;
 }

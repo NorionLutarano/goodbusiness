@@ -37,7 +37,7 @@
 	if ($produto->cadastrar()) {
 		echo 100;	
 	}else{
-		echo var_dump($_POST);
+		echo "Servidor em manutenção #503.";
 	}
 	
 	exit();
