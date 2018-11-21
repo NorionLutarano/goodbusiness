@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway');
 header{
     /* position: fixed; */
     height: 58px;
@@ -11,7 +11,7 @@ header{
 header .titulo{
     margin-top: 0.25rem;
     margin-left: 0.5rem;
-    /* margin-bottom:2rem; */
+    font-family: Montserrat,Raleway,arial;
     font-size: 1.9rem;
     font-weight:100;
     color: white;
@@ -333,7 +333,7 @@ form  button{
   width: 19%;
   height: 250px;
   margin-right: 1%;
-  cursor:pointer;
+  cursor:default;
 }
 
 .lista >.itens:last-of-type{
@@ -351,6 +351,7 @@ form  button{
   font-size:1rem;
   font-weight: 100;
   text-align: center;
+  font-family: Raleway;
 }
 
 
