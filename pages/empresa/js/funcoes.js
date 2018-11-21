@@ -21,6 +21,19 @@ var formReset=function(){
   });
 }
 
+//tratar string
+var tratarString=function(String){
+  String=String.replace("/1#0/","#");
+  String=String.replace("/3#0/","/*");
+  String=String.replace("/4#0/","*/");
+  String=String.replace("/5#0/","--");
+  String=String.replace("/6#0/","=");
+  String=String.replace("/7#0/","!");
+  String=String.replace("/8#0/","or");
+  String=String.replace("/9#0/","<script>");
+  return String;
+}
+
 
 var listarProdutos=function(quantidade){
   $.ajax({
@@ -47,7 +60,7 @@ var listarProdutos=function(quantidade){
            painel.querySelectorAll(".lista")[index].innerHTML+="\
            <div class='itens'>\
             <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+valor.nome+"</h3>\
+            <h3>"+tratarString(valor.nome)+"</h3>\
           <div>";
           contador++;
           if(contador%5==0){index+=1;}
