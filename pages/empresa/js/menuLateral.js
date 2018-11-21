@@ -1,8 +1,8 @@
   //adiciona função de click para mostrar e desaparecer submenu
   var Menu = document.querySelectorAll(".menu > li >span");
   Menu.forEach(function(el){
-     el.addEventListener("click",function(t){
-        let subMenu =  el.nextElementSibling;
+     el.addEventListener("click",function(){
+        var subMenu =  el.nextElementSibling;
         if(subMenu.classList.contains("desativado")){
           subMenu.classList.remove("desativado");
         }else{
@@ -10,6 +10,9 @@
         }        
       });
   });
+
+  //limpa todos os formulários
+  document.querySelectorAll("form").forEach(function(el){ el.reset(); });
 
  //Listar Fornecedor
  mostrarFormId("listarFornecedor","formListarFornecedor");
@@ -19,9 +22,6 @@
  
  //configuração
  mostrarFormId("configuracao","formConfiguracao");
-
-  //limpa todos os formulários
-  document.querySelectorAll("form").forEach(function(el){ el.reset(); });
 
  //mostrar formulário de cadastro de produto
  mostrarFormId("cadastrarProduto","formCadastrarProduto");

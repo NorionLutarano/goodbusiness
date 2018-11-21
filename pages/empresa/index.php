@@ -99,6 +99,7 @@ conferirStatusLogin();
          <quantidadeProdutos>
           <?php quantidadeProdutos($_SESSION['empresa']['id_empresa']); ?>
          </quantidadeProdutos>
+         cadastrado
         </span>
         <div class="painel">
           <!--<div class="lista">

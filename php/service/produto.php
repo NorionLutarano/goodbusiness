@@ -22,7 +22,7 @@ class produto{
 	public  function listarProduto($produto){
 		$min=$produto['quantidade']-20;
 		//cria a query
-		$sql="select nome,imagem from produto where id_empresa={$produto['id_empresa']} limit {$min},{$produto['quantidade']}";
+		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$produto['id_empresa']} limit {$min},{$produto['quantidade']}";
 		//prepara a query para executar 
 		 $query=$this->con->prepare($sql);
 		 //encerra a conexao
@@ -34,10 +34,10 @@ class produto{
 	}
 
 	public function obterProduto($dados){ 
-		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$dados['id']} and nome='{$dados['produto']}'";
+		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$dados['id']} and nome like '%{$dados['produto']}%'";
 		$query = $this->con->prepare($sql);
 		if(false==$query->execute()){return "Servidor em manutenção #902";}
-		return $query->fetchAll(PDO::FETCH_ASSOC);
+		return $query->fetchAll();
 	}
 
 	public function quantidadeProdutos($idEmpresa){

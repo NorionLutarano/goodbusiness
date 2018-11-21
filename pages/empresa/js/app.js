@@ -8,6 +8,82 @@ var avisoCadastrarProduto=cadastrarProduto.querySelector("h2").querySelector("su
 
 
 
+//------- Funções
+ 
+var mostrarFormId=function(id,form){
+ //mostrar formulário de listar filial
+ document.getElementById(id).addEventListener("click",function(){
+  //esconde todos os formulários, control variável global
+  control.forEach(function(elemento){
+    elemento.classList.add("desativado");
+  });
+
+  document.querySelectorAll('sub').forEach(function(tag){
+    tag.classList.add('desativado');
+  });
+  document.getElementById(form).classList.remove("desativado");
+ });  
+ return;
+};
+
+var formReset=function(){
+  document.querySelectorAll("form").forEach(function(form){
+    form.reset();
+  });
+}
+
+//tratar string
+var tratarString=function(String){
+  String=String.replace("/1#0/","#");
+  String=String.replace("/3#0/","/*");
+  String=String.replace("/4#0/","*/");
+  String=String.replace("/5#0/","--");
+  String=String.replace("/6#0/","=");
+  String=String.replace("/7#0/","!");
+  String=String.replace("/8#0/","or");
+  String=String.replace("/9#0/","<script>");
+  return String;
+}
+
+
+var listarProdutos=function(quantidade){
+  $.ajax({
+      url: 'php/listarProdutos.php',
+      method: 'post',
+      cache: true,
+      data:"quantidade="+quantidade,
+      contentType: false,
+      processData: false,
+      success: function(sucesso){
+        var contador=index=0;
+        var painel=document.getElementById("formListarProduto").querySelector(".painel");
+        //limpa a tabela
+        painel.innerHTML="";
+        //formatar a string para json
+        sucesso=JSON.parse(sucesso);
+        //se não houver resultado informe ao usuário
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        //verifica se servidor respondeu
+        if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
+        //adicionar as tag listas no painel
+        for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
+        //adiciona os produtos a tabela
+        sucesso.forEach(function(valor,key){
+           painel.querySelectorAll(".lista")[index].innerHTML+="\
+           <div class='itens'>\
+            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+            <h3>"+tratarString(valor.nome)+"</h3>\
+           <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
+            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
+            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
+            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
+          <div>";
+          contador++;
+          if(contador%5==0){index+=1;}
+        });
+      }
+   });
+  };
 //mostrar mais produtos no formulários de pesquisa produtos
 $(".setaBaixo").on("click",function(){
     //quantidade de pesquisa
@@ -19,33 +95,36 @@ $(".setaBaixo").on("click",function(){
 //pesquisar produto
 $("#formListarProduto").on("submit",function(e){
   e.preventDefault();
+  if(!$("#formListarProduto .pesquisa input")[0].value) {return;}
   $.ajax({
     url:"php/pesquisarMeuProduto.php",
     method:"post",
-    data:"produto="+$("#formListarProduto input")[0].value,
+    data:$("#formListarProduto .pesquisa").serialize(),
     cache:false,
     success: function(sucesso){
-        $(".setaBaixo").css({'display':'none'});console.log(sucesso);
+        $(".setaBaixo").css({'display':'none'});
         var contador=index=0;
         var painel=document.getElementById("formListarProduto").querySelector(".painel");
         //limpa a tabela
-        painel.innerHTML=""; console.log(typeof sucesso);
+        painel.innerHTML="";
+        //formatar a string para json
+        sucesso=JSON.parse(sucesso);
+        //se não houver resultado informe ao usuário
+        if(!sucesso.length){painel.innerHTML="<h1>Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
         for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
-        //formatar a string para json
-        sucesso=JSON.parse(sucesso);
         //adiciona os produtos a tabela
         sucesso.forEach(function(valor,key){
            painel.querySelectorAll(".lista")[index].innerHTML+="\
            <div class='itens'>\
-            <img src='"+valor[key].imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor[key].nome)+"</h3>\
-            <input name='descricao' value="+tratarString(valor[key].descricao)+" class='desativado'>\
-            <input name='valor' value="+tratarString(valor[key].valor)+" class='desativado'>\
-            <input name='parcelamento' value="+tratarString(valor[key].parcelamento)+" class='desativado'>\
-            <input name='frete' value="+tratarString(valor[key].frete)+" class='desativado'>\
+            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+            <h3>"+tratarString(valor.nome)+"</h3>\
+            <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
+            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
+            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
+            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
           <div>";
           contador++;
           if(contador%5==0){index+=1;}
@@ -59,6 +138,8 @@ $("#formListarProduto").on("submit",function(e){
 $("#listarProduto").on("click",function(){
    //mostrar o formulario
    mostrarFormId("listarProduto","formListarProduto");
+   //lista produtos
+   listarProdutos(20);
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$(".itens").length){
     $(".setaBaixo").css({'display':'none'});
@@ -175,33 +256,36 @@ $(".setaBaixo").on("click",function(){
 //pesquisar produto
 $("#formListarProduto").on("submit",function(e){
   e.preventDefault();
+  if(!$("#formListarProduto .pesquisa input")[0].value) {return;}
   $.ajax({
     url:"php/pesquisarMeuProduto.php",
     method:"post",
-    data:"produto="+$("#formListarProduto input")[0].value,
+    data:$("#formListarProduto .pesquisa").serialize(),
     cache:false,
     success: function(sucesso){
-        $(".setaBaixo").css({'display':'none'});console.log(sucesso);
+        $(".setaBaixo").css({'display':'none'});
         var contador=index=0;
         var painel=document.getElementById("formListarProduto").querySelector(".painel");
         //limpa a tabela
-        painel.innerHTML=""; console.log(typeof sucesso);
+        painel.innerHTML="";
+        //formatar a string para json
+        sucesso=JSON.parse(sucesso);
+        //se não houver resultado informe ao usuário
+        if(!sucesso.length){painel.innerHTML="<h1>Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
         for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
-        //formatar a string para json
-        sucesso=JSON.parse(sucesso);
         //adiciona os produtos a tabela
         sucesso.forEach(function(valor,key){
            painel.querySelectorAll(".lista")[index].innerHTML+="\
            <div class='itens'>\
-            <img src='"+valor[key].imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor[key].nome)+"</h3>\
-            <input name='descricao' value="+tratarString(valor[key].descricao)+" class='desativado'>\
-            <input name='valor' value="+tratarString(valor[key].valor)+" class='desativado'>\
-            <input name='parcelamento' value="+tratarString(valor[key].parcelamento)+" class='desativado'>\
-            <input name='frete' value="+tratarString(valor[key].frete)+" class='desativado'>\
+            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+            <h3>"+tratarString(valor.nome)+"</h3>\
+            <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
+            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
+            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
+            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
           <div>";
           contador++;
           if(contador%5==0){index+=1;}
@@ -215,6 +299,8 @@ $("#formListarProduto").on("submit",function(e){
 $("#listarProduto").on("click",function(){
    //mostrar o formulario
    mostrarFormId("listarProduto","formListarProduto");
+   //lista produtos
+   listarProdutos(20);
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$(".itens").length){
     $(".setaBaixo").css({'display':'none'});
@@ -223,81 +309,11 @@ $("#listarProduto").on("click",function(){
   return;
 });
 
-//------- Funções
- 
-var mostrarFormId=function(id,form){
- //mostrar formulário de listar filial
- document.getElementById(id).addEventListener("click",function(){
-  control.forEach(function(elemento){
-    elemento.classList.add("desativado");
-  });
-
-  document.getElementById(form).classList.remove("desativado");
-  document.querySelectorAll('sub').forEach(function(tag){
-    tag.classList.add('desativado');
-  });
-  return;
- });  
-};
-
-var formReset=function(){
-  document.querySelectorAll("form").forEach(function(form){
-    form.reset();
-  });
-}
-
-//tratar string
-var tratarString=function(String){
-  String=String.replace("/1#0/","#");
-  String=String.replace("/3#0/","/*");
-  String=String.replace("/4#0/","*/");
-  String=String.replace("/5#0/","--");
-  String=String.replace("/6#0/","=");
-  String=String.replace("/7#0/","!");
-  String=String.replace("/8#0/","or");
-  String=String.replace("/9#0/","<script>");
-  return String;
-}
-
-
-var listarProdutos=function(quantidade){
-  $.ajax({
-      url: 'php/listarProdutos.php',
-      method: 'post',
-      cache: true,
-      data:"quantidade="+quantidade,
-      contentType: false,
-      processData: false,
-      success: function(sucesso){
-        if(sucesso==1){
-          $(".setaBaixo").css({'display':'none'});
-          return;
-        }
-        sucesso=JSON.parse(sucesso);
-        var contador=index=0;
-        var painel=document.getElementById("formListarProduto").querySelector(".painel");
-        //limpa a tabela
-        painel.innerHTML="";
-        //adicionar as tag listas no painel
-        for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
-        //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){
-           painel.querySelectorAll(".lista")[index].innerHTML+="\
-           <div class='itens'>\
-            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor.nome)+"</h3>\
-          <div>";
-          contador++;
-          if(contador%5==0){index+=1;}
-        });
-      }
-   });
-  };
   //adiciona função de click para mostrar e desaparecer submenu
   var Menu = document.querySelectorAll(".menu > li >span");
   Menu.forEach(function(el){
-     el.addEventListener("click",function(t){
-        let subMenu =  el.nextElementSibling;
+     el.addEventListener("click",function(){
+        var subMenu =  el.nextElementSibling;
         if(subMenu.classList.contains("desativado")){
           subMenu.classList.remove("desativado");
         }else{
@@ -305,6 +321,9 @@ var listarProdutos=function(quantidade){
         }        
       });
   });
+
+  //limpa todos os formulários
+  document.querySelectorAll("form").forEach(function(el){ el.reset(); });
 
  //Listar Fornecedor
  mostrarFormId("listarFornecedor","formListarFornecedor");
@@ -315,10 +334,6 @@ var listarProdutos=function(quantidade){
  //configuração
  mostrarFormId("configuracao","formConfiguracao");
 
-  //limpa todos os formulários
-  document.querySelectorAll("form").forEach(function(el){ el.reset(); });
-
  //mostrar formulário de cadastro de produto
- mostrarFormId("cadastrarProduto","formCadastrarProduto");
-//obter os primeiros 20 produtos para mostrar no form lista 
-listarProdutos(20);
+ mostrarFormId("cadastrarProduto","formCadastrarProduto");//obter os primeiros 20 produtos para mostrar no form lista 
+//listarProdutos(20);
