@@ -33,6 +33,12 @@ class produto{
 		 return $query->fetchAll();
 	}
 
+	public function obterProduto($dados){ 
+		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$dados['id']} and nome='{$dados['produto']}'";
+		$query = $this->con->prepare($sql);
+		if(false==$query->execute()){return "Servidor em manutenção #902";}
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
 
 	public function quantidadeProdutos($idEmpresa){
 		//cria o comando do sql
@@ -81,3 +87,6 @@ class produto{
 }
 
 
+	function __destruct(){
+		$this->con=null;
+	}
