@@ -2,7 +2,7 @@
 session_start();
 session_regenerate_id();
 require_once("../../autoload.php");
-require_once("php/listarProduto.php");
+require_once("php/quantidadeProdutos.php");
 conferirStatusLogin();
 ?>
 
@@ -26,7 +26,6 @@ conferirStatusLogin();
   <main>
     <ul class="menu">
       <li >Home</li>
-     
       <li>
            <span>Fornecedores</span>
            <ul class="subMenu desativado">
@@ -37,7 +36,6 @@ conferirStatusLogin();
       <li>
           <span>Produtos</span>
           <ul class="subMenu desativado">
-
            <li id="listarProduto">Listar Produtos</li>
            <li id="cadastrarProduto">Cadastrar Produto</li>
           </ul>
@@ -130,7 +128,7 @@ conferirStatusLogin();
                 <h3>Nome do Fornecedor</h3>  
             </div>
           </div>
-      </div>
+        </div>
       </div>      
 
 <!--Listar Fornecedor-->
@@ -221,7 +219,7 @@ conferirStatusLogin();
   </main>
   <footer></footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script type="text/javascript" src="js/app.js"></script> 
+<script type="text/javascript" src="js/app.js"></script> 
  
  
 </body>
