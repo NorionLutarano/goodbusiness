@@ -62,7 +62,7 @@ var listarProdutos=function(quantidade){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial;font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -110,7 +110,7 @@ $("#formListarProduto").on("submit",function(e){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -152,9 +152,9 @@ $("#listarProduto").on("click",function(){
     });
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
-    $(".setaBaixo").css({'display':'none'});
+    $(".setaBaixo").addClaass("desativado");
     return;
-  }else{$(".setaBaixo").css({'display':'block'});}
+  }else{$(".setaBaixo").removeClass("desativado");}
   return;
 });
 
@@ -281,7 +281,7 @@ $("#formListarProduto").on("submit",function(e){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -323,9 +323,9 @@ $("#listarProduto").on("click",function(){
     });
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
-    $(".setaBaixo").css({'display':'none'});
+    $(".setaBaixo").addClaass("desativado");
     return;
-  }else{$(".setaBaixo").css({'display':'block'});}
+  }else{$(".setaBaixo").removeClass("desativado");}
   return;
 });
 

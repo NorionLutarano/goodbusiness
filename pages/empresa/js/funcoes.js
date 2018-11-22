@@ -52,7 +52,7 @@ var listarProdutos=function(quantidade){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial;font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
