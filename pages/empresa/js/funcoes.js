@@ -13,7 +13,7 @@ var mostrarFormId=function(id,form){
   });
   document.getElementById(form).classList.remove("desativado");
  });  
- return;
+ 
 };
 
 var formReset=function(){

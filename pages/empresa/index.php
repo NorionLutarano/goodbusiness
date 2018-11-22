@@ -109,10 +109,10 @@ conferirStatusLogin();
             </div>
           </div-->
 
+      </div>
           <div class="setaBaixo">
             <img  src="/imgs/down-arrow.png">
           </div>
-      </div>
       </div>
 
 <!--Procurar Fornecedor-->
@@ -123,12 +123,6 @@ conferirStatusLogin();
           <span class="spanEstilo1">Procura fornecedor pelo produto. </span>
         </form>
         <div class="painel desativado">
-          <div class="lista">
-            <div class="itens">
-              <img src="">
-                <h3>Nome do Fornecedor</h3>  
-            </div>
-          </div>
         </div>
       </div>      
 
@@ -139,12 +133,6 @@ conferirStatusLogin();
         <h1 class="nenhumResultado desativado">Nenhum fornecedor para esse produto está cadastrado ainda.</h1>
         <div class="painel desativado">
         <!--Código AJAX-->
-          <div class="lista">
-            <div class="itens">
-              <img src="http://www.supervarejo.com.br/wp-content/uploads/2018/07/destaque-coca-cola.jpg">   
-                <h3>Nome do Fornecedor</h3> 
-            </div>
-          </div>
       </div>
       </div>   
 

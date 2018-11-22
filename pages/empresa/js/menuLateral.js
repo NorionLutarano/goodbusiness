@@ -25,3 +25,5 @@
 
  //mostrar formulário de cadastro de produto
  mostrarFormId("cadastrarProduto","formCadastrarProduto");
+ //adicionar função de mostrar listar produto
+ mostrarFormId("listarProduto","formListarProduto");

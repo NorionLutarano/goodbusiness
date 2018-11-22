@@ -24,7 +24,7 @@ $("#formListarProduto").on("submit",function(e){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>";"; return;}
+        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -50,15 +50,25 @@ $("#formListarProduto").on("submit",function(e){
 
 //mostrar e atualizar dados na lista de produtos da empresa
 $("#listarProduto").on("click",function(){
-   //mostrar o formulario
-   mostrarFormId("listarProduto","formListarProduto");
    //lista produtos
    listarProdutos(20);
+    //ver a quantidade de produtos existente
+    $.ajax({
+      url:"php/quantidadeProdutos.php",
+      data:"atualizar="+1,
+      method:"post",
+      cache:false,
+      success: function(sucesso){
+        document.querySelector("quantidadeProdutos").innerHTML="";
+        document.querySelector("quantidadeProdutos").innerHTML=sucesso;
+        return;
+      }
+    });
   //verifica se o usuário já pesquisou todos os produtos
-  if(parseInt($("quantidadeProdutos").text())==$(".itens").length){
+  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
     $(".setaBaixo").css({'display':'none'});
     return;
-  }
+  }else{$(".setaBaixo").css({'display':'block'});}
   return;
 });
 
