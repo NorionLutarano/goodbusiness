@@ -2,7 +2,6 @@
 session_start();
 session_regenerate_id();
 require_once("../../autoload.php");
-require_once("php/quantidadeProdutos.php");
 conferirStatusLogin();
 ?>
 
@@ -96,9 +95,7 @@ conferirStatusLogin();
           <button>Pesquisar</button>
         </form>
         <span class="spanEstilo1">Quantidade de produtos:
-         <quantidadeProdutos>
-          <?php quantidadeProdutos($_SESSION['empresa']['id_empresa']); ?>
-         </quantidadeProdutos>
+         <quantidadeProdutos></quantidadeProdutos>
          cadastrado
         </span>
         <div class="painel">

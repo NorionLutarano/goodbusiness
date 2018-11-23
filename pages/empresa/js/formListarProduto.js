@@ -55,7 +55,6 @@ $("#listarProduto").on("click",function(){
     //ver a quantidade de produtos existente
     $.ajax({
       url:"php/quantidadeProdutos.php",
-      data:"atualizar="+1,
       method:"post",
       cache:false,
       success: function(sucesso){
@@ -67,7 +66,6 @@ $("#listarProduto").on("click",function(){
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
     $(".setaBaixo").css({'display':'none'});
-    return;
   }else{$(".setaBaixo").css({'display':'block'});}
   return;
 });
