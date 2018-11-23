@@ -3,7 +3,11 @@
 
 class produto{
 
+<<<<<<< HEAD
 	function __construct($dados=''){
+=======
+	function __construct($dados=array()){
+>>>>>>> back-end
 		//obter dados
 		$this->id_empresa=		isset($dados['id_empresa'])?	$dados['id_empresa']:'';
 		$this->nome=			isset($dados['nome'])?			$dados['nome']:'';

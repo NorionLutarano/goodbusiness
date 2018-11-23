@@ -55,7 +55,6 @@ $("#listarProduto").on("click",function(){
     //ver a quantidade de produtos existente
     $.ajax({
       url:"php/quantidadeProdutos.php",
-      data:"atualizar="+1,
       method:"post",
       cache:false,
       success: function(sucesso){
@@ -66,9 +65,14 @@ $("#listarProduto").on("click",function(){
     });
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
+<<<<<<< HEAD
     $(".setaBaixo").addClaass("desativado");
     return;
   }else{$(".setaBaixo").removeClass("desativado");}
+=======
+    $(".setaBaixo").css({'display':'none'});
+  }else{$(".setaBaixo").css({'display':'block'});}
+>>>>>>> back-end
   return;
 });
 

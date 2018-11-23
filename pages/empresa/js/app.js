@@ -141,10 +141,10 @@ $("#listarProduto").on("click",function(){
     //ver a quantidade de produtos existente
     $.ajax({
       url:"php/quantidadeProdutos.php",
-      data:"atualizar="+1,
       method:"post",
       cache:false,
       success: function(sucesso){
+        sucesso=(sucesso)?sucesso:0;
         document.querySelector("quantidadeProdutos").innerHTML="";
         document.querySelector("quantidadeProdutos").innerHTML=sucesso;
         return;
@@ -152,9 +152,14 @@ $("#listarProduto").on("click",function(){
     });
   //verifica se o usuário já pesquisou todos os produtos
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
+<<<<<<< HEAD
     $(".setaBaixo").addClaass("desativado");
     return;
   }else{$(".setaBaixo").removeClass("desativado");}
+=======
+    $(".setaBaixo").css({'display':'none'});
+  }else{$(".setaBaixo").css({'display':'block'});}
+>>>>>>> back-end
   return;
 });
 
@@ -255,6 +260,7 @@ cadastrarProduto.addEventListener("submit",function(e){
 });
 //-------------------
 
+<<<<<<< HEAD
       //mostrar mais produtos no formulários de pesquisa produtos
 $(".setaBaixo").on("click",function(){
     //quantidade de pesquisa
@@ -330,6 +336,9 @@ $("#listarProduto").on("click",function(){
 });
 
   //adiciona função de click para mostrar e desaparecer submenu
+=======
+        //adiciona função de click para mostrar e desaparecer submenu
+>>>>>>> back-end
   var Menu = document.querySelectorAll(".menu > li >span");
   Menu.forEach(function(el){
      el.addEventListener("click",function(){
