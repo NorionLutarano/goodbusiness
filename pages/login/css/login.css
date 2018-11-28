@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway');
 body{margin:0;}
 header{
     margin-bottom:3rem;
@@ -5,15 +6,16 @@ header{
     height: 45px;
     display:flex;
     justify-content: space-between;
-    background-color:#09A5F0;
+    background-color:#0984e3;
 }
 
 header h1{
   padding-left:1rem;
-  margin: 0.25rem;
+  margin: 0 0.25rem;
   font-size: 2rem;
-  font-family:arial;
+  font-family:Montserrat,Raleway,arial;
   color:#FFF;
+  font-weight: 100;
 }
 
 
@@ -73,9 +75,9 @@ header .buttonLogin {
 
   main > form button{
       padding:0.40rem;
-      font-size:1.1rem;
+      font-size:1rem;
       border:0;
-      font-family:helvetica;
+      font-family:Raleway,helvetica;
       font-weight:100;
       background-color:#58C6A4;
       color:#fff;
@@ -85,8 +87,8 @@ header .buttonLogin {
   main >form>  a{
     margin-left:1rem;
     text-decoration:none;
-    font-size:1.1rem;
-    font-family:helvetica;
+    font-size:1rem;
+    font-family:Raleway,arial;
     color:white;
     font-weight: 100;
     background-color: #58C6A4;
@@ -102,6 +104,8 @@ header .buttonLogin {
     margin-top: 1rem;
     cursor:default;
     width: 135px;
+    font-family: Raleway,arial;
+    font-size: 1rem;
   }
 
   .alert{

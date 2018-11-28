@@ -3,11 +3,7 @@
 
 class produto{
 
-<<<<<<< HEAD
-	function __construct($dados=''){
-=======
 	function __construct($dados=array()){
->>>>>>> back-end
 		//obter dados
 		$this->id_empresa=		isset($dados['id_empresa'])?	$dados['id_empresa']:'';
 		$this->nome=			isset($dados['nome'])?			$dados['nome']:'';
@@ -15,8 +11,8 @@ class produto{
 		$this->descricao=		isset($dados['descricao'])?		$dados['descricao']:'';
 		$this->valor=			isset($dados['valor'])?			removerMoeda($dados['valor']):'';
 		$this->parcelamento=	isset($dados['parcelamento'])?	$dados['parcelamento']:'';
-		$this->promocao=		isset($dados['promocao'])?		$dados['promocao']:'';
-		$this->frete=			isset($dados['frete'])?			$dados['frete']:'';
+		$this->promocao=		isset($dados['promocao'])?		$dados['promocao']:0;
+		$this->frete=			isset($dados['frete'])?			$dados['frete']:0;
 		//obter conexao
 		$this->con = (isset($GLOBALS['con'])) ? $GLOBALS['con']: '';
 		
@@ -24,9 +20,8 @@ class produto{
 	}
 
 	public  function listarProduto($produto){
-		$min=$produto['quantidade']-20;
 		//cria a query
-		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$produto['id_empresa']} limit {$min},{$produto['quantidade']}";
+		$sql="select nome,imagem,descricao,valor,parcelamento,frete from produto where id_empresa={$produto['id_empresa']} limit {$produto['quantidade']},20";
 		//prepara a query para executar 
 		 $query=$this->con->prepare($sql);
 		 //encerra a conexao

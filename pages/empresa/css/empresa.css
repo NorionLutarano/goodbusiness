@@ -3,7 +3,7 @@ header{
     /* position: fixed; */
     height: 58px;
     width: 100%;
-    background-color: #09A5F0;
+    background-color: #0984e3;
     display:flex;
     justify-content: space-between;
 }
@@ -101,7 +101,7 @@ main > .menu > h2{
     color: #454847;
 }
 
-main > .menu > li{
+main > .menu > li,a{
     margin-bottom: 1.5rem;
     font-size: 1rem;
     color:#787596;
@@ -235,41 +235,45 @@ form  span{
 }
 
 form  h2{
-  font-family: arial;
+  font-family: Raleway,arial;
   font-size:2rem;
   font-weight: 100;
 }
 
 form  select{
-    padding:0.5rem;
-    width: 25rem;
+    padding:0.59rem;
+    width: 8rem;
     border:1px solid #AAA;
     background-color: white;
     color:#777;
+    margin-bottom: 0.5rem;
 }
 
 form  textarea{
   margin-bottom: 0.75rem;
   padding: 0.25rem;
   border:1px solid #AAA;
-  width: 25rem;
+  width: 50rem;
 }
 
 form  input{
   padding:0.25rem;
-  width: 25rem;
+  width: 50rem;
   border:1px solid #AAA;
+  margin-bottom: 1rem;
 }
 
 
 form  button{
+  margin:0.5rem 0;
   border:0;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
   background-color: #0F78FF;
   color:white;
   font-size: 1.15rem;
   cursor: pointer;
   display: block;
+  font-family: Raleway,arial;
 }
 
 #formCadastrarFilial {
@@ -301,8 +305,8 @@ form  button{
 }
 
 .pesquisa > input{
-  width: 61rem;
-  padding:0.45rem;
+  width: 54rem;
+  padding:0.44rem;
   border-right: 0;
   margin-right: -5px;
 }
@@ -391,17 +395,16 @@ form  button{
 
 #formCadastrarProduto input{
   margin-bottom: 1rem; 
-  width: 35rem;
+  /*! width: 35rem; */
 }
 
 #formCadastrarProduto textarea{
   margin-bottom: 1rem; 
-  width: 35rem;
+  /*! width: 35rem; */
 }
 
 #formCadastrarProduto select{
-  margin-bottom: 1rem; 
-  width: 35rem;
+  width: 50rem;
 }
 
 #formConfiguracao{
@@ -453,7 +456,7 @@ form  button{
 
 
 .spanEstilo1{
-    font-family: arial;
+    font-family: Montserrat,arial;
     font-size: 0.9rem;
     display: block;
     color:#555;
@@ -461,12 +464,12 @@ form  button{
 
 
 .setaBaixo{
-  width: 100%;
+  width: 96.5%;
   height: 30px;
   display: flex;
   justify-content: center;
   margin: 2rem 0;
-  background-color: #CCC;
+  background-color: #009FFF;
   cursor: pointer;
   padding-top: 0.25rem;
 }
@@ -474,4 +477,11 @@ form  button{
 .setaBaixo > img{
   width:23px;
   height: 22px;
+}
+
+
+carregando{
+  font-size: 2rem;
+  color: #7060ff;
+  font-family: Raleway;
 }

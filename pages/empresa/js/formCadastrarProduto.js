@@ -1,13 +1,7 @@
 
 
   //mostrar o máximo de caracteres na descrição do produto
-  cadastrarProduto.querySelector("textarea[name='descricao']").addEventListener("keyup",function(value){
-    if(this.value.length>5000){
-      this.value=this.value.substring(0,5000);
-      return;
-    }
-    document.querySelector("digit").innerText=this.value.length;
-  });
+  cadastrarProduto.querySelector("textarea[name='descricao']").addEventListener("keyup",limitarCaracteres("#formCadastrarProduto digit",5000));
 
  //monitoramento dos inputs do formulário Cadastro produto
  cadastrarProduto.querySelector("input[name='parcelamento']").addEventListener("keyup",function(valor){
@@ -22,16 +16,7 @@
  });
 
 
- cadastrarProduto.querySelector("input[name='valor']").addEventListener("keyup",function(valor){
-  this.value=this.value.replace(/[^\d]+/g,'');
-  if(this.value.length>2){
-    this.value="R$ "+this.value.substring(0,this.value.length-2)+"."+this.value.substring(this.value.length-2,this.value.length);
-  }else{
-    this.value="R$ "+this.value;
-  }
-
-  return;
- });
+  formatarValor(cadastrarProduto);
 
 cadastrarProduto.addEventListener("submit",function(e){
   e.preventDefault();

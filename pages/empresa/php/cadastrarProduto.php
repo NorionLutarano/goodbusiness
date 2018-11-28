@@ -3,11 +3,11 @@
 	include_once("carregarLib.php");
 
 	//verifica se arquivo é imagem, cria um diretório no diretório imagens e salva o arquivo nele 
-	$diret=getcwd().'/imagens/';
+	$diret=getcwd().'/imgsEmpresa/';
 	//move arquivo, e retorna a diretório para variável $path(variável de referência)
-	switch(moverArquivo($_FILES['imagem'],str_replace('/php','', $diret),$path)){
+	switch(moverArquivo($_FILES['imagem'],str_replace('/pages/empresa/php','', $diret),$path)){
 		case 2:
-			echo "Servidor está em manutenção.";
+			echo "Servidor está em manutenção #501.";
 			exit();
 		break;
 		case 3:

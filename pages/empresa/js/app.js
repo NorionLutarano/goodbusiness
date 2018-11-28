@@ -18,7 +18,8 @@ var mostrarFormId=function(id,form){
     elemento.classList.add("desativado");
   });
 
-  document.querySelectorAll('sub').forEach(function(tag){
+  document.querySelectorAll('sub').forEach(function(tag,index){
+    if(!index)return;
     tag.classList.add('desativado');
   });
   document.getElementById(form).classList.remove("desativado");
@@ -46,26 +47,39 @@ var tratarString=function(String){
 }
 
 
-var listarProdutos=function(quantidade){
+var listarProdutos=function(info){
+  info.quantidade=(!!info.quantidade)?info.quantidade:0;
+  info.tag=(!!info.tag)?info.tag:0;
   $.ajax({
-      url: 'php/listarProdutos.php',
+      url: info.url,
       method: 'post',
       cache: true,
-      data:"quantidade="+quantidade,
-      contentType: false,
-      processData: false,
+      data:"quantidade="+info.quantidade,
+      beforeSend:()=>{
+        $("#"+info.form+" .setaBaixo")[0].style.display="none";
+        if(!info.tag)return;
+        $(info.tag).removeClass("desativado");
+      },
       success: function(sucesso){
-        var contador=index=0;
-        var painel=document.getElementById("formListarProduto").querySelector(".painel");
+        var contador=0;
+        var index=$("#"+info.form+" .lista").length;
+        var painel=document.getElementById(info.form).querySelector(".painel");
         //limpa a tabela
-        painel.innerHTML="";
+        if(!$("#"+info.form+" .lista").length){
+          painel.innerHTML="";
+        }
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial;font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){
+          $(".setaBaixo").css({'display':'none'});
+          $(info.tag).addClass("desativado");
+          painel.innerHTML="<h1 style=\"font-family:Raleway,arial;font-size:1.7rem;font-weight:100;\">Nenhum produto cadastrado :(</h1>";
+          return;
+        }
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
-        //adicionar as tag listas no painel
+        //adicionar as info.tag nas listas no painel
         for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
         //adiciona os produtos a tabela
         sucesso.forEach(function(valor,key){
@@ -76,31 +90,109 @@ var listarProdutos=function(quantidade){
            <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
             <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
             <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
+            <input name='promocao' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
             <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
           <div>";
           contador++;
           if(contador%5==0){index+=1;}
         });
+
+           //verifica se o usuário já pesquisou todos os produtos
+          if(parseInt($("#"+info.form+" quantidadeProdutos").text())==$("#"+info.form+" .itens").length){
+          $("#"+info.form+" .setaBaixo")[0].style.display="none";
+        }
+          else{$("#"+info.form+" .setaBaixo")[0].style.display="flex";}
+          //some o carregar da página 
+          $(info.tag).addClass("desativado");  
+          //se não precisar
+          switch(info.func){
+          case "editar":
+            //carrega a função aos itens para edição
+            $(".itens").on("click",function(){
+              esconderForms("#editarProduto");
+              $("#editarProduto input")[0].value=$(this).find("h3").text();
+              $("#editarProduto textarea")[0].value=$(this).find("textarea").value;
+              $("#editarProduto input")[2].value=$(this).find("input")[0].value;
+              $("#editarProduto input")[3].value=$(this).find("input")[1].value;
+              $("#editarProduto select")[0].value=$(this).find("input")[2].value||0;
+              $("#editarProduto select")[1].value=$(this).find("input")[3].value||0;
+            });
+          break;
+          case "adicionarFornecedor":
+           $(".itens").on("click",function(){
+              esconderForms("#editarProduto");
+              $("#editarProduto input")[0].value=$(this).find("h3").text();
+              $("#editarProduto textarea")[0].value=$(this).find("textarea").value;
+              $("#editarProduto input")[2].value=$(this).find("input")[0].value;
+              $("#editarProduto input")[3].value=$(this).find("input")[1].value;
+              $("#editarProduto select")[0].value=$(this).find("input")[2].value||0;
+              $("#editarProduto select")[1].value=$(this).find("input")[3].value||0;
+            });
+          break;
+          default:
+          return;
+        }
       }
    });
   };
+
+
+
+
+
+var esconderForms=function(form){
+  $(".control").each(function(){
+    $(this).addClass("desativado");
+  });
+  $(form).removeClass("desativado");
+}
+
+
+var formatarValor= function(form){
+  form.querySelector("input[name='valor']").addEventListener("keyup",function(){
+    if(this.value.length>13){ this.value=this.value.substring(0,13); return;}
+    this.value=this.value.replace(/[^\d]+/g,'');
+    this.value=parseInt(this.value).toString();
+    this.value=(this.value.length>2)? this.value.substring(0,this.value.length-2)+","+this.value.substring(this.value.length-2,this.value.length):this.value.padStart(4,"0,0");
+    this.value=(this.value.length>6)? this.value.substring(0,this.value.length-6)+"."+this.value.substring(this.value.length-6,this.value.length):this.value.padStart(4,"0,0");
+    this.value=(this.value.length>10)? this.value.substring(0,this.value.length-10)+"."+this.value.substring(this.value.length-10,this.value.length):this.value.padStart(4,"0,0");
+  return;
+ });
+}
+
+
+
+var limitarCaracteres = (tag,quantidade)=>{
+    return function() {
+       if(this.value.length>quantidade){
+        this.value=this.value.substring(0,quantidade);
+        return;
+      }
+      $(tag).text(this.value.length);
+    }
+  }
+
 //mostrar mais produtos no formulários de pesquisa produtos
 $(".setaBaixo").on("click",function(){
+  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){return;}
     //quantidade de pesquisa
-   var quantidade=$(".itens").length+20;
+   var quantidade=$(".itens").length;
    //listar produto
-   listarProdutos(quantidade);
+   listarProdutos(quantidade,$("#formListarProduto carregando"));
 });
 
 //pesquisar produto
 $("#formListarProduto").on("submit",function(e){
   e.preventDefault();
-  if(!$("#formListarProduto .pesquisa input")[0].value) {return;}
+  if(!$("#formListarProduto .pesquisa input")[0].value) {$("#listarProduto").click();return;}
   $.ajax({
     url:"php/pesquisarMeuProduto.php",
     method:"post",
     data:$("#formListarProduto .pesquisa").serialize(),
     cache:false,
+     beforeSend:()=>{
+        $("#formListarProduto carregando").removeClass("desativado");
+      },
     success: function(sucesso){
         $(".setaBaixo").css({'display':'none'});
         var contador=index=0;
@@ -110,7 +202,11 @@ $("#formListarProduto").on("submit",function(e){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){
+          $("#formListarProduto carregando").addClass("desativado");
+          painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>";
+          return;
+        }
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -129,6 +225,7 @@ $("#formListarProduto").on("submit",function(e){
           contador++;
           if(contador%5==0){index+=1;}
         });
+        $("#formListarProduto carregando").addClass("desativado");
       }
   });
 });
@@ -136,43 +233,31 @@ $("#formListarProduto").on("submit",function(e){
 
 //mostrar e atualizar dados na lista de produtos da empresa
 $("#listarProduto").on("click",function(){
-   //lista produtos
-   listarProdutos(20);
+   var painel=document.getElementById("formListarProduto").querySelector(".painel");
+   //limpa a tabela
+   painel.innerHTML="";
     //ver a quantidade de produtos existente
     $.ajax({
       url:"php/quantidadeProdutos.php",
       method:"post",
       cache:false,
       success: function(sucesso){
-        sucesso=(sucesso)?sucesso:0;
         document.querySelector("quantidadeProdutos").innerHTML="";
         document.querySelector("quantidadeProdutos").innerHTML=sucesso;
         return;
       }
     });
-  //verifica se o usuário já pesquisou todos os produtos
-  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
-<<<<<<< HEAD
-    $(".setaBaixo").addClaass("desativado");
-    return;
-  }else{$(".setaBaixo").removeClass("desativado");}
-=======
-    $(".setaBaixo").css({'display':'none'});
-  }else{$(".setaBaixo").css({'display':'block'});}
->>>>>>> back-end
+   //lista produtos
+   listarProdutos({form:"formListarProduto",url:"php/listarProdutos.php",func:"editar"});
   return;
 });
 
 
+$("#editarProduto textarea").on("keyup",limitarCaracteres("#editarProduto digit",5000));
+formatarValor(document.getElementById("editarProduto"));
 
   //mostrar o máximo de caracteres na descrição do produto
-  cadastrarProduto.querySelector("textarea[name='descricao']").addEventListener("keyup",function(value){
-    if(this.value.length>5000){
-      this.value=this.value.substring(0,5000);
-      return;
-    }
-    document.querySelector("digit").innerText=this.value.length;
-  });
+  cadastrarProduto.querySelector("textarea[name='descricao']").addEventListener("keyup",limitarCaracteres("#formCadastrarProduto digit",5000));
 
  //monitoramento dos inputs do formulário Cadastro produto
  cadastrarProduto.querySelector("input[name='parcelamento']").addEventListener("keyup",function(valor){
@@ -187,16 +272,7 @@ $("#listarProduto").on("click",function(){
  });
 
 
- cadastrarProduto.querySelector("input[name='valor']").addEventListener("keyup",function(valor){
-  this.value=this.value.replace(/[^\d]+/g,'');
-  if(this.value.length>2){
-    this.value="R$ "+this.value.substring(0,this.value.length-2)+"."+this.value.substring(this.value.length-2,this.value.length);
-  }else{
-    this.value="R$ "+this.value;
-  }
-
-  return;
- });
+  formatarValor(cadastrarProduto);
 
 cadastrarProduto.addEventListener("submit",function(e){
   e.preventDefault();
@@ -260,85 +336,7 @@ cadastrarProduto.addEventListener("submit",function(e){
 });
 //-------------------
 
-<<<<<<< HEAD
-      //mostrar mais produtos no formulários de pesquisa produtos
-$(".setaBaixo").on("click",function(){
-    //quantidade de pesquisa
-   var quantidade=$(".itens").length+20;
-   //listar produto
-   listarProdutos(quantidade);
-});
-
-//pesquisar produto
-$("#formListarProduto").on("submit",function(e){
-  e.preventDefault();
-  if(!$("#formListarProduto .pesquisa input")[0].value) {return;}
-  $.ajax({
-    url:"php/pesquisarMeuProduto.php",
-    method:"post",
-    data:$("#formListarProduto .pesquisa").serialize(),
-    cache:false,
-    success: function(sucesso){
-        $(".setaBaixo").css({'display':'none'});
-        var contador=index=0;
-        var painel=document.getElementById("formListarProduto").querySelector(".painel");
-        //limpa a tabela
-        painel.innerHTML="";
-        //formatar a string para json
-        sucesso=JSON.parse(sucesso);
-        //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
-        //verifica se servidor respondeu
-        if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
-        //adicionar as tag listas no painel
-        for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
-        //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){
-           painel.querySelectorAll(".lista")[index].innerHTML+="\
-           <div class='itens'>\
-            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor.nome)+"</h3>\
-            <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
-            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
-            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
-            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
-          <div>";
-          contador++;
-          if(contador%5==0){index+=1;}
-        });
-      }
-  });
-});
-
-
-//mostrar e atualizar dados na lista de produtos da empresa
-$("#listarProduto").on("click",function(){
-   //lista produtos
-   listarProdutos(20);
-    //ver a quantidade de produtos existente
-    $.ajax({
-      url:"php/quantidadeProdutos.php",
-      data:"atualizar="+1,
-      method:"post",
-      cache:false,
-      success: function(sucesso){
-        document.querySelector("quantidadeProdutos").innerHTML="";
-        document.querySelector("quantidadeProdutos").innerHTML=sucesso;
-        return;
-      }
-    });
-  //verifica se o usuário já pesquisou todos os produtos
-  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
-    $(".setaBaixo").addClaass("desativado");
-    return;
-  }else{$(".setaBaixo").removeClass("desativado");}
-  return;
-});
-
-  //adiciona função de click para mostrar e desaparecer submenu
-=======
         //adiciona função de click para mostrar e desaparecer submenu
->>>>>>> back-end
   var Menu = document.querySelectorAll(".menu > li >span");
   Menu.forEach(function(el){
      el.addEventListener("click",function(){

@@ -1,20 +1,24 @@
 //mostrar mais produtos no formulários de pesquisa produtos
 $(".setaBaixo").on("click",function(){
+  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){return;}
     //quantidade de pesquisa
-   var quantidade=$(".itens").length+20;
+   var quantidade=$(".itens").length;
    //listar produto
-   listarProdutos(quantidade);
+   listarProdutos(quantidade,$("#formListarProduto carregando"));
 });
 
 //pesquisar produto
 $("#formListarProduto").on("submit",function(e){
   e.preventDefault();
-  if(!$("#formListarProduto .pesquisa input")[0].value) {return;}
+  if(!$("#formListarProduto .pesquisa input")[0].value) {$("#listarProduto").click();return;}
   $.ajax({
     url:"php/pesquisarMeuProduto.php",
     method:"post",
     data:$("#formListarProduto .pesquisa").serialize(),
     cache:false,
+     beforeSend:()=>{
+        $("#formListarProduto carregando").removeClass("desativado");
+      },
     success: function(sucesso){
         $(".setaBaixo").css({'display':'none'});
         var contador=index=0;
@@ -24,7 +28,11 @@ $("#formListarProduto").on("submit",function(e){
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
-        if(!sucesso.length){painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>"; return;}
+        if(!sucesso.length){
+          $("#formListarProduto carregando").addClass("desativado");
+          painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>";
+          return;
+        }
         //verifica se servidor respondeu
         if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
@@ -43,6 +51,7 @@ $("#formListarProduto").on("submit",function(e){
           contador++;
           if(contador%5==0){index+=1;}
         });
+        $("#formListarProduto carregando").addClass("desativado");
       }
   });
 });
@@ -50,8 +59,9 @@ $("#formListarProduto").on("submit",function(e){
 
 //mostrar e atualizar dados na lista de produtos da empresa
 $("#listarProduto").on("click",function(){
-   //lista produtos
-   listarProdutos(20);
+   var painel=document.getElementById("formListarProduto").querySelector(".painel");
+   //limpa a tabela
+   painel.innerHTML="";
     //ver a quantidade de produtos existente
     $.ajax({
       url:"php/quantidadeProdutos.php",
@@ -63,16 +73,9 @@ $("#listarProduto").on("click",function(){
         return;
       }
     });
-  //verifica se o usuário já pesquisou todos os produtos
-  if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){
-<<<<<<< HEAD
-    $(".setaBaixo").addClaass("desativado");
-    return;
-  }else{$(".setaBaixo").removeClass("desativado");}
-=======
-    $(".setaBaixo").css({'display':'none'});
-  }else{$(".setaBaixo").css({'display':'block'});}
->>>>>>> back-end
+   //lista produtos
+   listarProdutos({form:"formListarProduto",url:"php/listarProdutos.php",func:"editar"});
   return;
 });
+
 
