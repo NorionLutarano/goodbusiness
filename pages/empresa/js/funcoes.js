@@ -1,5 +1,20 @@
 //------- Funções
- 
+ var adicionarProdutoPainel=function(valor,key,painel,index,contador=0){
+  painel.querySelectorAll(".lista")[index].innerHTML+="\
+  <div class='itens'>\
+    <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+    <h3>"+tratarString(valor.nome)+"</h3>\
+    <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
+    <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
+    <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
+    <input name='promocao' value='"+tratarString(valor.promocao||'0')+"' class='desativado'>\
+    <input name='frete' value='"+tratarString(valor.frete||'0')+"' class='desativado'>\
+  <div>";
+  contador++;
+  if(contador%5==0){index+=1;}
+}
+
+
 var mostrarFormId=function(id,form){
  //mostrar formulário de listar filial
  document.getElementById(id).addEventListener("click",function(){
@@ -8,10 +23,6 @@ var mostrarFormId=function(id,form){
     elemento.classList.add("desativado");
   });
 
-  document.querySelectorAll('sub').forEach(function(tag,index){
-    if(!index)return;
-    tag.classList.add('desativado');
-  });
   document.getElementById(form).classList.remove("desativado");
  });  
  
@@ -38,27 +49,24 @@ var tratarString=function(String){
 
 
 var listarProdutos=function(info){
-  info.quantidade=(!!info.quantidade)?info.quantidade:0;
+  info.pesquisa=(!!info.pesquisa)?info.pesquisa:0;
   info.tag=(!!info.tag)?info.tag:0;
   
   $.ajax({
       url: info.url,
       method: 'post',
       cache: true,
-      data:"quantidade="+info.quantidade,
+      data:info.pesquisa,
       beforeSend:()=>{
         $("#"+info.form+" .setaBaixo")[0].style.display="none";
         if(!info.tag)return;
         $(info.tag).removeClass("desativado");
       },
       success: function(sucesso){
-        var contador=0;
         var index=$("#"+info.form+" .lista").length;
         var painel=document.getElementById(info.form).querySelector(".painel");
         //limpa a tabela
-        if(!$("#"+info.form+" .lista").length){
-          painel.innerHTML="";
-        }
+        if(!$("#"+info.form+" .lista").length)painel.innerHTML="";
         //formatar a string para json
         sucesso=JSON.parse(sucesso);
         //se não houver resultado informe ao usuário
@@ -68,25 +76,10 @@ var listarProdutos=function(info){
           painel.innerHTML="<h1 style=\"font-family:Raleway,arial;font-size:1.7rem;font-weight:100;\">Nenhum produto cadastrado :(</h1>";
           return;
         }
-        //verifica se servidor respondeu
-        if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as info.tag nas listas no painel
-        for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
+        for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
         //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){
-           painel.querySelectorAll(".lista")[index].innerHTML+="\
-           <div class='itens'>\
-            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor.nome)+"</h3>\
-           <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
-            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
-            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
-            <input name='promocao' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
-            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
-          <div>";
-          contador++;
-          if(contador%5==0){index+=1;}
-        });
+        sucesso.forEach(function(valor,key){adicionarProdutoPainel(valor,key,painel,index);});
 
            //verifica se o usuário já pesquisou todos os produtos
           if(parseInt($("#"+info.form+" quantidadeProdutos").text())==$("#"+info.form+" .itens").length){
@@ -99,26 +92,7 @@ var listarProdutos=function(info){
           switch(info.func){
           case "editar":
             //carrega a função aos itens para edição
-            $(".itens").on("click",function(){
-              esconderForms("#editarProduto");
-              $("#editarProduto input")[0].value=$(this).find("h3").text();
-              $("#editarProduto textarea")[0].value=$(this).find("textarea").value;
-              $("#editarProduto input")[2].value=$(this).find("input")[0].value;
-              $("#editarProduto input")[3].value=$(this).find("input")[1].value;
-              $("#editarProduto select")[0].value=$(this).find("input")[2].value||0;
-              $("#editarProduto select")[1].value=$(this).find("input")[3].value||0;
-            });
-          break;
-          case "adicionarFornecedor":
-           $(".itens").on("click",function(){
-              esconderForms("#editarProduto");
-              $("#editarProduto input")[0].value=$(this).find("h3").text();
-              $("#editarProduto textarea")[0].value=$(this).find("textarea").value;
-              $("#editarProduto input")[2].value=$(this).find("input")[0].value;
-              $("#editarProduto input")[3].value=$(this).find("input")[1].value;
-              $("#editarProduto select")[0].value=$(this).find("input")[2].value||0;
-              $("#editarProduto select")[1].value=$(this).find("input")[3].value||0;
-            });
+            $("#"+info.form+" .itens").on("click",prepararEdicaoProduto());
           break;
           default:
           return;
@@ -128,10 +102,7 @@ var listarProdutos=function(info){
   };
 
 
-
-
-
-var esconderForms=function(form){
+var mostrarForm=function(form){
   $(".control").each(function(){
     $(this).addClass("desativado");
   });
@@ -163,3 +134,35 @@ var limitarCaracteres = (tag,quantidade)=>{
     }
   }
 
+
+
+var prepararEdicaoProduto=function(){
+  return function(){
+      mostrarForm("#editarProduto");
+      $("#editarProduto input")[0].value=$(this).find("h3").text();
+      $("#editarProduto textarea")[0].value=$(this).find("textarea").value;
+      $("#editarProduto input")[2].value=$(this).find("input")[0].value;
+      $("#editarProduto input")[3].value=$(this).find("input")[1].value;
+      $("#editarProduto select")[0].value=$(this).find("input")[2].value||0;
+      $("#editarProduto select")[1].value=$(this).find("input")[3].value||0;
+    }
+}
+
+
+var converterStringJson= function deparam(query) {
+    var pairs, i, keyValuePair, key, value, map = {};
+    // remove leading question mark if its there
+    if (query.slice(0, 1) === '?') {
+        query = query.slice(1);
+    }
+    if (query !== '') {
+        pairs = query.split('&');
+        for (i = 0; i < pairs.length; i += 1) {
+            keyValuePair = pairs[i].split('=');
+            key = decodeURIComponent(keyValuePair[0]);
+            value = (keyValuePair.length > 1) ? decodeURIComponent(keyValuePair[1]) : undefined;
+            map[key] = value;
+        }
+    }
+    return map;
+}

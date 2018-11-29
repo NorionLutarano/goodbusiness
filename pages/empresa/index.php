@@ -148,7 +148,7 @@ conferirStatusLogin();
 <!--Procurar Fornecedor-->
       <div class="control desativado" id="formProcurarFornecedor">
         <form class="pesquisa">
-          <input type="text" name="produto" placeholder="nome do produto" style="border-right: 0; width: 54rem;" />
+          <input type="text" name="nome" placeholder="nome do produto" style="border-right: 0; width: 54rem;" />
             <select  name="estado"  required>
              <option value="AC">AC</option>
              <option value="AL">AL</option>
@@ -183,6 +183,10 @@ conferirStatusLogin();
         </form>
          <div class="painel desativado">
         </div>
+        <carregando class="desativado">Carregando...</carregando>
+          <div class="setaBaixo" >
+            <img  src="/imgs/setaBaixo.png">
+          </div>
       </div>      
 
 <!--Listar Fornecedor-->

@@ -1,10 +1,14 @@
+
+
+
+
 //mostrar mais produtos no formulários de pesquisa produtos
 $(".setaBaixo").on("click",function(){
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){return;}
     //quantidade de pesquisa
    var quantidade=$(".itens").length;
    //listar produto
-   listarProdutos(quantidade,$("#formListarProduto carregando"));
+   listarProdutos({pesquisa:$("#formListarProduto .itens").length,form:"formListarProduto",url:"php/listarProdutos.php"});
 });
 
 //pesquisar produto
@@ -33,24 +37,10 @@ $("#formListarProduto").on("submit",function(e){
           painel.innerHTML="<h1 style=\"font-family:Raleway,arial; font-size:1.7rem;\">Nenhum produto cadastrado :(</h1>";
           return;
         }
-        //verifica se servidor respondeu
-        if(typeof sucesso == "string"){painel.innerHTML="<h1>"+sucesso+"</h1>"; return;}
         //adicionar as tag listas no painel
-        for(let x=0;x<4;x++){painel.innerHTML+="<div class='lista'></div>";}
+        for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
         //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){
-           painel.querySelectorAll(".lista")[index].innerHTML+="\
-           <div class='itens'>\
-            <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-            <h3>"+tratarString(valor.nome)+"</h3>\
-            <textarea name='descricao'  class='desativado'>"+tratarString(valor.descricao)+"</textarea>\
-            <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
-            <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
-            <input name='frete' value='"+tratarString(valor.frete)+"' class='desativado'>\
-          <div>";
-          contador++;
-          if(contador%5==0){index+=1;}
-        });
+        sucesso.forEach(function(valor,key){adicionarProdutoPainel(valor,key,painel,index);});
         $("#formListarProduto carregando").addClass("desativado");
       }
   });
@@ -74,7 +64,7 @@ $("#listarProduto").on("click",function(){
       }
     });
    //lista produtos
-   listarProdutos({form:"formListarProduto",url:"php/listarProdutos.php",func:"editar"});
+   listarProdutos({pesquisa:"quantidade=0",form:"formListarProduto",url:"php/listarProdutos.php",func:"editar",tag:"#formListarProduto carregando"});
   return;
 });
 

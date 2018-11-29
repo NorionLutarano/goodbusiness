@@ -1,10 +1,8 @@
 <?php
 
 class pesquisa{
-	var $conect;
-	var $paginacao;
-	public function __construct($con){
-		$this->conect = $con;
+	public function __construct(){
+		$this->conect = $GLOBALS['con'];
 	}
 
 	public function PesquisaProduto($dados,$produto,$filtro,$paginacao=["0","10"]){
@@ -33,14 +31,22 @@ class pesquisa{
 
 	public function pesquisaProdutoFornecedor($pesquisa){
 		//sql
-		$sql="select P.nome from produto left join empresa where  filtro  order by valor asc;";
+		$sql="select P.nome,P.imagem,P.valor,P.parcelamento,P.descricao,P.promocao,P.frete from produto as P inner join empresa on  filtro  order by valor asc limit quantidade,20";
 		//prepara os arquivos
-		$pesquisa->produto="'%".$pesquisa->produto."%'";
-		$pesquisa->filtro=(isset($pesquisa->filtro))?$this->filtro($pesquisa->filtro):'';
+		//substituir string filtro
+		$sql=str_replace('filtro', $this->filtro($pesquisa), $sql);
+		$sql=str_replace('quantidade', intval($pesquisa['quantidade']), $sql);
+		//prepara
+		$query=$this->conect->prepare($sql);
+		//executa
+		if(false==$query->execute()){return ["error"=>"Servidor em manutenção #801"];}
+		//retorna o resultado
+		return $query->fetchAll();
 	}
 
 	public function filtro($filtro){
  		$filtrado='';
+ 		if(isset($filtro['nome']))$filtrado.=" P.nome like '%".$filtro['nome']."%' and ";
 		if(isset($filtro['estado']))$filtrado.="estado='".$filtro['estado']."' and ";
 		if(isset($filtro['bairro']))$filtrado.="bairro='".$filtro['bairro']."' and ";
 		if(isset($filtro['tipo']))$filtrado.="tipo='".$filtro['tipo']."' and ";
@@ -48,9 +54,10 @@ class pesquisa{
 		if(isset($filtro['frete']))$filtrado.="frete='".$filtro['frete']."' and ";
 		if(isset($filtro['promocao']))$filtrado.="promocao='".$filtro['promocao']."' and ";
 		if(isset($filtro['parcelamento']))$filtrado.="parcelamento='".$filtro['parcelamento']."' and ";
+		if(isset($filtro['limit']))$filtrado.="limit='".$filtro['limit']."' and ";
 		if(trim(substr($filtrado,strlen($filtrado)-4,strlen($filtrado)))=="and")
-			return trim(substr($filtrado,0,strlen($filtrado)-4));
-		return $filtrado;
+		return trim(substr($filtrado,0,strlen($filtrado)-4));
+
 	}
 
 	function __destruct(){
