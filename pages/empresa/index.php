@@ -57,7 +57,7 @@ conferirStatusLogin();
       <form class="control desativado" id="formCadastrarProduto">
         <h2>Cadastrar Produto<sub class="desativado"></sub></h2>
         <span>Nome do produto: <sub class="subAviso">obrigatório</sub></span>
-        <input type="text" name="nome" placeholder="Informe o nome do produto" required />
+        <input  type="text" name="nome" placeholder="Informe o nome do produto" required />
         
         <span>Imagem para produto: <sub class="subAviso">arquivo menor que 2 megabyte</sub></span>
         <input type="file" name="imagem" placeholder="Informe a imagem do produto" required />
@@ -88,6 +88,30 @@ conferirStatusLogin();
         <button>Cadastrar</button>
       </form>
 
+<!--adicionar fornecedor-->
+      <form class="control desativado" id="formAdicionarFornecedor">
+        <input type="text" name="addProduto" class="desativado">
+        <voltar></voltar>
+        <nomeProduto></nomeProduto>
+        <imagemProduto></imagemProduto>
+        <descricaoProduto></descricaoProduto>
+        <valor></valor>
+        <frete></frete>
+        <parcelamento></parcelamento>
+        <nomeEmpresa></nomeEmpresa> 
+        <imagemEmpresa></imagemEmpresa>
+        <cnpj></cnpj>
+        <categoria></categoria>
+        <estado></estado>
+        <bairro></bairro>
+        <endereco></endereco>
+        <descricaoEmpresa></descricaoEmpresa>
+        <observacao></observacao>
+        <contato></contato>
+        <button>Adicionar</button>
+      </form>
+<!---->
+
 <!--Listar produto-->
       <div class="control desativado" id="formListarProduto">
         <form class="pesquisa">
@@ -107,7 +131,7 @@ conferirStatusLogin();
           </div-->
       </div>
           <carregando class="desativado">Carregando...</carregando>
-          <div class="setaBaixo" >
+          <div class="setaBaixo desativado" >
             <img  src="/imgs/setaBaixo.png">
           </div>
       </div>
@@ -148,7 +172,7 @@ conferirStatusLogin();
 <!--Procurar Fornecedor-->
       <div class="control desativado" id="formProcurarFornecedor">
         <form class="pesquisa">
-          <input type="text" name="nome" placeholder="nome do produto" style="border-right: 0; width: 54rem;" />
+          <input class="nome" type="text" name="nome" placeholder="nome do produto" style="border-right: 0; width: 54rem;" />
             <select  name="estado"  required>
              <option value="AC">AC</option>
              <option value="AL">AL</option>
@@ -181,13 +205,22 @@ conferirStatusLogin();
           <button>Pesquisar</button>
           <span class="spanEstilo1">Procura fornecedor pelo produto. </span>
         </form>
-         <div class="painel desativado">
+         <div class="painel">
         </div>
         <carregando class="desativado">Carregando...</carregando>
           <div class="setaBaixo" >
             <img  src="/imgs/setaBaixo.png">
           </div>
       </div>      
+
+
+<!--mostrar dados do fornecedor-->
+
+  <produto>
+    
+  </produto>
+
+
 
 <!--Listar Fornecedor-->
       <div class="control desativado" id="formListarFornecedor">

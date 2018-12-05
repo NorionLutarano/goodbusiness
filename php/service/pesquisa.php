@@ -31,7 +31,7 @@ class pesquisa{
 
 	public function pesquisaProdutoFornecedor($pesquisa){
 		//sql
-		$sql="select P.nome,P.imagem,P.valor,P.parcelamento,P.descricao,P.promocao,P.frete from produto as P inner join empresa on  filtro  order by valor asc limit quantidade,20";
+		$sql="select P.nome,P.imagem,P.valor,P.id_empresa,P.id_produto from produto as P inner join empresa as E on  filtro P.id_empresa=E.id_empresa and not P.id_empresa={$pesquisa['id']} order by valor asc limit quantidade,20";
 		//prepara os arquivos
 		//substituir string filtro
 		$sql=str_replace('filtro', $this->filtro($pesquisa), $sql);
@@ -55,8 +55,8 @@ class pesquisa{
 		if(isset($filtro['promocao']))$filtrado.="promocao='".$filtro['promocao']."' and ";
 		if(isset($filtro['parcelamento']))$filtrado.="parcelamento='".$filtro['parcelamento']."' and ";
 		if(isset($filtro['limit']))$filtrado.="limit='".$filtro['limit']."' and ";
-		if(trim(substr($filtrado,strlen($filtrado)-4,strlen($filtrado)))=="and")
-		return trim(substr($filtrado,0,strlen($filtrado)-4));
+
+		return $filtrado;
 
 	}
 

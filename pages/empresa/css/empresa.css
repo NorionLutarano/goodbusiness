@@ -356,8 +356,22 @@ form  button{
   font-weight: 100;
   text-align: center;
   font-family: Raleway;
+  margin:0;
 }
 
+
+.itens h4{
+  margin:0;
+  color:#0F9;
+  text-align: center;
+  font-size:0.85rem;
+  font-family: arial;
+  font-weight: 100;
+}
+
+.itens h4::before{
+  content:"R$ ";
+}
 
 .filial {
   list-style: none;

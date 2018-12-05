@@ -3,12 +3,12 @@
 
 
 //mostrar mais produtos no formulários de pesquisa produtos
-$(".setaBaixo").on("click",function(){
+$("#formListarProduto .setaBaixo").on("click",function(){
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){return;}
     //quantidade de pesquisa
    var quantidade=$(".itens").length;
    //listar produto
-   listarProdutos({pesquisa:$("#formListarProduto .itens").length,form:"formListarProduto",url:"php/listarProdutos.php"});
+   listarProdutos({pesquisa:'quantidade='+$("#formListarProduto .itens").length,form:"formListarProduto",url:"php/listarProdutos.php"});
 });
 
 //pesquisar produto

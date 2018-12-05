@@ -1,5 +1,23 @@
 //------- Funções
- var adicionarProdutoPainel=function(valor,key,painel,index,contador=0){
+var isset = accessor => {
+  try {
+    // Note we're seeing if the returned value of our function is not
+    // undefined
+    return typeof accessor() !== 'undefined';
+  } catch (e) {
+    // And we're able to catch the Error it would normally throw for
+    // referencing a property of undefined
+    return false;
+  }
+};
+
+var diminuirString=(dados)=>{
+  if(dados.palavra.length<dados.tamanho)return dados.palavra;
+ return dados.palavra.substring(0,dados.tamanho)+dados.addString;
+}
+
+
+ var adicionarProdutoPainel=function(valor,key,painel,index){
   painel.querySelectorAll(".lista")[index].innerHTML+="\
   <div class='itens'>\
     <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
@@ -10,9 +28,7 @@
     <input name='promocao' value='"+tratarString(valor.promocao||'0')+"' class='desativado'>\
     <input name='frete' value='"+tratarString(valor.frete||'0')+"' class='desativado'>\
   <div>";
-  contador++;
-  if(contador%5==0){index+=1;}
-}
+};
 
 
 var mostrarFormId=function(id,form){
@@ -51,7 +67,7 @@ var tratarString=function(String){
 var listarProdutos=function(info){
   info.pesquisa=(!!info.pesquisa)?info.pesquisa:0;
   info.tag=(!!info.tag)?info.tag:0;
-  
+  console.log(info.pesquisa);
   $.ajax({
       url: info.url,
       method: 'post',
@@ -79,7 +95,12 @@ var listarProdutos=function(info){
         //adicionar as info.tag nas listas no painel
         for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
         //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){adicionarProdutoPainel(valor,key,painel,index);});
+        var contador=0;
+        sucesso.forEach(function(valor,key){
+            adicionarProdutoPainel(valor,key,painel,index);
+            ++contador;
+            if(contador%5===0)index+=1;
+          });
 
            //verifica se o usuário já pesquisou todos os produtos
           if(parseInt($("#"+info.form+" quantidadeProdutos").text())==$("#"+info.form+" .itens").length){
@@ -94,6 +115,7 @@ var listarProdutos=function(info){
             //carrega a função aos itens para edição
             $("#"+info.form+" .itens").on("click",prepararEdicaoProduto());
           break;
+          
           default:
           return;
         }

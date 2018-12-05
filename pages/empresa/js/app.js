@@ -9,7 +9,25 @@ var avisoCadastrarProduto=cadastrarProduto.querySelector("h2").querySelector("su
 
 
 //------- Funções
- var adicionarProdutoPainel=function(valor,key,painel,index,contador=0){
+var isset = accessor => {
+  try {
+    // Note we're seeing if the returned value of our function is not
+    // undefined
+    return typeof accessor() !== 'undefined';
+  } catch (e) {
+    // And we're able to catch the Error it would normally throw for
+    // referencing a property of undefined
+    return false;
+  }
+};
+
+var diminuirString=(dados)=>{
+  if(dados.palavra.length<dados.tamanho)return dados.palavra;
+ return dados.palavra.substring(0,dados.tamanho)+dados.addString;
+}
+
+
+ var adicionarProdutoPainel=function(valor,key,painel,index){
   painel.querySelectorAll(".lista")[index].innerHTML+="\
   <div class='itens'>\
     <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
@@ -20,9 +38,7 @@ var avisoCadastrarProduto=cadastrarProduto.querySelector("h2").querySelector("su
     <input name='promocao' value='"+tratarString(valor.promocao||'0')+"' class='desativado'>\
     <input name='frete' value='"+tratarString(valor.frete||'0')+"' class='desativado'>\
   <div>";
-  contador++;
-  if(contador%5==0){index+=1;}
-}
+};
 
 
 var mostrarFormId=function(id,form){
@@ -61,7 +77,7 @@ var tratarString=function(String){
 var listarProdutos=function(info){
   info.pesquisa=(!!info.pesquisa)?info.pesquisa:0;
   info.tag=(!!info.tag)?info.tag:0;
-  
+  console.log(info.pesquisa);
   $.ajax({
       url: info.url,
       method: 'post',
@@ -89,7 +105,12 @@ var listarProdutos=function(info){
         //adicionar as info.tag nas listas no painel
         for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
         //adiciona os produtos a tabela
-        sucesso.forEach(function(valor,key){adicionarProdutoPainel(valor,key,painel,index);});
+        var contador=0;
+        sucesso.forEach(function(valor,key){
+            adicionarProdutoPainel(valor,key,painel,index);
+            ++contador;
+            if(contador%5===0)index+=1;
+          });
 
            //verifica se o usuário já pesquisou todos os produtos
           if(parseInt($("#"+info.form+" quantidadeProdutos").text())==$("#"+info.form+" .itens").length){
@@ -104,6 +125,7 @@ var listarProdutos=function(info){
             //carrega a função aos itens para edição
             $("#"+info.form+" .itens").on("click",prepararEdicaoProduto());
           break;
+          
           default:
           return;
         }
@@ -181,12 +203,12 @@ var converterStringJson= function deparam(query) {
 
 
 //mostrar mais produtos no formulários de pesquisa produtos
-$(".setaBaixo").on("click",function(){
+$("#formListarProduto .setaBaixo").on("click",function(){
   if(parseInt($("quantidadeProdutos").text())==$("#formListarProduto .itens").length){return;}
     //quantidade de pesquisa
    var quantidade=$(".itens").length;
    //listar produto
-   listarProdutos({pesquisa:$("#formListarProduto .itens").length,form:"formListarProduto",url:"php/listarProdutos.php"});
+   listarProdutos({pesquisa:'quantidade='+$("#formListarProduto .itens").length,form:"formListarProduto",url:"php/listarProdutos.php"});
 });
 
 //pesquisar produto
@@ -247,19 +269,101 @@ $("#listarProduto").on("click",function(){
 });
 
 
-$("#formProcurarFornecedor").on("submit",function(e){
+$("#formProcurarFornecedor").on("submit",(e)=>{
 	e.preventDefault();
-	$.get("php/pesquisarProdutoFornecedor.php",$("#formProcurarFornecedor .pesquisa").serialize())
-	.then(response=> response).then(data=>console.log(data));
+	$("#formProcurarFornecedor .setaBaixo").removeClass("desativado");
+	if(!$("#formProcurarFornecedor .pesquisa .nome")[0].value.length){return;}
 
+	$.get("php/pesquisarProdutoFornecedor.php",$("#formProcurarFornecedor .pesquisa").serialize(),
+		function(produtos){
+			produtos=JSON.parse(produtos);
+			var painel = document.getElementById("formProcurarFornecedor").querySelector(".painel");
+			painel.innerHTML="";
+			var index=$("#formProcurarFornecedor .lista").length;
 
-	 
+			if(isset(()=>produtos['error'])){
+				painel.innerHTML="<h1>Servidor em Manutenção</h1>";
+			}
+
+			if(!produtos.length){
+				painel.innerHTML="<h1 style='font-weight:100; font-family:arial;'>Nenhum fornecedor cadastrado ainda.</h1>";
+				$("#formProcurarFornecedor .setaBaixo")[0].style.display="none";
+				return;
+			}
+
+			//adicionar as info.tag nas listas no painel
+        	for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
+
+        	//coloca os itens no painel
+			var contador=0;
+			produtos.forEach(function(valor,key){
+			  painel.querySelectorAll(".lista")[index].innerHTML+="\
+			  <div class='itens'>\
+			    <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+			    <h3>"+tratarString(diminuirString({palavra:valor.nome,tamanho:20,addString:"..."}))+"</h3>\
+			    <h4>"+tratarString(valor.valor.replace(".",","))+"</h4>\
+			    <input class='desativado' value="+tratarString(valor.id_empresa)+">\
+			    <input class='desativado' value="+tratarString(valor.id_produto)+">\
+			  <div>";
+			++contador;
+	  		if(contador%5===0)index+=1;
+			});
+
+			$("#formProcurarFornecedor .setaBaixo")[0].style.display="flex";
+			return;
+
+	});
 });
 
 
-$("#procurarFornecedor").on("click",()=> $("#formProcurarFornecedor .setaBaixo")[0].style="display:none;");
+$("#procurarFornecedor").on("click",()=>{
+		$("#formProcurarFornecedor .setaBaixo").css({"display":"none"});
+		$("#formProcurarFornecedor .painel").html("");
+		$("#formProcurarFornecedor .setaBaixo").removeClass("desativado");
+		formReset();
+	});
 
-$("#editarProduto textarea").on("keyup",limitarCaracteres("#editarProduto digit",5000));
+
+
+$("#formProcurarFornecedor .setaBaixo").on("click",function(){
+	if($("#formProcurarFornecedor .setaBaixo")[0].classList.contains("desativado")){return;}
+
+	data=$("#formProcurarFornecedor .pesquisa").serialize()+"&quantidade="+$("#formProcurarFornecedor .lista").length*5;
+	$.get("php/pesquisarProdutoFornecedor.php",data,(produtos)=>{
+		produtos=JSON.parse(produtos);
+
+		var painel = document.getElementById("formProcurarFornecedor").querySelector(".painel");
+		var index  = $("#formProcurarFornecedor .lista").length;
+		if(!produtos.length){
+			$("#formProcurarFornecedor .setaBaixo")[0].style.display="none";
+			$("#formProcurarFornecedor .setaBaixo").addClass("desativado");
+			return;
+		}
+
+		if(isset(()=>produtos.error)){
+			painel.innerHTML="";
+			painel.innerHTML="<h1 style='font-weight:100; font-family:arial;'>"+produtos.error+".</h1>";
+			return;
+		}
+
+		for(let x=0;x<4;x++)painel.innerHTML+="<div class='lista'></div>";
+		
+		//coloca os itens no painel
+		var contador=0;
+		produtos.forEach(function(valor,key){
+		  painel.querySelectorAll(".lista")[index].innerHTML+="\
+		  <div class='itens'>\
+		    <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
+		    <h3>"+tratarString(valor.nome)+"</h3>\
+		    <h4>"+tratarString(valor.valor)+"</h4>\
+		    <input class='desativado' value="+tratarString(valor.id_empresa)+">\
+		    <input class='desativado' value="+tratarString(valor.id_produto)+">\
+		  <div>";
+		++contador;
+  		if(contador%5===0)index+=1;
+		});
+	});
+});$("#editarProduto textarea").on("keyup",limitarCaracteres("#editarProduto digit",5000));
 formatarValor(document.getElementById("editarProduto"));
 
   //mostrar o máximo de caracteres na descrição do produto
