@@ -1,0 +1,218 @@
+header{
+    margin-bottom:0rem;
+    width: 1360px;
+    height: 100px;
+    display:flex;
+    flex-direction: column;
+    background-color:#fff;
+    box-shadow: 2px 2px 2px 2px #AAA;
+}
+
+header h1{
+  font-family: Muli,arial;
+  font-weight: 100;
+  width: 17rem;
+  padding-left:2.5rem;
+  color:#555;
+  font-size: 2.25rem;
+  margin-bottom: 0;
+}
+
+header h1 sub{
+  font-size:1rem;
+}
+
+header form{
+  padding-top:0.5rem;
+  width: 50rem;
+}
+
+header form input{
+  padding:0.5rem 0.5rem;
+  width: 40rem;
+  border:0;
+}
+
+header form button{
+  border:0;
+  padding:0.5rem 1rem;
+  background-color: #1FC0CF;
+  color:white;
+}
+
+
+header span {
+  font-family: Muli,arial;
+  color:#777;
+  margin:1rem 0.5rem;
+  display: inline-block;
+  cursor:default;
+}
+
+header ul{
+  padding-top:0.5rem;
+  list-style: none;
+  padding-left: 0;
+  width: 32.4rem;
+}
+
+header ul li{
+  float:right;
+  color:#777;
+  margin-left: 1rem;
+  display: inline-block;
+  cursor: default;
+}
+
+.listaProdutos{
+  width: 1100px;
+  padding-top: 3.2rem;
+}
+
+
+.grade{
+  display: flex;
+  justify-content: space-between;
+}
+
+.gradeNoSpace{
+  display: flex;
+  flex-direction: row;
+}
+
+.gradeColumn{
+  display: flex;
+  flex-direction: column;
+}
+
+.estande{
+  padding-left:2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+.estande h1{
+  display: block;
+  margin:  auto;
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  font-family: Muli,arial;
+  font-weight: 100;
+}
+
+.produto{
+  height: 14rem;
+  width: 100%;
+  cursor:pointer;
+  margin-bottom: 2rem;
+}
+
+.produto img {
+  height: 14rem;
+  width: 200px;
+  float: left;
+}
+
+.produto span{
+  display: block;
+  font-family: Muli,arial;
+}
+
+.infoProduto .empresa{
+  margin-top: 0;
+  font-size:0.7rem;
+}
+ 
+.valor::before{
+  content: "R$ ";
+}
+
+.produto .nome{
+  font-size:1.5rem;
+  color:#555;  
+}
+
+.produto .valor{
+  margin-top: 1.5rem;
+  color:#0F7;
+  font-size: 1.2rem;
+}
+
+.filtro{
+  width: 15rem;
+}
+
+.filtro h4{
+  margin-top:0;
+  text-align: center;
+  font-family: Muli,arial;
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+
+.filtro ul{
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.filtro ul li{
+  display: block;
+  margin:0.8rem 0;
+}
+
+.filtro input,select{
+  padding:0.1rem 0.4rem;
+  border:1px solid #AAA;
+  background-color:white;
+  width:100%;
+  font-size:0.8rem;
+}
+
+.desativado{
+  display: none;
+}
+
+
+.infoProduto {
+  float: left;
+  width: 53rem;
+  padding-left: 1rem;
+}
+
+.descricaoProduto {
+  margin-top: 1rem;
+  font-size:0.8rem;
+}
+
+
+
+#info {
+  position: relative;
+  width: 100%;
+  height:auto;
+}
+
+
+#info table{
+  margin: auto;
+  text-align: left;
+  font-family:Muli,arial;
+}
+
+#info table tr{
+  display: block;
+  margin-bottom:1rem;
+}
+
+#info caption{
+  caption-side: top;
+  font-size:1.5rem;
+}
+
+#info img{
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  height: 20px;
+}

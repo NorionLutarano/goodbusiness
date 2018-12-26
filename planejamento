@@ -1,0 +1,26 @@
+goodbusiness funções
+	pages pesquisar:
+		pesquisar produto
+			vem as informações da foto do produto, nome do produto e da empresa, valor e descrição.
+			quando clickado ele mostra os dados da empresa  e observação da mesma.
+		pesquisar estabelecimento
+			pesquisa um estabelecimento pelo seu tipo e local, vem o nome do estabelecimento, endereço , foto.
+			ao clickar em mais informações do estabelecimento 
+
+		pesquisar fornecedor
+			pesquisa o fornecedor pelo nome do produto a diferença é que mostra os dados do fornecedor, nome,imagem,observação.
+			Ao clickar mostra os dados da empresa.  
+
+	pages usuario:
+		cadastrar produto
+		editar produto
+		listar produto
+		excluir produto
+		
+		pesquisar fornecedor
+		listar fornecedor
+		excluir fornecedor
+		
+		atualizar conta
+		
+		deslogar
