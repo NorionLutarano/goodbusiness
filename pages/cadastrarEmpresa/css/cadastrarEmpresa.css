@@ -5,7 +5,7 @@ header{
     height: 45px;
     display:flex;
     justify-content: space-between;
-    background-color:#09A5F0;
+    background-color:#50a0f0;
 }
 
 header h1{
@@ -13,6 +13,12 @@ header h1{
   font-size: 2rem;
   font-family:arial;
   color:#FFF;
+  cursor: default;
+}
+
+header h1 > sub{
+  font-size: 0.9rem;
+  font-weight: 100;
 }
 
 
@@ -38,7 +44,12 @@ header .buttonLogin {
     margin:0 auto;
     height:470px;
     width:700px;
+    padding-bottom:1.5rem;
   }
+
+main > form{
+  margin-bottom:1.5rem;
+}
 
   main > form > h2{
     margin-top:0;
@@ -55,6 +66,18 @@ header .buttonLogin {
     padding:0.5rem;
     border:1px solid #ccc;
   }
+
+main > form > textarea{
+  display: block;
+  width: 96%;
+  height: 80px;
+  border:1px solid #BBB;
+  resize:none;
+  font-size:0.8rem;
+  padding-top: 0.2rem;
+  padding-left:0.5rem;
+  margin-bottom:2rem;
+}
 
   main > form > select{
     padding:0.4rem;
@@ -73,7 +96,7 @@ header .buttonLogin {
     display: inline-block;
   }
 
-  main > form > input.ConfirmarSenha{
+  main > form > input.confirmarSenha{
     margin-left:1rem;
     width: 43.5%;
     display: inline-block;
@@ -99,13 +122,20 @@ header .buttonLogin {
     margin-right: 1rem;
   }
 
+  .avisoSenha{
+    display: block;
+    font-size: 0.8rem;
+    font-family: arial;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
   .alert{
     position: absolute;
     top: 12%;
     left:41%;
     height:50px;
     width:450px;
-
   }
 
   .alert h2{

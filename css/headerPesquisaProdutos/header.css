@@ -15,6 +15,11 @@ header h1 {
   font-size: 2rem;
   font-family: Muli, arial; }
 
+header h1 sub{
+  font-size: 1rem;
+  font-weight: 100;
+}
+
 header form input {
   margin-top: 0.25rem;
   margin-left: 2rem;
@@ -28,7 +33,7 @@ header form input {
 
 
   header form{
-    width:800px;  
+    width:770px;  
   }
 
 header form button {
@@ -54,16 +59,17 @@ header .menu span {
   margin-left: 1rem;
   float: right;
   padding-top: 0.6rem;
-  cursor: pointer; }
+  cursor: pointer; 
+  font-weight: 100;
+  font-family: Muli,arial;
+}
 
 header .menu span.login {
   font-size: 0.9rem;
-  background-color: #2090f0;
   color: white;
-  font-weight: 900;
-  font-family: arial;
-  padding: 0.5rem;
-  margin-top: 0.1rem;
+  font-weight: 100;
+  font-family: Muli,arial;
+  margin-top: 0.14rem;
   cursor: pointer; }
 
 header .menu img{

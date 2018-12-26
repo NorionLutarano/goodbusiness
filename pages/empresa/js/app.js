@@ -36,7 +36,7 @@ var diminuirString=(dados)=>{
     <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
     <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
     <input name='promocao' value='"+tratarString(valor.promocao||'0')+"' class='desativado'>\
-    <input name='frete' value='"+tratarString(valor.frete||'0')+"' class='desativado'>\
+    <input name='frete' value='"+tratarString( (()=>(valor.frete)?"tem":"não tem")() )+"' class='desativado'>\
   <div>";
 };
 
@@ -61,7 +61,7 @@ var formReset=function(){
 }
 
 //tratar string
-var tratarString=function(String){
+var tratarString=function(String=""){
   String=String.replace("/1#0/","#");
   String=String.replace("/3#0/","/*");
   String=String.replace("/4#0/","*/");
@@ -199,6 +199,184 @@ var converterStringJson= function deparam(query) {
     return map;
 }
 
+String.prototype.toCnpj=function(){return this.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");};$("#listarFornecedor").on("click",function(){
+	const painel=$("#formListarFornecedor .painel");
+	painel.addClass("desativado");
+	painel.html("");
+	
+	$.get("php/quantidadeMeusFornecedores.php",function(resposta){
+		try{
+			resposta=JSON.parse(resposta);
+		}catch(e){
+			$("quantidadeFornecedor").text("0");
+			return;	
+		}
+		
+		$("quantidadeFornecedor").text("");
+		if(isset(()=>resposta.error)){
+			$("quantidadeFornecedor").text("Servidor em Manutenção");
+			return;
+		}
+		
+		//informa a quantidade
+		$("quantidadeFornecedor").text(resposta);
+		//Informa ao usuário que a página está carregando
+		painel.removeClass("desativado");
+		painel.html("<h1 style='color: #55F;'>Carregando...</h1>");
+		//pega os nomes dos fornecedores e mostra
+		$.get("php/nomesFornecedores.php",function(resposta){
+			painel.html("");
+			resposta=JSON.parse(resposta);
+			if(isset(()=>resposta.error)){
+				painel.removeClass("desativado");
+				painel.html("<h1>Servidor em manutenção.</h1>");
+				return;
+			}
+
+			painel.removeClass("desativado");
+			resposta.forEach(function(fornecedor){
+				painel.html(painel.html()+"\
+				  <div class='fornecedores'>\
+		            <div class='nomeFornecedor' ativo='0' buscar='0' idF="+fornecedor.id+">"+fornecedor.nome+"</div>\
+		          </div>");
+			});
+			
+			$(".nomeFornecedor").on("click",function(){
+				$(".resumoProdutos").css({"display":"none"});
+				const nomeFornecedor=$(this);
+				//obter dados do fornecedor
+				$.get("php/infoFornecedor.php",{idF:$(this).attr("idF")},function(resposta){
+					resposta=JSON.parse(resposta);
+					if(isset(()=>resposta.error)){ 
+						nomeFornecedor.attr("nome","error de conexão, atualize a página");
+						nomeFornecedor.attr("razao_social","error de conexão, atualize a página");
+						nomeFornecedor.attr("endereco","error de conexão, atualize a página");
+						nomeFornecedor.attr("bairro","error de conexão, atualize a página");
+						nomeFornecedor.attr("estado","error de conexão, atualize a página");
+						nomeFornecedor.attr("cep","error de conexão, atualize a página");
+						nomeFornecedor.attr("cnpj","error de conexão, atualize a página");
+						nomeFornecedor.attr("contato","error de conexão, atualize a página");
+						nomeFornecedor.attr("email","error de conexão, atualize a página");
+						return;
+					}else{	
+						nomeFornecedor.attr("nome",resposta.nome);
+						nomeFornecedor.attr("razao_social",resposta.razao_social);
+						nomeFornecedor.attr("endereco",resposta.endereco);
+						nomeFornecedor.attr("bairro",resposta.bairro);
+						nomeFornecedor.attr("estado",resposta.estado);
+						nomeFornecedor.attr("cep",resposta.cep);
+						nomeFornecedor.attr("cnpj",resposta.cnpj);
+						nomeFornecedor.attr("contato",resposta.contato);
+						nomeFornecedor.attr("email",resposta.email);
+						return;
+					}
+
+				});				
+				
+				if($(this).attr("buscar")==="0"){ 
+					$.get("php/listarProdutoFornecedor.php",{idF:$(this).attr("idF")},function(resposta){
+						const parent=nomeFornecedor.parent();
+						resposta=JSON.parse(resposta);
+						if(isset(()=>resposta.error)){
+							$(".nomeFornecedor").parent().html(html+"<span>Servidor em manutenção.</span>");
+							return;
+						}
+						
+						resposta.forEach(function(value,index){
+							value.descricao=(value.descricao.length==193)?value.descricao.substr(0,190)+"...":value.descricao;
+							parent.html($(".nomeFornecedor").parent().html()+"\
+										<div class='resumoProdutos'>\
+											<div class='produto'>\
+												<span class='nomeProduto'>"+value.nome+"</span>\
+												<span class='descricao'>"+value.descricao+"</span>\
+												<span class='valor'>"+value.valor+"</span>\
+												<span class='parcelamento desativado'>"+value.parcelamento+"</span>\
+											 </div>\
+											 <button class='btn-style-1' idP='"+value.idP+"'>Excluir</button>\
+										</div>");  	
+						});
+						//excluir produto
+						$(".resumoProdutos button").on("click",function(){
+								$("#formListarFornecedor .confirmacao button").
+									attr("idP",$(this).attr("idP"));
+								$("#formListarFornecedor .confirmacao").removeClass("desativado");
+						});
+						//ver informação desse produto
+						$(".resumoProdutos .produto").on("click",function(){
+							const tag=$("#contatoFornecedor");
+							$("#formListarFornecedor").addClass("desativado");
+							tag.removeClass("desativado");
+							tag.find("h4").text($(this).find(".nomeProduto").text());
+							tag.find(".descricaoproduto").text($(this).find(".descricao").text());
+							if("0"==$(this).find(".parcelamento").text()){
+								tag.find(".parcelamento").text("Não tem parcelamento.");
+							}else{
+								tag.find(".parcelamento").text($(this).find(".parcelamento").text()+"x");
+							}
+							tag.find(".valor").text($(this).find(".valor").text());
+							tag.find(".nome").text(nomeFornecedor.attr("nome"));
+							tag.find(".razaosocial").text(nomeFornecedor.attr("razao_social"));
+							tag.find(".endereco").text(nomeFornecedor.attr("endereco"));
+							tag.find(".bairro").text(nomeFornecedor.attr("bairro"));
+							tag.find(".estado").text(nomeFornecedor.attr("estado"));
+							tag.find(".cep").text(nomeFornecedor.attr("cep"));
+							tag.find(".cnpj").text(nomeFornecedor.attr("cnpj").toCnpj());
+							tag.find(".contato").text(nomeFornecedor.attr("contato"));
+							tag.find(".email").text(nomeFornecedor.attr("email"));
+
+						});
+						
+						$(".nomeFornecedor").attr("buscar",1);
+					});
+				}else{
+					$(this).find(".resumoProdutos").css({"display":"flex"});
+					return;
+				}
+			});
+
+		});
+	});
+});
+
+
+$("#formListarFornecedor .confirmacao button").on("click",function(){
+	if(!isset(()=>$(this).attr("idP"))){
+		$("#formListarFornecedor .confirmacao button").parent().find("h4").text("Error de carregamento.");
+	}
+	$("#formListarFornecedor .confirmacao ").addClass("desativado");
+	$.post("php/excluirProdutoFornecedor.php",{idP:$(this).attr("idP")},()=>$("#listarFornecedor").click());
+});
+
+
+$("#contatoFornecedor voltar").on("click",function(){
+	$("#contatoFornecedor").addClass("desativado");
+		let tag=$("#contatoFornecedor");
+		tag.addClass("desativado");
+		tag.find(".nomeProduto h4").text("");
+		tag.find(".descricaoproduto").text("");
+		tag.find(".parcelamento").text("");
+		$("#formListarFornecedor").removeClass("desativado");
+});$("#formAdicionarFornecedor").on("submit",function(e){
+	e.preventDefault();
+	$.get('php/cadastrarFornecedor.php',$("#formAdicionarFornecedor").serialize(),function(resposta){
+		$("info").removeClass("desativado");
+		$("info").text("");
+		if(resposta){
+			$("info").text("Cadastrado com sucesso.");
+			$("info").addClass("Sucess");
+		}else{
+			$("info").addClass("Error");
+			$("info").text("Servidor em manutenção.");
+		}
+		setTimeout(()=>{
+			$("info").removeClass("Error Sucess");
+			$("info").text("");
+			$("#formAdicionarFornecedor voltar").click();
+		},3000);
+	});
+});$('#editarProduto').on("submit",(e)=>{
+
+});
 
 
 
@@ -269,7 +447,7 @@ $("#listarProduto").on("click",function(){
 });
 
 
-$("#formProcurarFornecedor").on("submit",(e)=>{
+$("#formProcurarFornecedor > .pesquisa").on("submit",(e)=>{
 	e.preventDefault();
 	$("#formProcurarFornecedor .setaBaixo").removeClass("desativado");
 	if(!$("#formProcurarFornecedor .pesquisa .nome")[0].value.length){return;}
@@ -286,7 +464,7 @@ $("#formProcurarFornecedor").on("submit",(e)=>{
 			}
 
 			if(!produtos.length){
-				painel.innerHTML="<h1 style='font-weight:100; font-family:arial;'>Nenhum fornecedor cadastrado ainda.</h1>";
+				painel.innerHTML="<h1 style='font-weight:100; font-family:Raleway,arial;'>Nenhum fornecedor cadastrado ainda.</h1>";
 				$("#formProcurarFornecedor .setaBaixo")[0].style.display="none";
 				return;
 			}
@@ -298,21 +476,53 @@ $("#formProcurarFornecedor").on("submit",(e)=>{
 			var contador=0;
 			produtos.forEach(function(valor,key){
 			  painel.querySelectorAll(".lista")[index].innerHTML+="\
-			  <div class='itens'>\
+			 	<div class='itens'>\
 			    <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
-			    <h3>"+tratarString(diminuirString({palavra:valor.nome,tamanho:20,addString:"..."}))+"</h3>\
-			    <h4>"+tratarString(valor.valor.replace(".",","))+"</h4>\
-			    <input class='desativado' value="+tratarString(valor.id_empresa)+">\
-			    <input class='desativado' value="+tratarString(valor.id_produto)+">\
+			    <h3>"+tratarString(valor.nome)+"</h3>\
+			    <h4>"+tratarString(valor.valor)+"</h4>\
+				    <idP class='desativado'>"+tratarString(valor.produto)+"</idP>\
+				    <idF class='desativado'>"+tratarString(valor.empresa)+"</idF>\
 			  <div>";
 			++contador;
 	  		if(contador%5===0)index+=1;
 			});
 
 			$("#formProcurarFornecedor .setaBaixo")[0].style.display="flex";
-			return;
+			$(".itens").on("click",function(){
+				$.get("php/infoProdutoFornecedor.php",{idP:$(this).children("idP").text()},(resposta)=>{
+					resposta=JSON.parse(resposta);
+					if(isset(()=>resposta.error)){
+						return;
+					}
+					$("#formAdicionarFornecedor .addF")[0].value=resposta[0].iddF;
+					$("#formAdicionarFornecedor .addP")[0].value=resposta[0].iddP;
+					$("#formAdicionarFornecedor nomeProduto span").text(resposta[0].nomeProduto||"Não informado");
+					$("#formAdicionarFornecedor imagemProduto").html("<img src='"+resposta[0].imagemProduto.replace('/home/katy/sites/trabalhos/goodbusiness','')+"'/>");
+					$("#formAdicionarFornecedor descricaoProduto").text(resposta[0].descricaoProduto||"Não informado");
+					$("#formAdicionarFornecedor valor").text(resposta[0].valor||"Não informado");
+					$("#formAdicionarFornecedor frete").text((()=>( resposta[0].frete)?"tem":"não tem")());
+					$("#formAdicionarFornecedor parcelamento").text(resposta[0].parcelamento + "x"||"Não informado");
+					$("#formAdicionarFornecedor nomeEmpresa").text(resposta[0].nomeEmpresa||"Não informado");
+					$("#formAdicionarFornecedor cnpj").text(resposta[0].cnpj.toCnpj()||"Não informado");
+					$("#formAdicionarFornecedor categoria").text(resposta[0].categoria||"Não informado");
+					$("#formAdicionarFornecedor estado").text(resposta[0].estado||"Não informado");
+					$("#formAdicionarFornecedor bairro").text(resposta[0].bairro||"Não informado");
+					$("#formAdicionarFornecedor endereco").text(resposta[0].endereco||"Não informado");
+					$("#formAdicionarFornecedor descricaoEmpresa").text(resposta[0].descricaoEmpresa||"Não informado");
+					$("#formAdicionarFornecedor observacao").text(resposta[0].observacao||"Não informado");
+					$("#formAdicionarFornecedor contato").text(resposta[0].contato||"Não informado");
+					$("#formProcurarFornecedor").addClass("desativado");
+					$(".formAdicionarFornecedor").removeClass("desativado");	
+					$("info").addClass("desativado");		
 
+				});
+			});
+
+			return;
 	});
+
+
+
 });
 
 
@@ -342,7 +552,7 @@ $("#formProcurarFornecedor .setaBaixo").on("click",function(){
 
 		if(isset(()=>produtos.error)){
 			painel.innerHTML="";
-			painel.innerHTML="<h1 style='font-weight:100; font-family:arial;'>"+produtos.error+".</h1>";
+			painel.innerHTML="<h1 style='font-weight:100; font-family:Raleway,arial;'>"+produtos.error+".</h1>";
 			return;
 		}
 
@@ -356,14 +566,66 @@ $("#formProcurarFornecedor .setaBaixo").on("click",function(){
 		    <img src='"+valor.imagem.replace("/home/katy/sites/trabalhos/goodbusiness","")+"'>\
 		    <h3>"+tratarString(valor.nome)+"</h3>\
 		    <h4>"+tratarString(valor.valor)+"</h4>\
-		    <input class='desativado' value="+tratarString(valor.id_empresa)+">\
-		    <input class='desativado' value="+tratarString(valor.id_produto)+">\
+			    <idP class='desativado'>"+tratarString(valor.produto)+"</idP>\
+			    <idF class='desativado'>"+tratarString(valor.empresa)+"</idF>\
 		  <div>";
 		++contador;
   		if(contador%5===0)index+=1;
+		});	
+
+		$(".itens").on("click",function(){
+			$.get("php/infoProdutoFornecedor.php",{idP:$(this).children("idP").text()},(resposta)=>{
+				resposta=JSON.parse(resposta);
+				if(isset(()=>resposta.error)){
+					return;
+				}
+				$("#formAdicionarFornecedor .addF").value=resposta[0].iddF;
+				$("#formAdicionarFornecedor .addP").value=resposta[0].iddP;				
+				$("#formAdicionarFornecedor nomeProduto span").text(resposta[0].nomeProduto||"Não informado");
+				$("#formAdicionarFornecedor imagemProduto").html("<img src='"+resposta[0].imagemProduto.replace('/home/katy/sites/trabalhos/goodbusiness','')+"'/>");
+				$("#formAdicionarFornecedor descricaoProduto").text(resposta[0].descricaoProduto||"Não informado");
+				$("#formAdicionarFornecedor valor").text(resposta[0].valor||"Não informado");
+				$("#formAdicionarFornecedor frete").text(resposta[0].frete||"Não informado");
+				$("#formAdicionarFornecedor parcelamento").text(resposta[0].parcelamento||"Não informado");
+				$("#formAdicionarFornecedor nomeEmpresa").text(resposta[0].nomeEmpresa||"Não informado");
+				$("#formAdicionarFornecedor cnpj").text(resposta[0].cnpj||"Não informado");
+				$("#formAdicionarFornecedor categoria").text(resposta[0].categoria||"Não informado");
+				$("#formAdicionarFornecedor estado").text(resposta[0].estado||"Não informado");
+				$("#formAdicionarFornecedor bairro").text(resposta[0].bairro||"Não informado");
+				$("#formAdicionarFornecedor endereco").text(resposta[0].endereco||"Não informado");
+				$("#formAdicionarFornecedor descricaoEmpresa").text(resposta[0].descricaoEmpresa||"Não informado");
+				$("#formAdicionarFornecedor observacao").text(resposta[0].observacao||"Não informado");
+				$("#formAdicionarFornecedor contato").text(resposta[0].contato||"Não informado");
+				$("#formProcurarFornecedor").addClass("desativado");
+				$(".formAdicionarFornecedor").removeClass("desativado");			
+				$("info").addClass("desativado");
+			});
 		});
 	});
-});$("#editarProduto textarea").on("keyup",limitarCaracteres("#editarProduto digit",5000));
+});
+
+
+$("#formAdicionarFornecedor voltar").on("click",function(){
+	$("#formAdicionarFornecedor nomeProduto span").text("");
+	$("#formAdicionarFornecedor imagemProduto").text("");
+	$("#formAdicionarFornecedor descricaoProduto").text("");
+	$("#formAdicionarFornecedor valor").text("");
+	$("#formAdicionarFornecedor frete").text("");
+	$("#formAdicionarFornecedor parcelamento").text("");
+	$("#formAdicionarFornecedor nomeEmpresa").text("");
+	$("#formAdicionarFornecedor cnpj").text("");
+	$("#formAdicionarFornecedor categoria").text("");
+	$("#formAdicionarFornecedor estado").text("");
+	$("#formAdicionarFornecedor bairro").text("");
+	$("#formAdicionarFornecedor endereco").text("");
+	$("#formAdicionarFornecedor descricaoEmpresa").text("");
+	$("#formAdicionarFornecedor observacao").text("");
+	$("#formAdicionarFornecedor contato").text("");
+	$("#formProcurarFornecedor").removeClass("desativado");
+	$(".formAdicionarFornecedor").addClass("desativado");			
+
+});
+$("#editarProduto textarea").on("keyup",limitarCaracteres("#editarProduto digit",5000));
 formatarValor(document.getElementById("editarProduto"));
 
   //mostrar o máximo de caracteres na descrição do produto
@@ -474,5 +736,10 @@ cadastrarProduto.addEventListener("submit",function(e){
  //mostrar formulário de cadastro de produto
  mostrarFormId("cadastrarProduto","formCadastrarProduto");
  //adicionar função de mostrar listar produto
- mostrarFormId("listarProduto","formListarProduto");//obter os primeiros 20 produtos para mostrar no form lista 
-//listarProdutos(20);
+ mostrarFormId("listarProduto","formListarProduto");
+
+
+ //obter os primeiros 20 produtos para mostrar no form lista 
+//form listar Fornecedor
+$(".confirmacao fechar").on("click",()=>$(".confirmacao fechar").parent(".confirmacao").addClass("desativado"));
+$("fechar").on("click",()=>$(this).parent().addClass("desativado"));

@@ -8,7 +8,7 @@ function validarString($String=null){
 	$String= str_replace("--","/5#0/",$String);
 	$String= str_replace("=","/6#0/",$String);
 	$String= str_replace("!","/7#0/",$String);
-	$String= str_replace("or","/8#0/",$String);
+	$String= str_replace(" or ","/8#0/",$String);
 	$String= str_replace("<script>","/9#0/",$String);
 	return $String;
 }

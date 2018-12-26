@@ -1,6 +1,8 @@
 <?php
 //config
 include_once("php/config/config.php");
+//class
+include_once("php/class/Array.php");
 //funções
 include_once("php/function/conferirStatusLogin.php");
 include_once("php/function/ArmazenarImagem.php");

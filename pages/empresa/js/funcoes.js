@@ -26,7 +26,7 @@ var diminuirString=(dados)=>{
     <input name='valor' value='"+tratarString(valor.valor)+"' class='desativado'>\
     <input name='parcelamento' value='"+tratarString(valor.parcelamento)+"' class='desativado'>\
     <input name='promocao' value='"+tratarString(valor.promocao||'0')+"' class='desativado'>\
-    <input name='frete' value='"+tratarString(valor.frete||'0')+"' class='desativado'>\
+    <input name='frete' value='"+tratarString( (()=>(valor.frete)?"tem":"não tem")() )+"' class='desativado'>\
   <div>";
 };
 
@@ -51,7 +51,7 @@ var formReset=function(){
 }
 
 //tratar string
-var tratarString=function(String){
+var tratarString=function(String=""){
   String=String.replace("/1#0/","#");
   String=String.replace("/3#0/","/*");
   String=String.replace("/4#0/","*/");
@@ -188,3 +188,5 @@ var converterStringJson= function deparam(query) {
     }
     return map;
 }
+
+String.prototype.toCnpj=function(){return this.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");};

@@ -52,7 +52,11 @@ conferirStatusLogin();
          <span>– John D. Rockefeller, empreendedor</span>
       </div>
 
-
+<!--aviso Geral-->
+<div class="avisoGeral desativado">
+  <span>Carregamento de incompleto, refazer a pesquisa.</span>
+  <fechar> </fechar>
+</div>
 <!--Cadastrar produto-->
       <form class="control desativado" id="formCadastrarProduto">
         <h2>Cadastrar Produto<sub class="desativado"></sub></h2>
@@ -89,27 +93,48 @@ conferirStatusLogin();
       </form>
 
 <!--adicionar fornecedor-->
-      <form class="control desativado" id="formAdicionarFornecedor">
-        <input type="text" name="addProduto" class="desativado">
-        <voltar></voltar>
-        <nomeProduto></nomeProduto>
+    <div class="control desativado formAdicionarFornecedor">
+      <form  id="formAdicionarFornecedor" >
+        <input type="text" name="addF" class="desativado addF">
+        <input type="text" name="addP" class="desativado addP">
+        <nomeProduto>
+          <voltar><img src="/imgs/voltar.png"></voltar>
+          <span>Casa</span>
+        </nomeProduto>
         <imagemProduto></imagemProduto>
-        <descricaoProduto></descricaoProduto>
-        <valor></valor>
-        <frete></frete>
-        <parcelamento></parcelamento>
-        <nomeEmpresa></nomeEmpresa> 
-        <imagemEmpresa></imagemEmpresa>
-        <cnpj></cnpj>
-        <categoria></categoria>
-        <estado></estado>
-        <bairro></bairro>
-        <endereco></endereco>
-        <descricaoEmpresa></descricaoEmpresa>
-        <observacao></observacao>
-        <contato></contato>
+        <span>Descrição do produto: </span>
+        <descricaoProduto>muita boa com vista para</descricaoProduto>
+        <span>Valor:</span>
+        <valor>125.696,25</valor>
+        <span>Frete:</span>
+        <frete>possui</frete>
+        <span>Parcelamento:</span>
+        <parcelamento>12x</parcelamento>
+        <span>Nome da empresa:</span>
+        <nomeEmpresa>Imobiáliaria</nomeEmpresa>
+        <span>Cnpj:</span>
+        <cnpj>127-985-787/20</cnpj>
+        <span>Categoria:</span>
+        <categoria>outros</categoria>
+        <span>Estado: </span>
+        <estado>Rio de janeiro</estado>
+        <span>Bairro:</span>
+        <bairro>Cascadura</bairro>
+        <span>Endereço:</span>
+        <endereco>R° Marcelo de Alencar n° 12</endereco>
+        <span>Descrição da empresa:</span>
+        <descricaoEmpresa>Empresa de venda de imóveis desde 1901</descricaoEmpresa>
+        <span>Observação: </span>
+        <observacao>abrimos as 7h e fechamos as 17h</observacao>
+        <span>Contato:</span>
+        <contato>
+          <span> 21-12345-6789 </span>
+          <span> 21-12345-9876 </span>
+        </contato>
+        <info></info>
         <button>Adicionar</button>
       </form>
+    </div>
 <!---->
 
 <!--Listar produto-->
@@ -122,14 +147,7 @@ conferirStatusLogin();
          <quantidadeProdutos></quantidadeProdutos>
          produtos cadastrados.         
         </span>
-        <div class="painel">
-          <!--<div class="lista">
-            <div class="itens">
-              <img src="">
-                <h3>Nome do Produto</h3>
-            </div>
-          </div-->
-      </div>
+        <div class="painel"></div>
           <carregando class="desativado">Carregando...</carregando>
           <div class="setaBaixo desativado" >
             <img  src="/imgs/setaBaixo.png">
@@ -214,23 +232,53 @@ conferirStatusLogin();
       </div>      
 
 
-<!--mostrar dados do fornecedor-->
 
-  <produto>
-    
-  </produto>
 
 
 
 <!--Listar Fornecedor-->
       <div class="control desativado" id="formListarFornecedor">
+        <div class="confirmacao desativado">
+          <fechar></fechar>
+          <span>Realmente deseja excluir esse produto?</span>
+          <button>Excluir</button>
+        </div>
         <h2>Meus Fornecedores</h2>
-        <span class="spanEstilo1">Quantidade de fornecedores: 0</span>
+        <span class="spanEstilo1">Quantidade de fornecedores: <quantidadeFornecedor></quantidadeFornecedor></span>
         <h1 class="nenhumResultado desativado">Nenhum fornecedor para esse produto está cadastrado ainda.</h1>
         <div class="painel desativado">
-        <!--Código AJAX-->
         </div>
       </div>   
+
+<!--Informação do produto do fornecedor-->
+      <div id="contatoFornecedor" class="control desativado">
+        <div class="nomeProduto">
+          <voltar><img src="/imgs/voltar.png"/></voltar>
+          <h4></h4>
+        </div>
+          <span>Descrição Produto</span>
+          <div class="descricaoproduto"></div>
+          <span>Parcelamento</span>
+          <div class="parcelamento"></div>
+          <span>Valor</span>
+          <div class="valor"></div>
+          <span>Razão social</span>
+          <div class="razaosocial"></div>
+          <span>Endereço</span>
+          <div class="endereco"></div>
+          <span>Bairro</span>
+          <div class="bairro"></div>
+          <span>Estado</span>
+          <div class="estado"></div>
+          <span>Cep</span>
+          <div class="cep"></div>
+          <span>Contato</span>
+          <div class="contato"></div>
+          <span>Email</span>
+          <div class="email"></div>
+          <span>Cpnj</span>
+          <div class="cnpj"></div>
+      </div>
 
 <!--Configuração-->   
       <form id="formConfiguracao" class="control desativado">

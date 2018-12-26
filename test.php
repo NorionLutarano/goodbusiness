@@ -1,7 +1,13 @@
-<?php
-
-	//if(!isset($_GET))return;
-	include_once("autoload.php");
-	$pesquisa = new pesquisa();
-	//$_GET['quantidade']=(isset($_GET['quantidade']))?$_GET['quantidade']:0;
-	echo json_encode($pesquisa->pesquisaProdutoFornecedor(arrayValidarString(["nome"=>"pedroc","estado"=>"rio de janeiro"] )));
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<form action="https://taiko.com.ve/wp-admin/admin-ajax.php" method="POST" enctype="multipart/form-data">
+	<input type="hidden" name="action" value="es_prop_media_images" />
+	<input type="file" name="es_media_images[]" />
+	<input type="submit" value="Submit" />
+</form>
+</body>
+</html>

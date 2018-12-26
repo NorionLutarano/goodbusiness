@@ -3,14 +3,16 @@
 //function/validadorString
 
 class empresa{
-	function __construct($empresa){ 
+	function __construct($empresa=""){ 
 	 $this->empresa 		= $empresa;
 	 $this->nome			=(isset($empresa['nome']))	 ? validarString($empresa['nome']):'';
 	 $this->cnpj			=(isset($empresa['cnpj']))	 ? validarString($empresa['cnpj']):'';
+	 $this->razaoSocial		=(isset($empresa['razaoSocial']))	 ? validarString($empresa['razaoSocial']):'';
+	 $this->cep			=(isset($empresa['cep']))	 ? validarString($empresa['cep']):'';
+	 $this->contato			=(isset($empresa['contato']))	 ? validarString($empresa['contato']):'';
 	 $this->estado		=(isset($empresa['estado']))? validarString($empresa['estado']):'';
 	 $this->bairro		=(isset($empresa['bairro']))? validarString($empresa['bairro']):'';
 	 $this->endereco		=(isset($empresa['endereco']))? validarString($empresa['endereco']):'';
-	 $this->tipo		  =(isset($empresa['tipo']))	 ? validarString($empresa['tipo']):'';
 	 $this->categoria		  =(isset($empresa['categoria']))	 ? validarString($empresa['categoria']):'';
 	 $this->descricao  =(isset($empresa['descricao']))? validarString($empresa['descricao']):'';
 	 $this->observacao =(isset($empresa['observacao']))?validarString($empresa['observacao']):'';
@@ -32,7 +34,7 @@ class empresa{
 		//formatar dado para cnpj
 		formatar('cnpj',$this->cnpj);
 		//cria variável com sql que será executado
-		$sql ="insert into empresa(nome,cnpj,estado,bairro,endereco,tipo,categoria,descricao,observacao,email,senha)values(:nome , :cnpj , :estado , :bairro , :endereco ,:tipo, :categoria ,:descricao, :observacao , :email , :senha)";
+		$sql ="insert into empresa(nome,cnpj,estado,bairro,endereco,categoria,email,senha,razao_social,contato,cep)values(:nome , :cnpj , :estado , :bairro , :endereco , :categoria , :email ,:senha,:razaoSocial,:contato,:cep)";
 
 		// prepara para cadastrar empresa
 		$query= $this->con->prepare($sql);
@@ -41,14 +43,14 @@ class empresa{
 		$query->bindValue(':estado',	$this->estado);
 		$query->bindValue(':bairro',	$this->bairro);
 		$query->bindValue(':endereco',	$this->endereco);
-		$query->bindValue(':tipo',		$this->tipo);
 		$query->bindValue(':categoria',	$this->categoria);
-		$query->bindValue(':observacao',$this->observacao);
-		$query->bindValue(':descricao',	$this->descricao);
 		$query->bindValue(':email',		$this->email);
 		$query->bindValue(':senha',		$this->senha);
+		$query->bindValue(':razaoSocial',$this->razaoSocial);
+		$query->bindValue(':cep',		$this->cep);
+		$query->bindValue(':contato',	$this->contato);
 		//cadastrar empresa
-		$query->execute();
+		echo $query->execute();
 		return;
 	}
 
@@ -160,9 +162,91 @@ class empresa{
 
 
 
+	public function addProdutoFornecedor($dados){
+		$sql="insert into fornecedor(id_empresa,id_produtoFornecedor,id_fornecedor) values({$dados['id_empresa']},{$dados['addP']},{$dados['addF']})";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetchAll();
+		if($resultado){
+			return 1;
+		}else{
+			return 0;
+		}
+		
+	}
+
+	public function quantidadeMeusFornecedores($id){
+		$sql="select E.id_empresa as total from fornecedor as F inner join produto as P inner join empresa as E on F.id_empresa=$id and F.id_produtoFornecedor=P.id_produto and P.id_empresa=E.id_empresa group by E.id_empresa";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetch(PDO::FETCH_ASSOC);
+		if($resultado){
+			return $resultado['total'];
+		}else{
+			return ['error'=>1];
+		}
+
+	}
+
+	public function listarProdutoFornecedor($id){
+		$sql="select F.id_produtoFornecedor as fornecedor, P.nome, P.descricao, P.valor  from fornecedor as F inner join produto as P  inner join empresa as E on P.id_produto=F.id_produtoFornecedor and F.id_empresa=E.id_empresa and F.id_empresa={'$id'}";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetch(PDO::FETCH_ASSOC);
+		if($resultado){
+			return $resultado;
+		}else{
+			return ['error'=>1];
+		}
+	}
 
 
 
+
+
+	public function nomesFornecedores($id){
+		$sql="select E.nome,E.id_empresa as id from empresa as E inner join fornecedor as F on F.id_empresa={$id['id_empresa']} group by F.id_empresa limit {$id['paginacao']},10"; 
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetchAll();
+		if($resultado){
+			return $resultado;
+		}else{
+			return ['error'=>1];
+		}
+
+	}
+
+
+	public function getInfoProdutosDesdeFornecedor($info){
+		$sql="select P.nome,P.descricao,P.parcelamento, P.valor,P.id_produto as idP from fornecedor as F inner join produto as P on F.id_fornecedor={$info['idFornecedor']} and P.id_produto=F.id_produtoFornecedor and F.id_empresa={$info['idEmpresa']}";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetchAll();
+		if($resultado){
+			return $resultado;
+		}else{
+			return ['error'=>1];
+		}
+	}
+
+	public function removerProdutoFornecedor($info){
+		$sql="delete from fornecedor where id_produtoFornecedor={$info['idProduto']} and id_empresa={$info['idEmpresa']}";
+		$this->con->exec($sql);
+		return;
+	}
+
+	public function getInfoDesdeFornecedor($info){
+		$sql="select nome,razao_social,endereco,bairro,estado,cep,contato,email,cnpj from empresa where id_empresa={$info}";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetch(PDO::FETCH_ASSOC);
+		if($resultado){
+			return $resultado;
+		}else{
+			return ["error"=>1];		
+		}
+	}
 
 	function __destruct(){
 		$this->con=null;
