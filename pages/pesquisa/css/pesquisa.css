@@ -41,19 +41,22 @@ header form button{
 }
 
 
-header span {
+header a {
   font-family: Muli,arial;
   color:#777;
   margin:1rem 0.5rem;
   display: inline-block;
   cursor:default;
 }
+a:hover{
+  color:#777;
+}
 
 header ul{
   padding-top:0.5rem;
   list-style: none;
   padding-left: 0;
-  width: 32.4rem;
+  width: 40.8rem;
 }
 
 header ul li{
@@ -134,13 +137,13 @@ header ul li{
 }
 
 .produto .valor{
-  margin-top: 1.5rem;
+  margin-top: 1.05rem;
   color:#0F7;
   font-size: 1.2rem;
 }
 
 .filtro{
-  width: 15rem;
+  width: 16rem;
 }
 
 .filtro h4{
@@ -165,7 +168,7 @@ header ul li{
   padding:0.1rem 0.4rem;
   border:1px solid #AAA;
   background-color:white;
-  width:100%;
+  width:15rem;
   font-size:0.8rem;
 }
 
@@ -183,9 +186,14 @@ header ul li{
 .descricaoProduto {
   margin-top: 1rem;
   font-size:0.8rem;
+  height: 115.2px;
 }
 
-
+.menu{
+  width: 220px;
+  display: flex;
+  justify-content: end;
+}
 
 #info {
   position: relative;
@@ -196,23 +204,46 @@ header ul li{
 
 #info table{
   margin: auto;
-  text-align: left;
   font-family:Muli,arial;
 }
 
 #info table tr{
-  display: block;
+  display: flex;
   margin-bottom:1rem;
+  flex-direction: column;
+}
+
+tr{
+  margin: 1rem auto;
+  text-align: center;
+  width: 60%;
+}
+
+tr > td:first-of-type{
+  font-size:1.5rem;
+  background-color: #CCC;
 }
 
 #info caption{
   caption-side: top;
   font-size:1.5rem;
+  text-align:center;
+  padding:0.75rem 2.4rem;
 }
 
 #info img{
   position: absolute;
   right: 1rem;
-  top: 1rem;
+  top: 1.5rem;
   height: 20px;
+}
+
+#paginacao{
+  font-size: 2rem;
+  text-align: center;
+  box-shadow: 0px 1px 1px 2px #AAA;
+  height: 3rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: 1px solid #AAA;
 }

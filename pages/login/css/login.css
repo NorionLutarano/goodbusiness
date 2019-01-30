@@ -1,146 +1,191 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway');
+@import url('https://fonts.googleapis.com/css?family=Muli');
 body{margin:0;}
-header{
-    margin-bottom:3rem;
-    width: auto;
-    height: 45px;
-    display:flex;
-    justify-content: space-between;
-    background-color:#0984e3;
+
+a{
+  text-decoration: none;
 }
 
-header h1{
-  padding-left:1rem;
-  margin: 0 0.25rem;
-  font-size: 2rem;
-  font-family:Montserrat,Raleway,arial;
-  color:#FFF;
+header{
+  display: flex;
+  justify-content: end;
+}
+
+header a{
+  margin-top: 1rem;
+  margin-right: 1rem;
+  color:#777;
+  text-decoration: none;
+  font-family: Muli,arial;
+}
+
+ h1 {
+  margin-top: 0;
+  padding-left: 1rem;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 100;
+  font-family:Muli,arial;
+  color:#777;
+  cursor: default;
+}
+
+h1 > a{
+  color:#777;
+}
+
+ h1 > sub{
+  font-size: 0.9rem;
   font-weight: 100;
 }
 
+  main{
+    margin:2rem auto;
+    height:470px;
+    width:500px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom:1.5rem;
+  }
 
-header .buttonLogin {
-  height: 17px;
-  width: 80px;
+main > button{
   margin:auto;
-  margin-right: 10px;
-  font-size: 0.8rem;
-  font-family: Muli, arial;
-  color: white;
-  font-weight: 900;
-  border: 0;
-  cursor: pointer;
-  text-decoration:none;
-  }
+}
 
-  header .buttonLogin:hover{
-    color:#fff;
-  }
+form{
+  margin:auto;
+  padding:1rem;
+  width: 70%;
+  box-shadow: 0px 0px 2px 2px #BBB;
+}
 
-
-  main {
-      margin-top:5rem;
-      width:100%;
-      display:flex;
-      flex-flow: column nowrap;
-      flex-flow: column nowrap;
-  }
-
-  main > form{
-      position:relative;
-      padding:10px 1rem;
-      height:250px;
-      width:350px;
-      margin: 0.5rem auto;
-  }
-
-  main >form h2{
+  main > form  h2{
     margin-top:0;
-    font-family:helvetica;
+    font-family:arial;
     font-weight:100;
-    font-size:2.5rem;
+    font-size:2rem;
+  } 
+
+
+  main > form  input{
+    width:95%;
+    display:block;
+    margin-bottom:1rem;
+    padding:0.5rem;
+    border:1px solid #AAA;
   }
 
-  main > form input{
-      padding:0.40rem;
-      width:94%;
-      font-size:1rem;
-      font-family:arial;
-      font-weight:100;
-      padding:0.5rem;
-      border:1px solid #ccc;
-      margin-bottom:1rem;
-      display:block;
+main > form  textarea{
+  display: block;
+  width: 96%;
+  height: 80px;
+  border:1px solid #BBB;
+  resize:none;
+  font-size:0.8rem;
+  padding-top: 0.2rem;
+  padding-left:0.5rem;
+  margin-bottom:2rem;
+}
+
+  main > form  select{
+    padding:0.4rem;
+    padding-left:0.5rem;
+    width: 96%;
+    background-color:white;
+    margin-bottom:1rem;
+    border:1px solid #AAA;
+    font-size:0.8rem;
+    color:#888;
+  }
+
+  main > form  input.senha{
+    margin-right:0.25rem;
+    width: 40%;
+    display: inline-block;
+  }
+
+  main > form  input.confirmarSenha{
+    margin-left:1rem;
+    width: 41%;
+    display: inline-block;
   }
 
   main > form button{
-      padding:0.40rem;
-      font-size:1rem;
-      border:0;
-      font-family:Raleway,helvetica;
-      font-weight:100;
-      background-color:#58C6A4;
-      color:#fff;
-      cursor:pointer;
-  }
-  
-  main >form>  a{
-    margin-left:1rem;
-    text-decoration:none;
+    margin-top:0.5rem;
+    padding:0.5rem;
+    border:0;
     font-size:1rem;
-    font-family:Raleway,arial;
-    color:white;
-    font-weight: 100;
-    background-color: #58C6A4;
-    padding: 0.4rem;
+    color: #555;
+    background-color:#CFCFCF;
   }
 
-  main > form .esqueciSenha{
-    background-color: white;
-    color:#777;
+  .infoGeral{
+    display: inline-block;
+  }
+
+  .aviso{
+    float: right;
+    font-size: 0.9rem;
+    font-family: arial;
+    margin-right: 1rem;
+  }
+
+  .avisoSenha{
     display: block;
-    margin-left: 0;
-    padding: 0;
-    margin-top: 1rem;
-    cursor:default;
-    width: 135px;
-    font-family: Raleway,arial;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    font-family: Muli,arial;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+    color: red;
   }
 
   .alert{
     position: absolute;
-    top: 71%;
-    right:5%;
-    font-size:0.9rem;
-    color:red;
-    font-family: arial;
+    top: 12%;
+    left:41%;
+    height:50px;
+    width:450px;
   }
 
   .alert h2{
-    margin:0;
+    margin-top:0.5rem;
     font-family:arial;
-    font-size:0.9rem;
     font-weight:100;
+    text-align:right;
     color:#F44;
   }
 
   .borderRed{
     border: 1px solid red;
   }
-  
-  footer{
-    position:absolute;
-    left:0;
-    bottom:0;
-    height:20px;
-    width:100%;
-  
+
+
+#butoes{
+  margin:auto;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+#butoes > button{
+  margin:0 2rem;
+  font-size: 1rem;
+  border:0;
+  padding:0.5rem 1rem;
+  color:#fff;
+  font-family: Poppins,Muli,arial;
+  cursor:pointer;
+  background-color: #778899;
+}
+
+  .desativado{
+    display: none;
   }
 
-  footer span{
-    margin:0 1rem;
-    font-size:0.7rem;
-    font-family: arial;
-    color:#444;
-  }
+
+#tela {
+  margin: auto;
+  font-family: Muli,arial;
+  font-size: 1rem;
+  text-transform: capitalize;
+  cursor: pointer;
+}

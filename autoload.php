@@ -10,10 +10,13 @@ include_once("php/function/validadorCnpj.php");
 include_once("php/function/validarString.php");
 include_once("php/function/formatarString.php");
 include_once("php/function/statusLogin.php");
+include_once("php/function/usuarioEstaLogado.php");
+include_once("php/function/arrayVazio.php");
+include_once("php/function/existeChaves.php");
+include_once("php/function/codificar.php");
+include_once("php/function/decodificar.php");
+include_once("php/function/estaLogado.php");
 //serviços
 include_once("php/service/empresa.php");
 include_once("php/service/pesquisa.php");
 include_once("php/service/produto.php");
-
-
-?>

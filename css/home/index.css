@@ -3,12 +3,11 @@ header {
   padding-top: 0.8rem;
   display: flex;
   justify-content: flex-end;
-  background-color:#50a0f0;
 }
 
 header a{
   margin:0 1rem;
-  color: #fff;
+  color: #777;
   cursor: pointer;
   height: 20px;
   font-family: Muli,arial;
@@ -39,18 +38,18 @@ a span{
 }
 
 a:hover{
-  color:#fff;
+  color:#777;
   text-decoration: none;
+  border-bottom:1px solid #777;
 }
 
 header .buttonLogin {
   margin: 0 15px;
-  color: white;
   cursor: pointer;
   }
 
   header .buttonLogin:hover{
-    color:#fff;
+
   }
 
 main h1 {
@@ -75,6 +74,7 @@ main span {
   font-size: 4rem;
   font-family: Muli,arial; 
   color:#777;
+  font-weight: 100;
 }
 
 #home h1 sub{
@@ -99,15 +99,16 @@ main span {
   width: 80%;
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
-  border-top: 1px solid #AAA;
-  border-left: 1px solid #AAA;
-  border-bottom: 1px solid #AAA;
+  /*! border-top: 1px solid #AAA; */
+  /*! border-left: 1px solid #AAA; */
+  /*! border-bottom: 1px solid #AAA; */
   border-right:  border-top: 1px solid #AAA;;
   box-shadow: 0px 2px 2px 1px #ccc;
   font-size: 1.1rem; 
   padding-top: 4px;
   padding-left:10px;
   padding-bottom: 6px;
+  border: 0;
 }
 
 
@@ -166,11 +167,10 @@ footer span {
 .btn-style-2{
   display: inline-block;
   margin: 0;
-  background-color: #2DF;
+  background-color: #50a0f0;
   color: white;
   padding: 0.45rem;
 }
-/*# sourceMappingURL=index.css.map */
 
 #planos{
   display: none;

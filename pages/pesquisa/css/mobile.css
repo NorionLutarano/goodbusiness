@@ -1,0 +1,249 @@
+header{
+    margin-bottom:0rem;
+    width: auto;
+    height: 150px;
+    background-color:#fff;
+}
+
+header h1{
+  font-family: Muli,arial;
+  font-weight: 100;
+  width: 100%;
+  color:#555;
+  padding-left: 0.5rem;
+  font-size: 1.7rem;
+  margin-bottom: 0;
+  display: block;
+  box-shadow: 2px 2px 2px 0 #AAA;
+}
+
+header h1 sub{
+  font-size:0.7rem;
+}
+
+header form{
+  padding-top:1.5rem;
+  width: 100%;
+}
+
+header form input{
+  padding:0.5rem 0.5rem;
+  width: 22%;
+  border:0;
+}
+
+header form button{
+  border:0;
+  padding:0.25rem 0.75rem;
+  background-color: #1FC0CF;
+  color:white;
+}
+
+header .menu{
+  position: absolute;
+  right: 0.8rem;
+  top:0.5rem;
+  height: 30px;
+  width: 38px;
+  background-image: url("/imgs/menu.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.menu span{
+  display: none;
+}
+
+header span {
+  font-family: Muli,arial;
+  color:#777;
+  margin:1rem 0.5rem;
+  display: inline-block;
+  cursor:default;
+}
+
+header ul{
+  padding-top:0.5rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+header ul li{
+  float:right;
+  color:#777;
+  margin-left: 1rem;
+  display: inline-block;
+  cursor: default;
+}
+
+.listaProdutos{
+  width: 1100px;
+  padding-top: 3.2rem;
+}
+
+
+.grade{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: auto;
+}
+
+.gradeNoSpace{
+  display: flex;
+  flex-direction: row;
+}
+
+.gradeColumn{
+  display: flex;
+  flex-direction: column;
+}
+
+.estande{
+  padding-left:2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+.estande h1{
+  display: block;
+  margin:  auto;
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  font-family: Muli,arial;
+  font-weight: 100;
+}
+
+.produto{
+  height: 28rem;
+  width: 100%;
+  cursor:pointer;
+  margin-bottom: 2rem;
+}
+
+.produto img {
+  height: 14rem;
+  width: 200px;
+  float: left;
+}
+
+.produto span{
+  display: block;
+  font-family: Muli,arial;
+}
+
+.infoProduto .empresa{
+  margin-top: 0;
+  font-size:0.7rem;
+}
+ 
+.valor::before{
+  content: "R$ ";
+}
+
+.produto .nome{
+  font-size:1.5rem;
+  color:#555;  
+}
+
+.produto .valor{
+  margin-top: 1.05rem;
+  color:#0F7;
+  font-size: 1.2rem;
+}
+
+.filtro{
+  width: 16rem;
+  display: none;
+}
+
+.filtro h4{
+  margin-top:0;
+  text-align: center;
+  font-family: Muli,arial;
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+
+.filtro ul{
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.filtro ul li{
+  display: block;
+  margin:0.8rem 0;
+}
+
+.filtro input,select{
+  padding:0.1rem 0.4rem;
+  border:1px solid #AAA;
+  background-color:white;
+  width:15rem;
+  font-size:0.8rem;
+}
+
+.desativado{
+  display: none;
+}
+
+
+.infoProduto {
+  float: left;
+  width: 100%;
+  padding-left: 0.5rem;
+}
+
+.descricaoProduto {
+  margin-top: 1rem;
+  font-size:0.8rem;
+  height: 115.2px;
+  /*! width: 10px; */
+}
+
+.menu{
+  width: 220px;
+  display: flex;
+  justify-content: end;
+}
+
+#info {
+  position: relative;
+  width: 100%;
+  height:auto;
+}
+
+
+#info table{
+  margin: auto;
+  text-align: left;
+  font-family:Muli,arial;
+}
+
+#info table tr{
+  display: block;
+  margin-bottom:1rem;
+}
+
+#info caption{
+  caption-side: top;
+  font-size:1.5rem;
+}
+
+#info img{
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  height: 20px;
+}
+
+#paginacao{
+  font-size: 2rem;
+  text-align: center;
+  box-shadow: 0px 1px 1px 2px #AAA;
+  height: 3rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: 1px solid #AAA;
+}

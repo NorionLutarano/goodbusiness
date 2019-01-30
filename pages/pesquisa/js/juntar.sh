@@ -1,2 +1,7 @@
+#!/bin/bash
 rm app.js
-cat funcoes.js geral.js filtro.js header.js verEmpresa.js > app.js
+while [ 1 -lt 5 ]
+ do
+	cat funcoes.js geral.js form.js filtro.js paginacao.js header.js tabela.js > app.js
+ 	sleep 4
+ done

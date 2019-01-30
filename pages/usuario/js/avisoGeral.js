@@ -1,0 +1,1 @@
+$("#aviso img").on("click",()=>$("#aviso").addClass("desativado"));

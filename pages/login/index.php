@@ -1,76 +1,31 @@
 <?php 
- session_start();
- session_regenerate_id();
- if(isset($_SESSION['empresa'])) {
- 	header("Location: /pages/empresa/");
-	return;
- }
- require_once("../../autoload.php");
+	require_once("php/logar.php");
+	if(isset($_COOKIE['logado'])){
+		header("Location: /");
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Good Business</title>
-	<link rel="stylesheet" href="/pages/login/css/login.css">
+	<link rel="stylesheet" href="css/login.css">	
 </head>
 <body>
 	<header>
-		<h1>Good Business</h1>
+		<a href="/pages/cadastrar">Cadastrar</a>
 	</header>
 	<main>
-		<form action="/pages/login/php/logar.php" method="post">
-			<h2>Fazer Login</h2>
+		<form action="#" method="post">
+			<h1><a href="/">Lilium</a><sub>alfa</sub></h1>
 			<input type="text" 		placeholder="email" name="email">
 			<input type="password"  placeholder="senha" name="senha">
 			<button>enviar</button>
-			<a href="/pages/cadastrarEmpresa">cadastrar</a>
-			<a class="esqueciSenha" href="#">esqueci a senha</a>
-			<div class="alert"><?php statusLogin();?></div>
+			<span><?php echo $statusLogin;?></span>
 		</form>
+		<div id="tela">recuperar senha</div>
 	</main>
-	<footer>
-		<span>Condições de uso</span>
-		<span>Política de privacidade</span>
-	</footer>
-	<script type="text/javascript" >
-		document.querySelector("h1").onclick=function(){
-			window.location.href="/";
-		};
-
-
-		window.onload=function(){
-			//função conferir se estão sendo enviados dados
-			document.forms[0].onsubmit=function(evento){
-				//cancela o evento de submit
-				evento.preventDefault();
-				// controle do submit
-				var formCompleto=true;
-				// obtém array dos inputs
-			 	var input= document.querySelectorAll("input");
-			 	// salva referência do alert
-			 	var alerta =document.querySelector('.alert');
-			 	
-				//verifica se os inputs foram preenchidos
-			 	input.forEach(function(dados){
-			 		if(!dados.value){
-			 		 alerta.innerHTML="";
-			 		 alerta.innerHTML="<h2> Preencha todos os campos</h2>";
-			 		 dados.classList.add("borderRed");
-			 		 formCompleto=false;
-			 		 return;
-			 		}
-			 	});
-			 	console.log(formCompleto);
-			 	
-			 	if(formCompleto){
-					document.forms[0].submit();	
-			 	}else{
-			 		return;
-			 	}
-			 	
-
-			};
-		};
-	</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

@@ -20,6 +20,9 @@ class empresa{
 	 $this->senha		= (isset($empresa['senha']))	 ? $empresa['senha']:'';
 	 $this->senha 		= hash('whirlpool', $this->senha);
 	 $this->con 			= (isset($GLOBALS['con']))	? $GLOBALS['con']:$empresa['con'];
+	 if(isset($empresa['email']) and isset($empresa['senha'])){
+	 	$this->id=$this->getId();
+	 }
 	}
 
 	public function cadastrar(){
@@ -29,10 +32,10 @@ class empresa{
 		if($this->emailJaCadastrado($this->email)){return "emailJáCadastrado";}
 		//verifica cnpj informado é válido
 		if(!validarCnpj($this->cnpj)){return "cnpjInválido";}
+		//verifica cnpj informado é válido
+		if(preg_match('/[a-zA-Z]/', $this->cep)){return "cepInválido";}
 		//verifica se email é válido
 		if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){ return "emailInválido";}
-		//formatar dado para cnpj
-		formatar('cnpj',$this->cnpj);
 		//cria variável com sql que será executado
 		$sql ="insert into empresa(nome,cnpj,estado,bairro,endereco,categoria,email,senha,razao_social,contato,cep)values(:nome , :cnpj , :estado , :bairro , :endereco , :categoria , :email ,:senha,:razaoSocial,:contato,:cep)";
 
@@ -49,8 +52,6 @@ class empresa{
 		$query->bindValue(':razaoSocial',$this->razaoSocial);
 		$query->bindValue(':cep',		$this->cep);
 		$query->bindValue(':contato',	$this->contato);
-		//cadastrar empresa
-		echo $query->execute();
 		return;
 	}
 
@@ -90,7 +91,7 @@ class empresa{
 
 	public function dadosLogin(){
 		//cria o comando sql a ser executado
-		$sql="select id_empresa from empresa where email=:email and senha=:senha";
+		$sql="select id_empresa, nome from empresa where email=:email and senha=:senha";
 		//prepara o comando a ser executado no banco de dados
 		$query=$this->con->prepare($sql);
 		//set as variáveis no comando sql e executa no banco de dados
@@ -161,12 +162,33 @@ class empresa{
 	}    
 
 
+	public function criarLinkRecuperarSenha($dado){
+		$sql="insert into recuperarSenha(id_empresa,email,link,dataReset) 
+		values ({$dado['id_empresa']},{$dado['email']},{$dado['link']},now())";
+		$query=$this->con->prepare($sql);
+		return $query->execute();
+	}
+
+
+	public function getDado($dado){
+		$sql ="select {$dado} from empresa where id_empresa=:id_empresa";
+    	$query=$this->con->prepare($sql);
+    	$query->bindValue(":id_empresa",$this->id);
+    	$query->execute();
+    	$resultado=$query->fetch(PDO::FETCH_ASSOC);
+    	if($resultado){
+    		return $resultado[$dado];
+    	}else{
+    		return '';
+    	}
+	}
+
 
 	public function addProdutoFornecedor($dados){
 		$sql="insert into fornecedor(id_empresa,id_produtoFornecedor,id_fornecedor) values({$dados['id_empresa']},{$dados['addP']},{$dados['addF']})";
 		$query=$this->con->prepare($sql);
 		$query->execute();
-		$resultado=$query->fetchAll();
+		$resultado=$query->fetchAll(PDO::FETCH_ASSOC);
 		if($resultado){
 			return 1;
 		}else{
@@ -176,14 +198,15 @@ class empresa{
 	}
 
 	public function quantidadeMeusFornecedores($id){
-		$sql="select E.id_empresa as total from fornecedor as F inner join produto as P inner join empresa as E on F.id_empresa=$id and F.id_produtoFornecedor=P.id_produto and P.id_empresa=E.id_empresa group by E.id_empresa";
+		$sql="select F.id_fornecedor as total from fornecedor as F where F.id_empresa={$id} group by F.id_fornecedor";
 		$query=$this->con->prepare($sql);
 		$query->execute();
-		$resultado=$query->fetch(PDO::FETCH_ASSOC);
+		$resultado=$query->fetchAll(PDO::FETCH_ASSOC);
 		if($resultado){
-			return $resultado['total'];
+			return count($resultado);
 		}else{
-			return ['error'=>1];
+
+			return 0;
 		}
 
 	}
@@ -201,14 +224,22 @@ class empresa{
 	}
 
 
+	public function getId(){
+		$sql="select id_empresa from empresa where email={$this->email} and senha={$this->senha}";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetch(PDO::FETCH_ASSOC);
+		return ($resultado)?$resultado:'';
+	}
+
 
 
 
 	public function nomesFornecedores($id){
-		$sql="select E.nome,E.id_empresa as id from empresa as E inner join fornecedor as F on F.id_empresa={$id['id_empresa']} group by F.id_empresa limit {$id['paginacao']},10"; 
+		$sql="select E.nome,E.id_empresa as id from empresa as E inner join fornecedor as F on F.id_empresa={$id['id_empresa']} and F.id_fornecedor=E.id_empresa group by E.id_empresa limit {$id['paginacao']},10"; 
 		$query=$this->con->prepare($sql);
 		$query->execute();
-		$resultado=$query->fetchAll();
+		$resultado=$query->fetchAll(PDO::FETCH_ASSOC);
 		if($resultado){
 			return $resultado;
 		}else{
@@ -222,7 +253,7 @@ class empresa{
 		$sql="select P.nome,P.descricao,P.parcelamento, P.valor,P.id_produto as idP from fornecedor as F inner join produto as P on F.id_fornecedor={$info['idFornecedor']} and P.id_produto=F.id_produtoFornecedor and F.id_empresa={$info['idEmpresa']}";
 		$query=$this->con->prepare($sql);
 		$query->execute();
-		$resultado=$query->fetchAll();
+		$resultado=$query->fetchAll(PDO::FETCH_ASSOC);
 		if($resultado){
 			return $resultado;
 		}else{
@@ -246,6 +277,21 @@ class empresa{
 		}else{
 			return ["error"=>1];		
 		}
+	}
+
+	public function produtosMeuFornecedor($dados){
+		$sql = "select p.nome, p.id_produto as idP from fornecedor as f inner join produto as p on f.id_empresa={$dados['ident']} and f.id_fornecedor=p.id_empresa and f.id_fornecedor={$dados['idF']} and f.id_produtoFornecedor=p.id_produto";
+		$query=$this->con->prepare($sql);
+		$query->execute();
+		$resultado=$query->fetchAll(PDO::FETCH_ASSOC);
+		return ($resultado)?$resultado:["error"=>1];
+	}
+
+	public function excluirProdutoMeuFornecedor($dados){
+		$sql= "delete from fornecedor where id_empresa={$dados['idE']} and 
+		id_produtoFornecedor={$dados['idP']}";
+		$query=$this->con->prepare($sql);
+		return ($query->execute())?"Excluido com sucesso.":json_encode(['error'=>1]);
 	}
 
 	function __destruct(){

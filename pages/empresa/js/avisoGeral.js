@@ -1,1 +1,0 @@
-$(".avisoGeral fechar").on("click",()=>$(".avisoGeral").addClass("desativado"));

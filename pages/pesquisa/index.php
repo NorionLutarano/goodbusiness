@@ -1,12 +1,12 @@
-<?php 
-	$_GET['estado']				=(isset($_GET['estado']))		?$_GET['estado']:'';
-	$_GET['bairro']				=(isset($_GET['bairro']))		?$_GET['bairro']:'';
-	$_GET['frete']				=(isset($_GET['frete']))		?$_GET['frete']:'';
-	$_GET['parcelamento']		=(isset($_GET['parcelamento']))	?$_GET['parcelamento']:'';
-	$_GET['promocao']			=(isset($_GET['promocao']))	?$_GET['promocao']:'';
-	$_GET['tipoProduto']		=(isset($_GET['tipoProduto']))	?$_GET['tipoProduto']:'';
-	$_GET['pesquisarPor']		=(isset($_GET['pesquisarPor']))?$_GET['pesquisarPor']:'produto';
-	$_GET['tipoLoja']			=(isset($_GET['tipoLoja']))?$_GET['tipoLoja']:'';
+<?php
+	require_once("php/funcoes.php"); 
+	if(isset($_GET)){
+
+		foreach ($_GET as $key => $value) {
+				$_GET[$key]=(isset($value))?$value:'';
+				
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +31,24 @@
 		 <input  name="frete"    		id="inputFrete" 		type="hidden" value="<?php echo $_GET['frete']; ?>"/>
 		 <input  name="parcelamento" 	id="inputParcelamento" 	type="hidden" value="<?php echo $_GET['parcelamento']; ?>"/>
 		 <input  name="promocao" 		id="inputPromocao" 		type="hidden" value="<?php echo $_GET['promocao']; ?>"/>
-		 <input  name="tipoLoja"		id="inputTipoLoja" 		type="hidden" value="<?php echo $_GET['tipoProduto']; ?>" />
+		 <input  name="tipoLoja"		id="inputTipoLoja" 		type="hidden" value="<?php echo $_GET['tipoLoja']; ?>" />
 		 <input  name="tipoProduto"		id="inputTipoProduto" 	type="hidden" value="<?php echo $_GET['tipoProduto']; ?>"/>
-		 <input  name="pesquisarPor" 	id="inputPesquisarPor" 	type="hidden"
-		  value="<?php echo $_GET['pesquisarPor'];?>" />
+		 <input  name="pesquisarPor" 	id="inputPesquisarPor" 	type="hidden" value="<?php echo $_GET['pesquisarPor'];?>" />
+		 <input  name="fabricante" 		id="inputFabricante" 	type="hidden" value="<?php echo $_GET['fabricante'];?>" />
+		 <input  name="modelo" 			id="inputModelo" 		type="hidden" value="<?php echo $_GET['modelo'];?>" />
+		 <input  name="paginacao" 		id="inputPaginacao" 	type="hidden" value="<?php echo $_GET['paginacao'];?>" />
 		</form>
 		<div class="menu">
-			<span>Cadastrar</span>
-			<span  class="login">Fazer Login</span>
-			<span></span>
-			<img class="imagemEmpresa">
+			<?php
+				menuLogado();
+			?>
+
 		</div>
 	  </div>
 	  <div class="grade">
 		<ul>
 			<li class="pesquisarPor opcaoFornecedor" >Fornecedor</li>
+			<li class="pesquisarPor opcaoEstabelecimento" >estabelecimento</li>
 			<li class="pesquisarPor opcaoLoja" >Lojas</li>
 			<li class="pesquisarPor opcaoProduto" >Produto</li>
 		</ul>
@@ -113,9 +116,17 @@
 					<input type="text" id="tipoProduto" placeholder="Tipo do produto: livro, Ração..." 
 					value="<?php echo $_GET['tipoProduto'];?>">
 				</li>
+				<li class="opcaoFiltroProduto">
+					<input type="text" id="fabricante" placeholder="fabricante do produto se houver" 
+					value="<?php echo $_GET['fabricante'];?>">
+				</li>
+				<li class="opcaoFiltroProduto">
+					<input type="text" id="modelo" placeholder="Modelo do produto se houver" 
+					value="<?php echo $_GET['modelo'];?>">
+				</li>								
 				<!--Fim do Produto-->
 				<!--loja-->
-				<li class="opcaoFiltroLoja">
+				<li class="opcaoFiltroLoja" style="display: none;">
 					<input type="text" id="tipoLoja" placeholder="Tipo da loja: restaurante,mercado..." 
 					value="<?php echo $_GET['tipoLoja'];?>">
 				</li>
@@ -126,32 +137,8 @@
 		<div class="listaProdutos gradeColumn">
 			<div id="info" class="desativado">
 				<img src="/imgs/x.png">
+				<a  class="desativado"></a>
 				<table>
-					<caption>Nome empresa</caption>
-					<tr>
-						<td>Cnpj:</td>
-						<td>127.159.987-78</td>
-					</tr>
-					<tr>
-						<td>endereço:</td>
-						<td>Rua de meia noite</td>
-					</tr>
-					<tr>
-						<td>Bairro:</td>
-						<td>Cascadura</td>
-					</tr>
-					<tr>
-						<td>Estado:</td>
-						<td>Rio de janeiro</td>
-					</tr>
-					<tr>
-						<td>Cep:</td>
-						<td>21498-78</td>
-					</tr>
-					<tr>
-						<td>Contato:</td>
-						<td>(21)3878-8778 (21)1459-9878</td>
-					</tr>
 				</table>
 			</div>
 			
@@ -164,7 +151,7 @@
 					 }
 					geral();	
 				?>
-
+				<div id="paginacao" class="desativado">+</div>
 			</div>
 			
 		</div>

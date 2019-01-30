@@ -1,0 +1,943 @@
+@import url('https://fonts.googleapis.com/css?family=Muli|Raleway');
+header{
+    height: 58px;
+    width: 100%;
+    background-color: #4876FF;
+    display:flex;
+    justify-content: space-between;
+}
+
+header .titulo{
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+    font-family: Muli,Raleway,arial;
+    font-size: 1.9rem;
+    font-weight:100;
+    color: #fff;
+    cursor:default;
+}
+
+header > .titulo> sub{
+    font-size: 0.8rem;
+}
+
+header > .responsavel{
+    margin-right:1rem;
+    display:flex;
+    height: 100%;
+}
+
+header > .responsavel > img{
+    margin-top:0.25rem;
+    height: 50px;
+    width: 50px;
+    background-color:white;
+    border-radius:100px; 
+}
+
+header > .responsavel > h2::before{
+    content: "Bem vindo,";
+    font-size:0.9rem;
+    font-weight:100;
+    display:block;
+    color:#AAA;
+}
+
+header > .responsavel > h2{
+    margin-top:0.5rem;
+    margin-left: 1.2rem;
+    font-size:0.9rem;
+    font-weight:100;
+    color:white;
+}
+
+header > span{
+    display:block;
+    margin-right: 1.5rem;
+    margin-top:0.9rem;
+    color: #fff;
+    font-weight:100;
+    font-size:1rem;
+}
+
+
+header ul{
+    padding-left:0;
+    list-style:none;
+}
+
+header > ul > li{
+    margin-bottom:1rem;
+    padding-left:1rem;
+    color:white;
+    cursor:pointer;
+    font-size:0.85rem;
+}
+
+
+main{
+    width: 1345px;
+}
+
+
+main > .menu{
+    float:left;
+    padding-left:0.5rem;
+    width: 218px;
+    list-style:none;
+    margin-top: 0;
+    height: 569px;
+    padding-top: 1rem;
+}
+
+main > .menu > h2{
+    font-size:2rem;
+    font-family: arial;
+    font-weight: 100;
+    cursor: default;
+    text-transform: uppercase;
+    color: #454847;
+}
+
+main > .menu > li,a{
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color:#787596;
+    cursor: pointer;
+}
+
+main > .menu > li >.subMenu{
+    list-style: none;
+    padding-left:10px;
+}
+
+main > .menu > li >.subMenu > li{
+    line-height: 35px;
+}
+
+main .conta{
+    padding-top:10px;
+    padding-right:15px;
+    display: flex;
+    justify-content:flex-end;
+}
+
+.conta >img{
+    margin-right:10px;
+    height:40px;
+    border-radius:100px;
+}
+
+.conta > span{
+    margin-top:0.5rem;
+    font-size:0.8rem;
+    cursor: pointer;
+    color:#444;
+}
+
+
+.infoGerais{
+    margin-top:1rem;
+    margin-bottom:2rem;
+    height: 88px;
+    width: 1117px;
+    color:#73879C;
+    display: flex;
+    float: right;
+}
+
+.infoEmpresa{
+    float: left;
+    padding-top: 10rem;
+    width: 1117px;
+}
+
+.container{
+    height:100%;
+    width: 16%;
+    display:inline-block;
+}
+
+
+.container:first-child{
+    border:0;
+}
+
+.container > span:first-child{
+    display:block;
+    font-size:0.8rem;
+}
+
+.container > span:nth-child(2){
+    display:block;
+    font-size: 40px;
+    font-weight:900;
+}
+
+
+.container > span:last-child{
+    display:block;
+}
+
+.container > .subiu::after{
+      content:" subiu";
+      color:#07A075;
+}
+
+.container > .queda::after{
+      content:" queda";
+      color:#F70045;
+}
+
+
+.infoEmpresa > .tituloGrafico{
+    margin-left: 0.5rem;
+    font-size:2.5rem;
+    font-family:arial;
+    font-weight:100;
+    color:#507987;
+    cursor:default;
+}
+
+.green{
+  color:#1ABB9C;
+}
+
+.red{
+  color:#f50755;
+}
+
+.desativado{
+    display: none;
+}
+
+#infoGeral{
+    width: 1125px;
+    float: left;
+    height: auto;
+}
+
+
+
+
+form  span{
+    font-family: arial;
+    font-size: 0.9rem;
+    display: block;
+    color:#555;
+}
+
+form  h2{
+  font-family: Raleway,arial;
+  font-size:1.5rem;
+  font-weight: 100;
+  margin-top: 1rem;
+}
+
+form  select{
+    padding-top:0.40rem;
+    padding-bottom:0.5rem;
+    width: 8rem;
+    border:1px solid #AAA;
+    background-color: white;
+    color:#777;
+    margin-bottom: 0.5rem;
+}
+
+form  textarea{
+  margin-bottom: 0.75rem;
+  padding: 0.25rem;
+  border:1px solid #AAA;
+  width: 50rem;
+}
+
+form  input{
+  padding:0.25rem;
+  width: 50rem;
+  border:1px solid #AAA;
+  margin-bottom: 1rem;
+}
+
+
+form  button{
+  margin:0.5rem 0;
+  border:0;
+  padding: 0.25rem 1rem;
+  background-color: #0F78FF;
+  color:white;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: block;
+  font-family: Raleway,arial;
+}
+
+#formCadastrarFilial {
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
+#formCadastrarFilial  input{
+    margin-bottom: 1rem;
+    border:1px solid #bbb;
+    display: block;
+    width: 34rem;
+}
+
+#formCadastrarFilial textarea{
+    width: 68rem;
+    height: 81px;
+}
+
+#formCadastrarFilial div{
+    display: inline-block;
+}
+
+
+
+.pesquisa {
+  padding-top: 0.5rem;
+}
+
+.pesquisa > input{
+  width: 54rem;
+  padding:0.44rem;
+  border-right: 0;
+  margin-right: -5px;
+}
+
+.pesquisa > button{
+  padding-top: 0.1rem;
+  padding-bottom:0.35rem;
+  display: inline-block;
+}
+
+.painel{
+  margin-top:1rem;
+  width: 68rem;
+} 
+
+#formListarFornecedor h2{
+  font-family: Muli,arial;
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
+.lista {
+  padding-top: 1rem;
+  display: flex;
+}
+
+.lista >.itens{
+  width: 19%;
+  height: 250px;
+  margin-right: 1%;
+  cursor:default;
+}
+
+.lista >.itens:last-of-type{
+  margin-right: 0;
+}
+
+.itens > img{
+  height: 200px;
+  width: 100%;
+  background-color: #CCC;
+}
+
+
+.itens h3{
+  font-size:1rem;
+  font-weight: 100;
+  text-align: center;
+  font-family: Raleway;
+  margin:0;
+}
+
+
+.itens h4{
+  margin:0;
+  color:#0F9;
+  text-align: center;
+  font-size:0.85rem;
+  font-family: arial;
+  font-weight: 100;
+}
+
+.itens h4::before{
+  content:"R$ ";
+}
+
+.filial {
+  list-style: none;
+  padding: 10px;
+  border:1px solid #AAA;
+  display:flex;
+  justify-content:space-between;
+}
+
+.filial >li:first-of-type{
+  margin-top: 0.5rem;
+}
+
+.filial >li:last-of-type{
+  margin:0;
+}
+
+.filial >li{
+  margin:0 1rem;
+  display: inline-block;
+}
+
+.filial button{
+  margin-top: 5px;
+  padding:5px 10px;
+  font-size:1rem;
+  background-color: #70F0F0;
+  color:#fff;
+  border:0;
+  cursor:pointer;
+}
+#formCadastrarProduto{
+  margin-bottom: 1rem;
+  font-family: Raleway,Muli,arial;
+}
+#formCadastrarProduto img{
+    height: 43px;
+    width: 50px;
+    cursor: pointer;
+}
+#formCadastrarProduto input{
+  margin-bottom: 1rem; 
+  /*! width: 35rem; */
+}
+
+#formCadastrarProduto textarea{
+  margin-bottom: 1rem; 
+  /*! width: 35rem; */
+}
+
+#formCadastrarProduto select{
+  width: 50rem;
+}
+
+#formConfiguracao{
+    margin-bottom:1rem;
+}
+
+#formConfiguracao div{
+  padding-right: 1rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  width: 47%;
+}
+
+#formConfiguracao textarea{
+    width: 100%;
+}
+
+#formConfiguracao input{
+    width: 100%;
+}
+
+#formConfiguracao select{
+    width: 46%;
+}
+#formConfiguracao button{
+    display: inline-block;
+}
+#formConfiguracao button:last-of-type{
+    margin-right: 2rem;
+}
+
+.error{
+    margin-left:1rem;
+    font-size: 0.9rem;
+    color:red;
+}
+
+.success{
+    margin-left:1rem;
+    font-size: 0.9rem;
+    color:green;
+}
+
+
+.subAviso {
+  display: inline-block;
+  bottom:0;
+}
+
+
+.spanEstilo1{
+    font-family: Muli,arial;
+    font-size: 0.9rem;
+    display: block;
+    color:#555;
+}
+
+
+.setaBaixo{
+  width: 96.5%;
+  height: 35px;
+  display: none;
+  justify-content: center;
+  margin: 2rem 0;
+  background-color: #009FFF;
+  cursor: pointer;
+  padding-top: 0.25rem;
+}
+
+.setaBaixo > img{
+  width:20px;
+  height: 24px;
+  padding-top: 0.25rem;
+}
+
+
+carregando{
+  font-size: 1.7rem;
+  color: #7060ff;
+  font-family:Muli, Raleway,arial;
+}
+
+.info{
+    background-color: #0CF;
+    width: 100%;
+    display: inline-block;
+    padding: 1rem;
+    color: #FFF;
+    font-weight: 900;
+    cursor: default;
+}
+
+
+
+
+#formAdicionarFornecedor {
+  font-size:0.85rem;
+  font-family:Muli,arial;
+}
+
+#formAdicionarFornecedor table{
+    margin:1rem 0;
+}
+
+#formAdicionarFornecedor table tr{
+    margin:0.8rem 0;
+    display: block;
+}
+
+#formAdicionarFornecedor table th{
+    padding-left:0.8rem;
+}
+
+#formAdicionarFornecedor valor::before{
+    content: "R$ ";
+}
+
+#formAdicionarFornecedor > span{
+  margin-top:1rem;
+}
+
+
+imagemproduto {
+ display: block;
+ border:1px solid #CCC;
+ margin-top: 1rem;
+ padding:0.25rem 0.5rem;
+}
+
+nomeProduto{
+  font-size:2rem;
+  display: flex; 
+}
+imagemproduto img{
+  width:10rem;
+  height: 10rem;
+  border-radius: 5rem;
+}
+
+
+nomeproduto span{
+  margin-left:1rem;
+  font-size:1.5rem;
+  margin-top: 0.5rem;
+}
+
+ voltar img{
+ width: 2.5rem;
+}
+
+contato >span{
+  font-size:1.5rem;
+  font-family:arial;
+  font-weight: 100;
+}
+
+.Sucess{
+  margin:1rem 0;
+  font-size:1.7rem;
+  font-weight: 100;
+  background-color:#0CC;
+  padding-left:1rem;
+  color:#FFF;
+  cursor: default;
+  font-family: Raleway,arial;
+}
+
+.Error{
+  margin:1rem 0;
+  font-size:1,7rem;
+  font-weight: 100;
+  background-color:#F00;
+  padding-left:1rem;
+  color:#FFF;
+  cursor: default;
+  font-family: Raleway,arial;
+}
+
+
+.avisoGeral {
+    top:15%;
+    left: 30%;
+    width: 50%;
+    height: 75px;
+    position: fixed;
+    background-color: white;
+    border:1px solid #AAA;
+}
+
+.avisoGeral span{
+    text-align: center;
+    margin-top: 1rem;
+    font-size:1.7rem;
+    display: block;
+}
+fechar {
+    position: absolute;
+    top:2.25rem;
+    right: 0.5rem;
+    float:right;
+    background-image: url("/imgs/x.png");
+    height: 30px;
+    width: 60px;
+    background-size: 35px 30px;
+    background-repeat: no-repeat;
+}
+fechar img{
+    height: 15px;
+}
+
+
+
+
+.nomeFornecedor {
+  padding:0.5rem;
+  background-color: #00BFFF;
+  color:white;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nomeFornecedor img{
+    height: 32px;
+    width: 40px;
+}
+
+.fornecedores {
+  display:flex;
+  flex-direction:column;
+  cursor: default;
+  font-family: Muli,arial;
+  margin-bottom: 1rem;
+}
+
+.descricao {
+  width:40rem;
+  text-align:center;
+  margin:auto;
+}
+.valor:before{
+ content:"R$ "; 
+}
+.valor{
+  margin: auto;
+}
+.resumoProdutos {
+  display: flex;
+  padding:0.5rem;
+  border:1px solid #AAA;
+  cursor: pointer;
+  width: 1088px;
+  height: 65px;
+  margin-bottom: 1rem;
+  font-family: Muli,arial;
+  font-size: 1.25rem;
+}
+
+.resumoProdutos:last-of-type{
+  margin-bottom: 1rem;
+}
+
+.resumoProdutos .produto{
+    width: 1000px;
+    display: flex;
+}
+
+
+.descricaoproduto {
+  padding-left: 1rem;
+}
+
+.botao {
+ border:0;
+ background-color: #07F;
+ color:white;
+ cursor: pointer;
+}
+.botao-red {
+  background-color: #f00;
+  border: 0;
+  color: white;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+}
+.confirmacao {
+  position:fixed;
+  top:9%;
+  left:16%;
+  width:71rem;
+  height:37rem;
+  background-color:white;
+  z-index: 999;
+  padding-top: 4rem;
+}
+.confirmacao > span{
+  display:block;
+  margin-top:1rem;
+  font-size:3rem;
+  text-align:center;
+  font-family: Raleway,arial;
+  font-weight: 100;
+}
+.confirmacao > button{
+  margin: 2rem auto;
+  display: block;
+  background-color:#F44;
+  border:0;
+  color:white;
+  padding:0.25rem 3rem;
+  font-size:1.25rem;
+}
+
+.btn-style-1{
+  background-color: #05F;
+  border:0;
+  color:white;
+  font-family:Raleway,arial;
+  z-index: 99;
+  cursor:default;
+  font-size: 1rem;
+}
+
+#contatoFornecedor span{
+  margin-top: 1rem;
+  display: block;
+  font-size:1rem;
+  font-family: Raleway,arial;
+  font-weight: 100;
+  background-color: #999;
+  color: white;
+  padding-left: 1rem;
+}
+.nomeProduto {
+  margin:auto;
+}
+
+#contatoFornecedor voltar{
+  margin-right:1rem;
+}
+#contatoFornecedor .valor{
+  font-size:1.15rem;
+  font-family: Montserrat,arial;
+  padding-left: 0.5rem;
+}
+
+#contatoFornecedor{
+  margin:1rem 0;
+  font-family: Montserrat,arial;
+  font-size:1rem;
+  border:1px solid #CCC;
+   box-shadow: 1px 10px 10px 5px #AAA;
+  padding: 1rem 0;
+}
+
+#contatoFornecedor div:not(.nomeProduto){
+    padding-left:1rem;
+}
+
+#contatoFornecedor .nomeProduto{
+    margin: 0.25rem 1rem;
+}
+
+#contatoFornecedor span{
+    padding-left: 0.5rem;
+}
+
+#contatoFornecedor h4{
+  display: inline-block;
+  font-family: Raleway,arial;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 1.7rem;
+}
+
+
+#menu{
+    margin-top: 1rem;
+    margin-right: 1rem;
+    width: 50px;
+    height: 25px;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+#menu div{
+    height: 2px;
+    background-color: #777;
+}
+
+input{
+    font-size:0.8rem;
+}
+
+#aviso{
+    position: fixed;
+    top: 28%;
+    height: auto;
+    width: 80%;
+    background-color:white;
+    border:1px solid #BBB;
+}
+
+#aviso #mensagem{
+  position: relative;
+}
+#aviso button{
+  display:block;
+   border:0;
+   color:white;
+   margin:0.5rem auto;
+   padding:0.5rem;
+   font-size:1.25rem;
+}
+
+#aviso img{
+    top:1rem;
+    width: 15px;
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+}
+
+#aviso h4{
+    margin-top: 1rem;
+    text-align: center;
+    font-family: Muli,arial;
+    font-size: 2rem;
+    font-weight: 100;
+    margin-bottom: 1rem;
+    padding: 0 2.2rem;
+}
+
+#infoProduto img{
+    display: block;
+    margin: 1rem auto;
+    height: 250px;
+}
+
+#infoProduto  input{
+    display: block;
+}
+
+#infoProduto textarea{
+    resize: none;
+    font-size: 0.9rem;
+    font-family: Muli,arial;
+}
+
+#infoProduto select{
+    padding-left: 0.5rem;
+    width: 100%;
+}
+
+#infoProduto form{
+    width: 50.5rem;
+    margin: auto;
+}
+#infoProduto button{
+    display: inline-block;
+    cursor:pointer;
+}
+#infoProduto button:last-of-type{
+    margin-left: 2rem;
+    background-color: red;
+}
+
+
+.butoes{
+    margin:1rem auto;
+    width:51rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.butoes button{
+    font-size:1.1rem;
+    padding:0.5rem 1rem;
+    color:white;
+    font-family: Muli,arial;
+    border:0;
+    background-color: #45A5f8;
+}
+
+
+.tableProduto{
+  width: 100%;
+  font-family: Muli,arial;
+  font-size: 0.9rem;
+}
+
+.tableProduto table{
+  width: 100%;
+  position: relative;
+}
+
+.tableProduto tr{
+  width: 100%;
+  display: block;
+}
+
+.tableProduto th{
+  width: 100%;
+  display: block;
+  padding: 0 1rem;
+  background-color: #CCD;
+  position: relative;
+  text-align: center;
+  border-bottom:2px solid white;
+}
+
+
+
+.tableProduto th img{
+  width: 11px;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  cursor: pointer;
+}

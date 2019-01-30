@@ -1,13 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<form action="https://taiko.com.ve/wp-admin/admin-ajax.php" method="POST" enctype="multipart/form-data">
-	<input type="hidden" name="action" value="es_prop_media_images" />
-	<input type="file" name="es_media_images[]" />
-	<input type="submit" value="Submit" />
-</form>
-</body>
-</html>
+<?php
+function decodificar($id){	
+	return substr(substr($id, 8,strlen($id)),0,-8);
+}
+
+
+
+function codificar($id){
+	return random_int(10000000, 99999999).$id.random_int(10000000, 99999999);
+}
+
+
+function usuarioEstaLogado(){
+ return isset($_COOKIE['logado']) and $_COOKIE['logado']===sha1(decodificar($_COOKIE['ident']).$_SERVER['REMOTE_ADDR']."30");
+};
+
+
+
+
+	echo str_replace('/pages/usuario','', "/var/www/html/pages/usuario/imgsEmpresa");
+
+
+
+	echo "<hr> <br> ainda";

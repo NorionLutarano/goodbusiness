@@ -16,12 +16,15 @@ if($_GET['pesquisarPor']==="produto"){
 		return;
 	}
 	$resultado=$pesquisa->produto($_GET);
-	retornaVazio($resultado,"<h1>Esse produto ainda não foi cadastrado.</h1>");
+	
+	if(consultaVazia($resultado,"<h1>Sem resultado</h1>")){
+		return;
+	}
 	
 	$produto="";
 	foreach ($resultado as $key => $value) {
 	 	if($value===false){ return;}
-				$produto.="<div class='produto'>
+				$produto.="<div class='produto'  id='".$value['id_produto']."' data-cat='pro'>
 						<img src='".$value['imagem']."'>
 						<div class='infoProduto'>	
 							<span class='nome'>".$value['nome']."</span>
@@ -41,12 +44,22 @@ if($_GET['pesquisarPor']==="produto"){
 if($_GET['pesquisarPor']==="estabelecimento" or
    $_GET['pesquisarPor']==="loja" or
    $_GET['pesquisarPor']==="fornecedor"){
-	$resultado=$pesquisa->empresa($_GET);
-	retornaVazio($resultado,"<h1>Estabelecimento não cadastrado, ainda.</h1>");
+	
+	if($_GET['pesquisarPor']==="fornecedor"){
+		$resultado=$pesquisa->fornecedor($_GET);
+	}else{
+		$resultado=$pesquisa->empresa($_GET);
+
+	}
+	
+
+	if(consultaVazia($resultado,"<h1>{$_GET['pesquisarPor']} ainda sem cadastro</h1>")){
+		return;
+	}
 
 	$estabelecimento="";
 	foreach ($resultado as $key => $value) {
-		$estabelecimento.="<div class='produto'>
+		$estabelecimento.="<div class='produto' id='".$value['id_empresa']."'' data-cat='emp'>
 							<img src='".$value['imagem']."'>
 						<div class='infoProduto'>	
 							<span class='nome'>".$value['nomeEmpresa']."</span>
